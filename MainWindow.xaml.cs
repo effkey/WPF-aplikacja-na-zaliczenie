@@ -57,7 +57,7 @@ namespace Projekt_WPF_TODO_app
 
         public void ChangeIntoWorkTaskPage()
         {
-            this.Content = new WorkTaskPage();
+            this.Content = new WorkTaskPage(mainwindow);
         }
 
     }

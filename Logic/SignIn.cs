@@ -37,7 +37,6 @@ namespace Projekt_WPF_TODO_app.Logic
             Response = signInResponse;
             try
             {
-
                 var deserializedResponseData = JsonSerializer.Deserialize<SignIn>(signInResponse) ?? throw new ArgumentException();
                 SaveLogInSession(deserializedResponseData);
                 Console.WriteLine("Response: " + Response);

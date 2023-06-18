@@ -73,8 +73,8 @@ namespace Projekt_WPF_TODO_app.Logic
                 string sessionJson = File.ReadAllText("session.json");
                 Console.WriteLine("session " + sessionJson);
                 var session = JsonSerializer.Deserialize<LogIn>(sessionJson);
-                Console.WriteLine("session " + session.Username);
-                Console.WriteLine("session " + session.Token);
+                Console.WriteLine("session " + session?.Username);
+                Console.WriteLine("session " + session?.Token);
                 return true;
             }
             else { return false; }
