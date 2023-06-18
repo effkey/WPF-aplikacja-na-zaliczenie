@@ -28,6 +28,7 @@ namespace Projekt_WPF_TODO_app.Windows
             this.mainWindow = mainWindow;
             ((LogIn)DataContext).LogInCompleted += ShowMassageBoxAfterLogIn;
         }
+
         private void ShowMassageBoxAfterLogIn(object? sender, bool success)
         {
 
@@ -56,19 +57,6 @@ namespace Projekt_WPF_TODO_app.Windows
             passwordTextBox.Password = TxtBox.Text;
             passwordTextBox.Visibility = Visibility.Visible;
             TxtBox.Visibility = Visibility.Collapsed;
-        }
-
-        public bool ReturnLoginResponse()
-        {
-            LogIn loginviewModel = (LogIn)DataContext;
-            if (loginviewModel.IsLogInSuccess)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }

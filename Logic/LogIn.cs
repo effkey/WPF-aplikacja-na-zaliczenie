@@ -1,4 +1,5 @@
 ﻿using Projekt_WPF_TODO_app.Logic.Helpers;
+using Projekt_WPF_TODO_app.Pages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,7 +37,7 @@ namespace Projekt_WPF_TODO_app.Logic
             var logInResponse = logInHandler.SendPostRequest(logInDataInJson, "login");
             try
             {
-                var deserializedResponseData = JsonSerializer.Deserialize<LogIn>(logInResponse) ?? throw new ArgumentException(); ;
+                var deserializedResponseData = JsonSerializer.Deserialize<LogIn>(logInResponse) ?? throw new ArgumentException();
                 Console.WriteLine("Token logged user: " + deserializedResponseData.Token);
                 Console.WriteLine("Response: " + logInResponse);
                 SaveLogInSession(deserializedResponseData);
@@ -61,7 +62,22 @@ namespace Projekt_WPF_TODO_app.Logic
                 deserializedResponseData.Token,
             };
             string sessionInJsonFormat = JsonSerializer.Serialize(session);
-            File.WriteAllText("logInSession.json", sessionInJsonFormat);
+            File.WriteAllText("session.json", sessionInJsonFormat);
+        }
+
+        public bool ReadLogInSession()
+        {
+            if (File.Exists("session.json"))
+            {
+
+                string sessionJson = File.ReadAllText("session.json");
+                Console.WriteLine("session " + sessionJson);
+                var session = JsonSerializer.Deserialize<LogIn>(sessionJson);
+                Console.WriteLine("session " + session.Username);
+                Console.WriteLine("session " + session.Token);
+                return true;
+            }
+            else { return false; }
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Projekt_WPF_TODO_app.Logic
 {
-    public class SignIn : User
+    public class SignIn : LogIn
     {
         public bool IsSignInSuccess { get; set; }
         public string? Response { get; set; }
@@ -38,18 +38,19 @@ namespace Projekt_WPF_TODO_app.Logic
             try
             {
 
-                var deserializedResponseData = JsonSerializer.Deserialize<SignIn>(signInResponse);
+                var deserializedResponseData = JsonSerializer.Deserialize<SignIn>(signInResponse) ?? throw new ArgumentException();
+                SaveLogInSession(deserializedResponseData);
                 Console.WriteLine("Response: " + Response);
                 //SaveLogInSession(deserializedResponseData);
                 IsSignInSuccess = true;
                 SignInCompleted?.Invoke(this, true);
+                
             }
             catch (Exception)
             {
                 Console.WriteLine("Response: " + Response);
                 Console.WriteLine("Blad");
                 IsSignInSuccess = false;
-                //ErrorResponse = signInResponse;
                 SignInCompleted?.Invoke(this, false);
             }
         }

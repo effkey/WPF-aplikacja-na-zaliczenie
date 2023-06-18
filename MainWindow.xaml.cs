@@ -27,28 +27,31 @@ namespace Projekt_WPF_TODO_app
 
         SignIn signIn = new SignIn();
         LogIn login = new LogIn();
-
+      
         public MainWindow()
         {
             InitializeComponent();
-            mainwindow = this;  
+            mainwindow = this;
+            if (login.ReadLogInSession())
+            {
+                ChangeIntoWorkTaskPage();
+            }
         }
 
         private void SignIn_Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        { 
+        {
             SignInWindow window = new SignInWindow(signIn, mainwindow);
             window.ShowDialog();
         }
 
         private void LogIn_Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            
-            LogInWindow logInWindow = new LogInWindow(login, mainwindow);
-            logInWindow.ShowDialog();
+            LogInWindow window = new LogInWindow(login, mainwindow);
+            window.ShowDialog();
         }
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
-            ResetPasswordWindow window = new ResetPasswordWindow();
+            ResetPasswordWindow window = new ResetPasswordWindow(login, mainwindow);
             window.ShowDialog();
         }
 
