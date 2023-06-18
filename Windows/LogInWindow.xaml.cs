@@ -20,12 +20,12 @@ namespace Projekt_WPF_TODO_app.Windows
     /// </summary>
     public partial class LogInWindow : Window
     {
-        MainWindow contentControl;
-        public LogInWindow(LogIn login, MainWindow content)
+        MainWindow mainWindow;
+        public LogInWindow(LogIn login, MainWindow mainWindow)
         {
             InitializeComponent();
             DataContext = login;
-            contentControl = content;
+            this.mainWindow = mainWindow;
             ((LogIn)DataContext).LogInCompleted += ShowMassageBoxAfterLogIn;
         }
         private void ShowMassageBoxAfterLogIn(object? sender, bool success)
@@ -37,7 +37,7 @@ namespace Projekt_WPF_TODO_app.Windows
             {
                 this.Close();
                 MessageBox.Show("Successfully logged in.");
-                contentControl.ChangeIntoWorkTaskPage();
+                mainWindow.ChangeIntoWorkTaskPage();
             }
             else
             {

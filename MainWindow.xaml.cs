@@ -24,23 +24,25 @@ namespace Projekt_WPF_TODO_app
     public partial class MainWindow : Window
     {
         MainWindow mainwindow;
-        
+
+        SignIn signIn = new SignIn();
+        LogIn login = new LogIn();
+
         public MainWindow()
         {
             InitializeComponent();
-            mainwindow = this;
-           
+            mainwindow = this;  
         }
 
         private void SignIn_Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            SignInWindow window = new SignInWindow();
+        { 
+            SignInWindow window = new SignInWindow(signIn, mainwindow);
             window.ShowDialog();
         }
 
         private void LogIn_Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            LogIn login = new LogIn();
+            
             LogInWindow logInWindow = new LogInWindow(login, mainwindow);
             logInWindow.ShowDialog();
         }

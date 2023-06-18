@@ -3,10 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Projekt_WPF_TODO_app.Windows"
+        xmlns:local="clr-namespace:Projekt_WPF_TODO_app.Windows" xmlns:Components="clr-namespace:Projekt_WPF_TODO_app.Components" 
         mc:Ignorable="d"
         Title="SignInWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label FontSize="30" Margin="5" Grid.ColumnSpan="2" HorizontalAlignment="Center">Sign in</Label>
+        <Label FontSize="20" Margin="5" Grid.Row="1" VerticalContentAlignment="Center" >Username:</Label>
+        <Label FontSize="20" Margin="5" Grid.Row="2" VerticalContentAlignment="Center" >Email:</Label>
+        <Label FontSize="20" Margin="5" Grid.Row="3" VerticalContentAlignment="Center" >Password:</Label>
+        <Label FontSize="20" Margin="5" Grid.Row="4" VerticalContentAlignment="Center" >Repassord:</Label>
+        <TextBox Text="{Binding Username}" FontSize="20" Name="usernameTextBox" Margin="5" Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center"/>
+        <TextBox Text="{Binding Email}" FontSize="20" Name="emailTextBox" Margin="5" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center"/>
+        <Components:BindAblePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="20" x:Name="passwordTextBox" Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center"/>
+        <Components:BindAblePasswordBox Password="{Binding Password2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="20" x:Name="passwordTextBox1" Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center"/>
+        <TextBox FontSize="20" Grid.Row="3" Grid.Column="1"  Margin="5" Name="TxtBox" Visibility="Collapsed" VerticalContentAlignment="Center"/>
+        <TextBox FontSize="20" Grid.Row="4" Grid.Column="1"  Margin="5" Name="TxtBox1" Visibility="Collapsed" VerticalContentAlignment="Center"/>
+        <Grid Grid.Row="5" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="0.11*"/>
+            </Grid.ColumnDefinitions>
+            <CheckBox FontSize="14" Name="revealModeCheckBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 120 0" VerticalContentAlignment="Center"
+            Unchecked="ShowPassword_Unchecked"  Checked="ShowPassword_Checked">Pokaż hasło</CheckBox>
+
+            <Button Command="{Binding SignInCommend}" FontSize="14" Grid.Row="1" Grid.Column="1" Margin="5" Padding="30,3"  HorizontalAlignment="Right">Sign in</Button>
+
+        </Grid>
     </Grid>
 </Window>

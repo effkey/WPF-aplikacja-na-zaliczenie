@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projekt_WPF_TODO_app.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,49 @@ namespace Projekt_WPF_TODO_app.Windows
     /// </summary>
     public partial class SignInWindow : Window
     {
-        public SignInWindow()
+        MainWindow mainWindow;
+        public SignInWindow(SignIn signIn, MainWindow mainWindow)
         {
             InitializeComponent();
+            DataContext = signIn;
+            this.mainWindow = mainWindow;
+            ((SignIn)DataContext).SignInCompleted += ShowMassageBoxAfterSignIn;
+        }
+
+        private void ShowMassageBoxAfterSignIn(object? sender, bool success)
+        {
+
+            SignIn signinviewModel = (SignIn)DataContext;
+
+            if (signinviewModel.IsSignInSuccess)
+            {
+                this.Close();
+                MessageBox.Show(signinviewModel.Response);
+                mainWindow.ChangeIntoWorkTaskPage();
+            }
+            else
+            {
+                MessageBox.Show(signinviewModel.Response);
+            }
+        }
+
+        private void ShowPassword_Checked(object sender, RoutedEventArgs e)
+        {
+            TxtBox.Text = passwordTextBox.Password;
+            TxtBox1.Text = passwordTextBox1.Password;
+            passwordTextBox.Visibility = Visibility.Collapsed;
+            passwordTextBox1.Visibility = Visibility.Collapsed;
+            TxtBox.Visibility = Visibility.Visible;
+            TxtBox1.Visibility = Visibility.Visible;
+        }
+        private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
+        {
+            passwordTextBox.Password = TxtBox.Text;
+            passwordTextBox1.Password = TxtBox1.Text;
+            passwordTextBox.Visibility = Visibility.Visible;
+            passwordTextBox1.Visibility = Visibility.Visible;
+            TxtBox.Visibility = Visibility.Collapsed;
+            TxtBox1.Visibility = Visibility.Collapsed;
         }
     }
 }
