@@ -27,25 +27,38 @@
             </MenuItem>
         </Menu>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="dupa"></TextBlock>
+            <TextBlock Text="dupa" />
             <ScrollViewer Height="300">
-                <ItemsControl ItemsSource="{Binding WorkTaskList}" Margin="10">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:WorkTask/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding WorkTaskList}" Margin="10" >
+                    <DataGrid.Columns >
+                        <DataGridTemplateColumn >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsSelected}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Task Title" Binding="{Binding TaskTitle}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Task Description" Binding="{Binding TaskDescription}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Task Priority" Binding="{Binding TaskPriority}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Task Due Date" Binding="{Binding TaskDueDate}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Task Start Date" Binding="{Binding TaskStartDate}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Task Completion Date" Binding="{Binding TaskCompletionDate}" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </ScrollViewer>
 
-            <TextBlock Text="Tytul zadania"/>
-            <TextBox Text="{Binding NewWorkTaskTitle, Mode=TwoWay}"/>
-            <TextBox Text="Opis zadania"/>
-            <TextBox Text="{Binding NewWorkTaskDescription, Mode=TwoWay}"/>
+            <TextBlock Text="Tytul zadania" />
+            <TextBox Text="{Binding NewWorkTaskTitle, Mode=TwoWay}" />
+            <TextBox Text="Opis zadania" />
+            <TextBox Text="{Binding NewWorkTaskDescription, Mode=TwoWay}" />
             <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding AddNewTaskCommand}" Content="Dodaj" />
                 <Button Command="{Binding DeleteSelectedTasksCommend}" Content="Usun" />
+                <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+          Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
             </StackPanel>
         </StackPanel>
+
     </Grid>
 </Page>

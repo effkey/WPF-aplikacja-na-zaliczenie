@@ -37,5 +37,10 @@ namespace Projekt_WPF_TODO_app
         public bool? IsTaskComplited { get; set; }
         public bool IsSelected { get; set; }
 
+        public override string ToString()
+        {
+            return $"Task Title: {TaskTitle}, Task Description: {TaskDescription}";
+        }
+
     }
 }

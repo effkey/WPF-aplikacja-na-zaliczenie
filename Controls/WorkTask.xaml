@@ -6,16 +6,25 @@
              xmlns:local="clr-namespace:Projekt_WPF_TODO_app.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             MouseLeftButtonUp="WorkTask_Click">
-    <StackPanel Orientation="Horizontal">
-        <CheckBox IsChecked="{Binding IsSelected}" />
-        <StackPanel>
-            <TextBlock Text="{Binding TaskTitle}"/>
-            <TextBlock Text="{Binding TaskDescription}"/>
-            <TextBlock Text="{Binding TaskPriority}"/>
-            <TextBlock Text="{Binding TaskDueDate}"/>
-            <TextBlock Text="{Binding TaskStartDate}"/>
-            <TextBlock Text="{Binding TaskCompletionDate}"/>
-        </StackPanel>
-    </StackPanel>
+             >
+    <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding WorkTaskList}" Margin="10" >
+        <DataGrid.Columns >
+            <DataGridTemplateColumn Header="Your boolean column">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+          Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+
+            <DataGridTextColumn Header="Task Title" Binding="{Binding TaskTitle}" IsReadOnly="True"/>
+            <DataGridTextColumn Header="Task Description" Binding="{Binding TaskDescription}" IsReadOnly="True"/>
+            <DataGridTextColumn Header="Task Priority" Binding="{Binding TaskPriority}" IsReadOnly="True"/>
+            <DataGridTextColumn Header="Task Due Date" Binding="{Binding TaskDueDate}" IsReadOnly="True"/>
+            <DataGridTextColumn Header="Task Start Date" Binding="{Binding TaskStartDate}" IsReadOnly="True"/>
+            <DataGridTextColumn Header="Task Completion Date" Binding="{Binding TaskCompletionDate}" IsReadOnly="True"/>
+        </DataGrid.Columns>
+    </DataGrid>
+
 </UserControl>

@@ -46,7 +46,31 @@ namespace Projekt_WPF_TODO_app.Pages
             Console.WriteLine("Wykonalem sie");
             Application.Current.Shutdown();
         }
-    
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            // CheckBox został zaznaczony, odblokuj kolumny
+            SetColumnReadOnly(false);
+
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // CheckBox został odznaczony, zablokuj kolumny
+            SetColumnReadOnly(true);
+        }
+
+        private void SetColumnReadOnly(bool isReadOnly)
+        {
+            // Ustaw wartość IsReadOnly dla odpowiednich kolumn
+            // Przyjmując, że pierwsza kolumna to DataGridTemplateColumn (CheckBox), indeksy są przesunięte o 1
+            var columnCount = dataGrid.Columns.Count;
+            for (int i = 1; i < columnCount; i++)
+            {
+                var column = dataGrid.Columns[i];
+                column.IsReadOnly = isReadOnly;
+            }
+        }
 
     }
 }
