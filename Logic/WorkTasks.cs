@@ -34,10 +34,12 @@ namespace Projekt_WPF_TODO_app
         {
             AddNewTaskCommand = new RelayCommand(AddNewTask);
             DeleteSelectedTasksCommend = new RelayCommand(DeleteSelectedTasks);
+       
         }
 
-        private void AddNewTask()
+        public void AddNewTask()
         {
+
             var newTask = new WorkTask
             {
                 TaskTitle = NewWorkTaskTitle,
@@ -70,5 +72,7 @@ namespace Projekt_WPF_TODO_app
                 WorkTaskList.Remove(task);
             }
         }
+
+        
     }
 }

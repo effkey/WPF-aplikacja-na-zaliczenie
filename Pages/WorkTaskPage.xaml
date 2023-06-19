@@ -7,6 +7,37 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="WorkTaskPage">
+
+    <Page.Resources>
+        <Style x:Key="CustomDatePickerStyle" TargetType="DatePicker">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="DatePicker">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="2">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <DatePickerTextBox x:Name="PART_TextBox" Foreground="{TemplateBinding Foreground}" BorderThickness="0" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
+
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Page.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -29,16 +60,15 @@
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="dupa" />
             <ScrollViewer Height="300">
-                <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding WorkTaskList}" Margin="10" CanUserAddRows="True">
-                    <DataGrid.Columns >
-
-                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding WorkTaskList}" Margin="10" CanUserAddRows="False" MaxWidth="1100" >
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" >
                         <DataGridCheckBoxColumn.ElementStyle>
                             <Style TargetType="CheckBox"/>
                         </DataGridCheckBoxColumn.ElementStyle>
                         </DataGridCheckBoxColumn>
-                        <DataGridTextColumn Header="Task Title" Binding="{Binding TaskTitle}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Task Description" Binding="{Binding TaskDescription}" IsReadOnly="True" Width="*">
+                        <DataGridTextColumn Header="Title" Binding="{Binding TaskTitle}" IsReadOnly="True" Width="0.55*"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding TaskDescription}" IsReadOnly="True" Width="*">
                             <DataGridTextColumn.ElementStyle>
                                 <Style>
                                     <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
@@ -46,10 +76,22 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Task Priority" Binding="{Binding TaskPriority}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Task Due Date" Binding="{Binding TaskDueDate}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Task Start Date" Binding="{Binding TaskStartDate}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Task Completion Date" Binding="{Binding TaskCompletionDate}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Priority" Binding="{Binding TaskPriority}" IsReadOnly="True" Width="0.55*"/>
+                        <DataGridTemplateColumn Header="Due Date" Width="0.55*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DatePicker Tag="datePicker"  SelectedDate="{Binding TaskDueDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CustomDatePickerStyle}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Start Date" Width="0.55*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DatePicker Tag="datePicker" SelectedDate="{Binding TaskStartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CustomDatePickerStyle}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Completion Date" Binding="{Binding TaskCompletionDate}" IsReadOnly="True" Width="0.55*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </ScrollViewer>

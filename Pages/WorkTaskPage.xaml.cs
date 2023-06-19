@@ -23,6 +23,7 @@ namespace Projekt_WPF_TODO_app.Pages
     public partial class WorkTaskPage : Page
     {
         MainWindow mainWindow;
+
         public WorkTaskPage(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -51,14 +52,52 @@ namespace Projekt_WPF_TODO_app.Pages
         {
             // CheckBox został zaznaczony, odblokuj kolumny
             SetColumnReadOnly(false);
+            SetDatePickerEnable(true);
+            dataGrid.CanUserAddRows = true;
 
         }
 
+        private void SetDatePickerEnable(bool isEnable)
+        {
+            var datePickers = FindVisualChildren<DatePicker>(dataGrid);
+            foreach (var datePicker in datePickers)
+            {
+                if (datePicker.Tag is string tag && tag == "datePicker")
+                {
+                    datePicker.IsEnabled = isEnable;
+                }
+            }
+        }
+        private IEnumerable<T> FindVisualChildren<T>(DependencyObject dependencyObject) where T : DependencyObject
+        {
+            if (dependencyObject != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(dependencyObject); i++)
+                {
+                    var child = VisualTreeHelper.GetChild(dependencyObject, i);
+                    if (child is T tChild)
+                    {
+                        yield return tChild;
+                    }
+
+                    foreach (var childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
+        }
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             // CheckBox został odznaczony, zablokuj kolumny
             SetColumnReadOnly(true);
+            SetDatePickerEnable(false);
+            dataGrid.CanUserAddRows = false;
+
+
         }
+
+
 
         private void SetColumnReadOnly(bool isReadOnly)
         {
@@ -70,6 +109,7 @@ namespace Projekt_WPF_TODO_app.Pages
                 var column = dataGrid.Columns[i];
                 column.IsReadOnly = isReadOnly;
             }
+
         }
 
     }
