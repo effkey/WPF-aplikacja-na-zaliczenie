@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projekt_WPF_TODO_app.Windows" xmlns:Components="clr-namespace:Projekt_WPF_TODO_app.Components" 
         mc:Ignorable="d"
-        Title="SignInWindow" Height="450" Width="800">
+        Title="SignInWindow" Height="450" Width="800" MaxHeight="350" MinWidth="350">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

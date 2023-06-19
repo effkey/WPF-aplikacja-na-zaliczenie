@@ -19,5 +19,8 @@ namespace Projekt_WPF_TODO_app.Logic
 
         [JsonPropertyName("token")]
         public string? Token { get; set; }
+
+        [JsonPropertyName("user_id")]
+        public int UserId { get; set; }
     }
 }

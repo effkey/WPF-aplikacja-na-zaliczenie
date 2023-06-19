@@ -38,13 +38,13 @@ namespace Projekt_WPF_TODO_app.Windows
             if (resetviewModel.IsResetSuccess)
             {
                 this.Close();
-                MessageBox.Show(resetviewModel.Message);
+                MessageBox.Show(resetviewModel.Message,"Success", MessageBoxButton.OK);
                 LogInWindow window = new LogInWindow(login, mainWindow);
                 window.ShowDialog();
             }
             else
             {
-                MessageBox.Show(resetviewModel.Message);
+                MessageBox.Show(resetviewModel.Message,"Error", MessageBoxButton.OK);
             }
         }
     }

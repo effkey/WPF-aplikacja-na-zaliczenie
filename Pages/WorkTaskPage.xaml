@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Projekt_WPF_TODO_app.Pages"
+      xmlns:local="clr-namespace:Projekt_WPF_TODO_app.Controls" xmlns:local1="clr-namespace:Projekt_WPF_TODO_app.Logic" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="WorkTaskPage">
@@ -13,6 +13,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Grid.Column="0" DockPanel.Dock="Top" Padding="5" Background="#FFA9D1F4">
@@ -21,9 +22,30 @@
                     <DockPanel HorizontalAlignment="Stretch"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            <MenuItem FontSize="15" Header="Ustawienia" HorizontalAlignment="Right" >
+            <MenuItem FontSize="15" Header="Ustawienia" HorizontalAlignment="Left" >
                 <MenuItem FontSize="12" Header="Wyloguj się" HorizontalAlignment="Right" Click="Logout_click"/>
             </MenuItem>
         </Menu>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="dupa"></TextBlock>
+            <ScrollViewer Height="300">
+                <ItemsControl ItemsSource="{Binding WorkTaskList}" Margin="10">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:WorkTask/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <TextBlock Text="Tytul zadania"/>
+            <TextBox Text="{Binding NewWorkTaskTitle, Mode=TwoWay}"/>
+            <TextBox Text="Opis zadania"/>
+            <TextBox Text="{Binding NewWorkTaskDescription, Mode=TwoWay}"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding AddNewTaskCommand}" Content="Dodaj" />
+                <Button Command="{Binding DeleteSelectedTasksCommend}" Content="Usun" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

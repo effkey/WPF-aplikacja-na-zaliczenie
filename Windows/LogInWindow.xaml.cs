@@ -37,12 +37,12 @@ namespace Projekt_WPF_TODO_app.Windows
             if (loginviewModel.IsLogInSuccess)
             {
                 this.Close();
-                MessageBox.Show("Successfully logged in.");
+                MessageBox.Show("Successfully logged in.", "Successfully log in", MessageBoxButton.OK, MessageBoxImage.Information);
                 mainWindow.ChangeIntoWorkTaskPage();
             }
             else
             {
-                MessageBox.Show(loginviewModel.ErrorResponse);
+                MessageBox.Show(loginviewModel.ErrorResponse, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

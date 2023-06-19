@@ -26,13 +26,17 @@ namespace Projekt_WPF_TODO_app.Pages
         public WorkTaskPage(MainWindow mainWindow)
         {
             InitializeComponent();
+            DataContext = new WorkTasks();
             this.mainWindow = mainWindow;
         }
 
         private void Logout_click(object sender, RoutedEventArgs e)
         {
-            File.Delete("session.json");
-            RestartApplication();
+            if(MessageBox.Show("Czy na pewno chcesz się wylogować?", "Log Out", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                File.Delete("session.json");
+                RestartApplication();
+            }
         }
 
         private void RestartApplication()
@@ -42,5 +46,7 @@ namespace Projekt_WPF_TODO_app.Pages
             Console.WriteLine("Wykonalem sie");
             Application.Current.Shutdown();
         }
+    
+
     }
 }

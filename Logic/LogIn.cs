@@ -1,12 +1,7 @@
 ﻿using Projekt_WPF_TODO_app.Logic.Helpers;
-using Projekt_WPF_TODO_app.Pages;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Projekt_WPF_TODO_app.Logic
@@ -39,6 +34,7 @@ namespace Projekt_WPF_TODO_app.Logic
             {
                 var deserializedResponseData = JsonSerializer.Deserialize<LogIn>(logInResponse) ?? throw new ArgumentException();
                 Console.WriteLine("Token logged user: " + deserializedResponseData.Token);
+                Console.WriteLine("UserID logged user: " + deserializedResponseData.UserId);
                 Console.WriteLine("Response: " + logInResponse);
                 SaveLogInSession(deserializedResponseData);
                 IsLogInSuccess = true;

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Projekt_WPF_TODO_app.Logic.Base;
+using System;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
-namespace Projekt_WPF_TODO_app.Logic
+namespace Projekt_WPF_TODO_app
 {
-    public class WorkTask
+    public class WorkTask : BaseViewModel
     {
         [JsonPropertyName("task_id")]
         public int? TaskId { get; set; }
@@ -38,6 +35,7 @@ namespace Projekt_WPF_TODO_app.Logic
 
         [JsonPropertyName("completed")]
         public bool? IsTaskComplited { get; set; }
+        public bool IsSelected { get; set; }
 
     }
 }
