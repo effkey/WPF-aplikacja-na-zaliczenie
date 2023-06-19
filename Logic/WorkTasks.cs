@@ -58,11 +58,11 @@ namespace Projekt_WPF_TODO_app
 
         private void DeleteSelectedTasks()
         {
-     /*       foreach (var workTask in WorkTaskList)
+            foreach (var workTask in WorkTaskList)
             {
                 Console.WriteLine(workTask.ToString());
             }
-*/
+
             var selectedTasks = WorkTaskList.Where(x => x.IsSelected).ToList();
 
             foreach (var task in selectedTasks)
