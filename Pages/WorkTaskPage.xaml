@@ -29,15 +29,14 @@
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="dupa" />
             <ScrollViewer Height="300">
-                <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding WorkTaskList}" Margin="10" >
+                <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding WorkTaskList}" Margin="10" CanUserAddRows="False">
                     <DataGrid.Columns >
-                        <DataGridTemplateColumn >
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsSelected}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+
+                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
+                        <DataGridCheckBoxColumn.ElementStyle>
+                            <Style TargetType="CheckBox"/>
+                        </DataGridCheckBoxColumn.ElementStyle>
+                        </DataGridCheckBoxColumn>
                         <DataGridTextColumn Header="Task Title" Binding="{Binding TaskTitle}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Task Description" Binding="{Binding TaskDescription}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Task Priority" Binding="{Binding TaskPriority}" IsReadOnly="True"/>
@@ -55,7 +54,7 @@
             <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding AddNewTaskCommand}" Content="Dodaj" />
                 <Button Command="{Binding DeleteSelectedTasksCommend}" Content="Usun" />
-                <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+                <CheckBox 
           Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
             </StackPanel>
         </StackPanel>
