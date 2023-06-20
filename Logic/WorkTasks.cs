@@ -86,7 +86,7 @@ namespace Projekt_WPF_TODO_app
                 TaskTitle = "siemasiema",
                 TaskDescription = "dupa123",
                 TaskPriority = "taktak",
-                TaskDueDate = null,
+                TaskDueDate = TaskDueDate,
                 TaskStartDate = null,
                 //TaskCompletionDate = NewWorkTaskStartDate,
             };

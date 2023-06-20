@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Projekt_WPF_TODO_app.Controls" xmlns:local1="clr-namespace:Projekt_WPF_TODO_app.Logic.Helpers"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
-
+      xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit" xmlns:xctk1="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="WorkTaskPage">
@@ -65,8 +65,12 @@
                 <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding WorkTaskList}" Margin="10" CanUserAddRows="False" MaxWidth="1100" >
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" >
-                
+                            <DataGridCheckBoxColumn.ElementStyle>
+                                <Style TargetType="CheckBox"/>
+                            </DataGridCheckBoxColumn.ElementStyle>
                         </DataGridCheckBoxColumn>
+                        
+             
                         <DataGridTextColumn Header="Title" Binding="{Binding TaskTitle}" IsReadOnly="True" Width="0.55*"/>
                         <DataGridTextColumn Header="Description" Binding="{Binding TaskDescription}" IsReadOnly="True" Width="*">
                             <DataGridTextColumn.ElementStyle>
@@ -77,57 +81,22 @@
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
                         <DataGridTextColumn Header="Priority" Binding="{Binding TaskPriority}" IsReadOnly="True" Width="0.55*"/>
-                        <DataGridTemplateColumn  Width="0.55*">
-                            <DataGridTemplateColumn.Header  >
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Due Date" Margin="0 2 0 0"/>
-                                    <ToggleButton x:Name="toggleButton" Content="Sort dates" Click="SortByDueDate_Click" Margin="10 0 0 0"/>
-                                </StackPanel>
-                            </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <DatePicker Tag="datePicker" Style="{StaticResource CustomDatePickerStyle}" SelectedDate="{Binding TaskDueDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                        <DatePicker.Resources>
-                                            <Style TargetType="DatePicker">
-                                                <Setter Property="Validation.ErrorTemplate">
-                                                    <Setter.Value>
-                                                        <ControlTemplate>
-                                                            <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" VerticalAlignment="Center"/>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </DatePicker.Resources>
-                                        <DatePicker.BlackoutDates>
-                                            <CalendarDateRange Start="{x:Static sys:DateTime.MinValue}" End="{x:Static local1:DateValidation.Yesterday}" />
-                                        </DatePicker.BlackoutDates>
-                                    </DatePicker>
+                                    <TextBlock Text="{Binding TaskDueDate}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Start Date" Width="0.55*">
-                            <DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
-                                    <DatePicker Tag="datePicker" SelectedDate="{Binding TaskStartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CustomDatePickerStyle}" >
-                                        <DatePicker.Resources>
-                                            <Style TargetType="DatePicker">
-                                                <Setter Property="Validation.ErrorTemplate">
-                                                    <Setter.Value>
-                                                        <ControlTemplate>
-                                                            <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" VerticalAlignment="Center"/>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </DatePicker.Resources>
-                                        <DatePicker.BlackoutDates>
-                                            <CalendarDateRange Start="{x:Static sys:DateTime.MinValue}" End="{x:Static local1:DateValidation.Yesterday}" />
-                                        </DatePicker.BlackoutDates>
-                                    </DatePicker>
+                                    <xctk1:DateTimePicker Text="{Binding TaskDueDate, Mode=TwoWay}" Format="Custom" FormatString="yyyy-MM-dd HH:mm" />
                                 </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Completion Date" Binding="{Binding TaskCompletionDate}" IsReadOnly="True" Width="0.55*"/>
+
+
+                        <DataGridTextColumn Header="Start Date" Binding="{Binding TaskStartDate}" IsReadOnly="True" Width="0.55*"/>
+                  
                     </DataGrid.Columns>
                 </DataGrid>
             </ScrollViewer>
