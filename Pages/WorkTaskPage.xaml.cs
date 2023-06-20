@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -23,12 +25,15 @@ namespace Projekt_WPF_TODO_app.Pages
     public partial class WorkTaskPage : Page
     {
         MainWindow mainWindow;
-
+        WorkTasks workTask = new WorkTasks();
         public WorkTaskPage(MainWindow mainWindow)
         {
             InitializeComponent();
-            DataContext = new WorkTasks();
+            DataContext = workTask;
             this.mainWindow = mainWindow;
+        
+           
+
         }
 
         private void Logout_click(object sender, RoutedEventArgs e)
@@ -97,6 +102,25 @@ namespace Projekt_WPF_TODO_app.Pages
 
         }
 
+        private bool isDueDateSortedAscending = true;
+
+        private void SortByDueDate_Click(object sender, RoutedEventArgs e)
+        {
+            if (isDueDateSortedAscending)
+            {
+                dataGrid.Items.SortDescriptions.Clear();
+                dataGrid.Items.SortDescriptions.Add(new SortDescription("TaskDueDate", ListSortDirection.Descending));
+                SetDatePickerEnable(false);
+            }
+            else
+            {
+                dataGrid.Items.SortDescriptions.Clear();
+                dataGrid.Items.SortDescriptions.Add(new SortDescription("TaskDueDate", ListSortDirection.Ascending));
+                SetDatePickerEnable(false);
+            }
+            isDueDateSortedAscending = !isDueDateSortedAscending;
+            ;
+        }
 
 
         private void SetColumnReadOnly(bool isReadOnly)

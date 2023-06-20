@@ -39,7 +39,7 @@ namespace Projekt_WPF_TODO_app
 
         public override string ToString()
         {
-            return $"Task Title: {TaskTitle}, Task Description: {TaskDescription}";
+            return $"Task Title: {TaskTitle}, Task Description: {TaskDescription}, TaskPriority: {TaskPriority}, TaskDueDate: {TaskDueDate} , TaskStartDate: {TaskStartDate}";
         }
 
     }

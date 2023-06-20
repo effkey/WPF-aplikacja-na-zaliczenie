@@ -3,6 +3,7 @@ using Projekt_WPF_TODO_app.Logic.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,10 +45,10 @@ namespace Projekt_WPF_TODO_app
             {
                 TaskTitle = NewWorkTaskTitle,
                 TaskDescription = NewWorkTaskDescription,
-                /*TaskPriority = NewWorkTaskPiority,
+                TaskPriority = NewWorkTaskPiority,
                 TaskDueDate = NewWorkTaskDueDate,
                 TaskStartDate = NewWorkTaskStartDate,
-                TaskCompletionDate = NewWorkTaskStartDate,*/
+                //TaskCompletionDate = NewWorkTaskStartDate,
             };
 
             WorkTaskList.Add(newTask);
@@ -71,6 +72,25 @@ namespace Projekt_WPF_TODO_app
             {
                 WorkTaskList.Remove(task);
             }
+        }
+
+        public void Add()
+        {
+            string dateString = "23.05.2023 00:00:00";
+            string format = "dd.MM.yyyy HH:mm:ss";
+            DateTime TaskDueDate = DateTime.ParseExact(dateString, format, CultureInfo.InvariantCulture);
+
+
+            var newTask = new WorkTask
+            {
+                TaskTitle = "siemasiema",
+                TaskDescription = "dupa123",
+                TaskPriority = "taktak",
+                TaskDueDate = null,
+                TaskStartDate = null,
+                //TaskCompletionDate = NewWorkTaskStartDate,
+            };
+            WorkTaskList.Add(newTask);
         }
 
         
