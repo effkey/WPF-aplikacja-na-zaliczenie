@@ -91,6 +91,21 @@ namespace Projekt_WPF_TODO_app
                 //TaskCompletionDate = NewWorkTaskStartDate,
             };
             WorkTaskList.Add(newTask);
+
+            string dateString1 = "23.05.2023 00:00:00";
+            string format1 = "dd.MM.yyyy HH:mm:ss";
+            DateTime TaskDueDate1 = DateTime.ParseExact(dateString1, format1, CultureInfo.InvariantCulture);
+
+            var newTask1 = new WorkTask
+            {
+                TaskTitle = "siemasiema",
+                TaskDescription = "dupa123",
+                TaskPriority = "taktak",
+                TaskDueDate = TaskDueDate,
+                TaskStartDate = null,
+                //TaskCompletionDate = NewWorkTaskStartDate,
+            };
+            WorkTaskList.Add(newTask1);
         }
 
         

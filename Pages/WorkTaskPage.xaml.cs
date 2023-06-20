@@ -32,7 +32,7 @@ namespace Projekt_WPF_TODO_app.Pages
             DataContext = workTask;
             this.mainWindow = mainWindow;
         
-            workTask.Add();
+            //workTask.Add();
 
         }
 
@@ -138,30 +138,8 @@ namespace Projekt_WPF_TODO_app.Pages
 
 
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            // Ustawienie wiersza DataGrid jako tryb edycji
-            var button = (Button)sender;
-            var dataGridCell = FindVisualParent<DataGridCell>(button);
-            if (dataGridCell != null)
-            {
-                dataGridCell.IsEditing = true;
-                dataGridCell.Focus();
-            }
-        }
 
-        private static T FindVisualParent<T>(DependencyObject child) where T : DependencyObject
-        {
-            var parentObject = VisualTreeHelper.GetParent(child);
 
-            if (parentObject == null)
-                return null;
-
-            if (parentObject is T parent)
-                return parent;
-            else
-                return FindVisualParent<T>(parentObject);
-        }
 
     }
 }

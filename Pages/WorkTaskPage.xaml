@@ -69,8 +69,6 @@
                                 <Style TargetType="CheckBox"/>
                             </DataGridCheckBoxColumn.ElementStyle>
                         </DataGridCheckBoxColumn>
-                        
-             
                         <DataGridTextColumn Header="Title" Binding="{Binding TaskTitle}" IsReadOnly="True" Width="0.55*"/>
                         <DataGridTextColumn Header="Description" Binding="{Binding TaskDescription}" IsReadOnly="True" Width="*">
                             <DataGridTextColumn.ElementStyle>
@@ -81,22 +79,30 @@
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
                         <DataGridTextColumn Header="Priority" Binding="{Binding TaskPriority}" IsReadOnly="True" Width="0.55*"/>
-                        <DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Start date" IsReadOnly="True" Width="0.55*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding TaskDueDate}" />
+                                    <TextBlock Text="{Binding FormattedStartDate}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                             <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
-                                    <xctk1:DateTimePicker Text="{Binding TaskDueDate, Mode=TwoWay}" Format="Custom" FormatString="yyyy-MM-dd HH:mm" />
+                                    <xctk1:DateTimePicker Text="{Binding FormattedStartDate, Mode=TwoWay}" Format="Custom" FormatString="yyyy.MM.dd HH:mm" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
+                        </DataGridTemplateColumn >
+                        <DataGridTemplateColumn Header="Due date" IsReadOnly="True" Width="0.55*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding FormattedDueDate}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellEditingTemplate>
+                                <DataTemplate>
+                                    <xctk1:DateTimePicker Text="{Binding FormattedDueDate, Mode=TwoWay}" Format="Custom" FormatString="yyyy.MM.dd HH:mm" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>
-
-
-                        <DataGridTextColumn Header="Start Date" Binding="{Binding TaskStartDate}" IsReadOnly="True" Width="0.55*"/>
-                  
                     </DataGrid.Columns>
                 </DataGrid>
             </ScrollViewer>
