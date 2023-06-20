@@ -5,40 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Projekt_WPF_TODO_app.Controls" xmlns:local1="clr-namespace:Projekt_WPF_TODO_app.Logic.Helpers"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
-      xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit" xmlns:xctk1="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:xctk1="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="WorkTaskPage">
 
-    <Page.Resources>
-        <Style x:Key="CustomDatePickerStyle" TargetType="DatePicker">
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="Background" Value="White" />
-            <Setter Property="BorderBrush" Value="Gray" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="DatePicker">
-                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="2">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <DatePickerTextBox x:Name="PART_TextBox" Foreground="{TemplateBinding Foreground}" BorderThickness="0" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
+    
 
-                                    </Grid>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-    </Page.Resources>
+  
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -59,9 +33,11 @@
                 <MenuItem FontSize="12" Header="Wyloguj się" HorizontalAlignment="Right" Click="Logout_click"/>
             </MenuItem>
         </Menu>
+
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="dupa" />
             <ScrollViewer Height="300">
+                
                 <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding WorkTaskList}" Margin="10" CanUserAddRows="False" MaxWidth="1100" >
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" >
@@ -78,7 +54,21 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Priority" Binding="{Binding TaskPriority}" IsReadOnly="True" Width="0.55*"/>
+
+                        <DataGridTemplateColumn  Header="Priority" IsReadOnly="True" Width="0.55*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TaskPriority}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellEditingTemplate>
+                                <DataTemplate>
+                                    <ComboBox ItemsSource="{Binding PriorityOptions}" SelectedItem="{Binding TaskPriority}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
+                        </DataGridTemplateColumn>
+                        
+                        
                         <DataGridTemplateColumn Header="Start date" IsReadOnly="True" Width="0.55*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -105,19 +95,18 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
+                
             </ScrollViewer>
 
-            <TextBlock Text="Tytul zadania" />
-            <TextBox Text="{Binding NewWorkTaskTitle, Mode=TwoWay}" />
-            <TextBox Text="Opis zadania" />
-            <TextBox Text="{Binding NewWorkTaskDescription, Mode=TwoWay}" />
+           
             <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding AddNewTaskCommand}" Content="Dodaj" />
                 <Button Command="{Binding DeleteSelectedTasksCommend}" Content="Usun" />
-                <CheckBox 
-          Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
+                <Button Command="{Binding AddSelectedTaskskToDoneListCommend}" Content="Przenieś do tasków ukończonych" />
+              
+                <CheckBox Content="Dodaj task / edytuj task" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
             </StackPanel>
         </StackPanel>
-
+       
     </Grid>
 </Page>

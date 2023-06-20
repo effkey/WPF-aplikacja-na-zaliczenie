@@ -15,6 +15,8 @@ namespace Projekt_WPF_TODO_app
     {
         public ObservableCollection<WorkTask> WorkTaskList { get; set; } = new ObservableCollection<WorkTask>();
 
+        public ObservableCollection<WorkTask> DoneTasks { get; set; } = new ObservableCollection<WorkTask>();
+
         public string NewWorkTaskTitle { get; set; }
 
         public string NewWorkTaskDescription { get; set; }
@@ -30,11 +32,13 @@ namespace Projekt_WPF_TODO_app
         public ICommand AddNewTaskCommand { get; set; }
 
         public ICommand DeleteSelectedTasksCommend { get; set; }
+        public ICommand AddSelectedTaskskToDoneListCommend { get; set; }
 
         public WorkTasks()
         {
             AddNewTaskCommand = new RelayCommand(AddNewTask);
             DeleteSelectedTasksCommend = new RelayCommand(DeleteSelectedTasks);
+            AddSelectedTaskskToDoneListCommend = new RelayCommand(AddSelectedTaskskToDoneList);
        
         }
 
@@ -45,7 +49,7 @@ namespace Projekt_WPF_TODO_app
             {
                 TaskTitle = NewWorkTaskTitle,
                 TaskDescription = NewWorkTaskDescription,
-                TaskPriority = NewWorkTaskPiority,
+                TaskPriority = null,
                 TaskDueDate = NewWorkTaskDueDate,
                 TaskStartDate = NewWorkTaskStartDate,
                 //TaskCompletionDate = NewWorkTaskStartDate,
@@ -74,6 +78,23 @@ namespace Projekt_WPF_TODO_app
             }
         }
 
+        private void AddSelectedTaskskToDoneList()
+        {
+            foreach (var workTask in WorkTaskList)
+            {
+                Console.WriteLine(workTask.ToString());
+            }
+
+            var selectedTasks = WorkTaskList.Where(x => x.IsSelected).ToList();
+
+            foreach (var task in selectedTasks)
+            {
+                task.IsSelected = true;
+                DoneTasks.Add(task);
+                WorkTaskList.Remove(task);
+            }
+        }
+
         public void Add()
         {
             string dateString = "23.05.2023 00:00:00";
@@ -85,7 +106,7 @@ namespace Projekt_WPF_TODO_app
             {
                 TaskTitle = "siemasiema",
                 TaskDescription = "dupa123",
-                TaskPriority = "taktak",
+                TaskPriority = null,
                 TaskDueDate = TaskDueDate,
                 TaskStartDate = null,
                 //TaskCompletionDate = NewWorkTaskStartDate,
@@ -100,7 +121,7 @@ namespace Projekt_WPF_TODO_app
             {
                 TaskTitle = "siemasiema",
                 TaskDescription = "dupa123",
-                TaskPriority = "taktak",
+                TaskPriority = null,
                 TaskDueDate = TaskDueDate,
                 TaskStartDate = null,
                 //TaskCompletionDate = NewWorkTaskStartDate,

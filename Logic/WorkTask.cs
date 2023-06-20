@@ -1,5 +1,6 @@
 ﻿using Projekt_WPF_TODO_app.Logic.Base;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json.Serialization;
 
@@ -15,7 +16,10 @@ namespace Projekt_WPF_TODO_app
 
         [JsonPropertyName("category_id")]
         public int? CategoryId { get; set; }
-        
+
+        [JsonPropertyName("category")]
+        public string Category { get; set; }
+
         [JsonPropertyName("title")]
         public string? TaskTitle { get; set; }
 
@@ -23,8 +27,9 @@ namespace Projekt_WPF_TODO_app
         public string? TaskDescription { get; set; }
 
         [JsonPropertyName("priority")]
-        public string? TaskPriority { get; set; }
+        public string TaskPriority { get; set; }
 
+       
         [JsonPropertyName("due_date")]
         public DateTime? TaskDueDate { get; set; }
 
@@ -90,7 +95,14 @@ namespace Projekt_WPF_TODO_app
         public bool IsSelected { get; set; }
 
 
+        public List<string> PriorityOptions { get; set; }
 
+        public WorkTask()
+        {
+            // W konstruktorze lub metodzie inicjalizującej
+            PriorityOptions = new List<string> { "High", "Medium", "Low" };
+
+        }
         public override string ToString()
         {
             return $"Task Title: {TaskTitle}, Task Description: {TaskDescription}, TaskPriority: {TaskPriority}, TaskDueDate: {TaskDueDate} , TaskStartDate: {TaskStartDate}";
