@@ -7,7 +7,9 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Projekt_WPF_TODO_app
@@ -81,11 +83,11 @@ namespace Projekt_WPF_TODO_app
 
         private void AddSelectedTaskskToDoneList()
         {
-            /*foreach (var workTask in WorkTaskList)
+            foreach (var workTask in WorkTaskList)
             {
                 Console.WriteLine(workTask.ToString());
             }
-*/
+
             var selectedTasks = WorkTaskList.Where(x => x.IsSelected).ToList();
 
 
@@ -93,43 +95,31 @@ namespace Projekt_WPF_TODO_app
             {
                 task.IsTaskComplited = true;
                 Console.WriteLine(task.ToString());
-                /*    DoneTasks.Add(task);
-                    WorkTaskList.Remove(task);*/
+                task.TaskCompletionDate = DateTime.Now;
+                DoneTasks.Add(task);
+                WorkTaskList.Remove(task);
             }
+         
+
         }
 
-        public void Add()
+        public void AddTasksFromDataBase()
         {
-            string dateString = "23.05.2023 00:00:00";
-            string format = "dd.MM.yyyy HH:mm:ss";
-            DateTime TaskDueDate = DateTime.ParseExact(dateString, format, CultureInfo.InvariantCulture);
+         
+            ApiHelper apiHelper = new ApiHelper("http://kubpi.pythonanywhere.com");
+            string response = apiHelper.SendGetRequest("/user-tasks/1");
+            /*Console.WriteLine(response);*/
+            List<WorkTask> tasks = JsonSerializer.Deserialize<List<WorkTask>>(response);
 
-
-            var newTask = new WorkTask
+            foreach (WorkTask task in tasks)
             {
-                TaskTitle = "siemasiema",
-                TaskDescription = "dupa123",
-                TaskPriority = null,
-                TaskDueDate = TaskDueDate,
-                TaskStartDate = null,
-                //TaskCompletionDate = NewWorkTaskStartDate,
-            };
-            WorkTaskList.Add(newTask);
-
-            string dateString1 = "23.05.2023 00:00:00";
-            string format1 = "dd.MM.yyyy HH:mm:ss";
-            DateTime TaskDueDate1 = DateTime.ParseExact(dateString1, format1, CultureInfo.InvariantCulture);
-
-            var newTask1 = new WorkTask
-            {
-                TaskTitle = "siemasiema",
-                TaskDescription = "dupa123",
-                TaskPriority = null,
-                TaskDueDate = TaskDueDate,
-                TaskStartDate = null,
-                //TaskCompletionDate = NewWorkTaskStartDate,
-            };
-            WorkTaskList.Add(newTask1);
+                if (task.isTaskComplited == false)
+                {
+                    Console.WriteLine(task);
+                    WorkTaskList.Add(task);
+                }
+                
+            }
         }
 
         

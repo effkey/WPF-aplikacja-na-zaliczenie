@@ -33,17 +33,7 @@ namespace Projekt_WPF_TODO_app.Pages
             InitializeComponent();
             DataContext = workTask;
             this.mainWindow = mainWindow;
-
-            ApiHelper apiHelper = new ApiHelper("http://kubpi.pythonanywhere.com");
-            string response = apiHelper.SendGetRequest("/user-tasks/1");
-            /*Console.WriteLine(response);*/
-            List<WorkTask> tasks = JsonSerializer.Deserialize<List<WorkTask>>(response);
-            
-            foreach (WorkTask task in tasks)
-            {
-                Console.WriteLine(task);
-                workTask.WorkTaskList.Add(task);
-            }
+            workTask.AddTasksFromDataBase();
             //workTask.Add();
 
         }
@@ -103,10 +93,6 @@ namespace Projekt_WPF_TODO_app.Pages
         }
 
      
-
-       
-
-
         private void SetColumnReadOnly(bool isReadOnly)
         {
             // Ustaw wartość IsReadOnly dla odpowiednich kolumn

@@ -87,7 +87,22 @@ namespace Projekt_WPF_TODO_app
             }
         }
 
-    
+        [JsonPropertyName("completed")]
+        public bool isTaskComplited { get; set; }
+
+        public bool IsTaskComplited
+        {
+            get { return isTaskComplited; }
+            set
+            {
+                if (isTaskComplited != value)
+                {
+                    isTaskComplited = value;
+                    OnPropertyChanged(nameof(IsTaskComplited));
+                }
+            }
+        }
+  
         public bool IsSelected { get; set; }
 
 
@@ -99,25 +114,14 @@ namespace Projekt_WPF_TODO_app
             PriorityOptions = new List<string> { "High", "Medium", "Low" };
 
         }
-        public override string ToString()
+        /*public override string ToString()
         {
             return $"Task Id: {TaskId}, User Id: {UserId}, Category: {Category}, Task Title: {TaskTitle}, Task Description: {TaskDescription}, Task Priority: {TaskPriority}, Task Due Date: {FormattedDueDate}, Task Start Date: {FormattedStartDate}, Task Completion Date: {FormattedCompletionDate}, Is Task Completed: {IsTaskComplited}, Is Selected: {IsSelected}";
-        }
+        }*/
 
-        [JsonPropertyName("completed")]
-        private bool _isTaskComplited { get; set; }
-
-        public bool IsTaskComplited
+        public override string ToString()
         {
-            get { return _isTaskComplited; }
-            set
-            {
-                if (_isTaskComplited != value)
-                {
-                    _isTaskComplited = value;
-                    OnPropertyChanged(nameof(IsTaskComplited));
-                }
-            }
+            return $"Task Title: {TaskTitle}, Task Description: {TaskDescription}, Task Due Date: {FormattedDueDate}, Task Start Date: {FormattedStartDate}, Task Completion Date: {FormattedCompletionDate}, Is Task Completed: {IsTaskComplited}, Is Selected: {IsSelected}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

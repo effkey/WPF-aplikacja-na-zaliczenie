@@ -55,7 +55,7 @@
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
 
-                        <DataGridTemplateColumn  Header="Priority" IsReadOnly="True" Width="0.55*">
+                        <DataGridTemplateColumn  Header="Priority" SortMemberPath="TaskPriority" IsReadOnly="True" Width="0.55*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding TaskPriority}" />
@@ -67,9 +67,9 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>
-                        
-                        
-                        <DataGridTemplateColumn Header="Start date" IsReadOnly="True" Width="0.55*">
+
+
+                        <DataGridTemplateColumn Header="Start date" SortMemberPath="FormattedStartDate" IsReadOnly="True" Width="0.55*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding FormattedStartDate}" />
@@ -81,7 +81,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn >
-                        <DataGridTemplateColumn Header="Due date" IsReadOnly="True" Width="0.55*">
+                        <DataGridTemplateColumn Header="Due date" SortMemberPath="FormattedDueDate" IsReadOnly="True" Width="0.55*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding FormattedDueDate}" />
