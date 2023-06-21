@@ -77,7 +77,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                             <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
-                                    <xctk1:DateTimePicker Text="{Binding FormattedStartDate, Mode=TwoWay}" Format="Custom" FormatString="yyyy.MM.dd HH:mm" />
+                                    <xctk1:DateTimePicker Text="{Binding FormattedStartDate, Mode=TwoWay}" Format="Custom" FormatString="yyyy-MM-dd HH:mm" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn >
@@ -89,10 +89,11 @@
                             </DataGridTemplateColumn.CellTemplate>
                             <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
-                                    <xctk1:DateTimePicker Text="{Binding FormattedDueDate, Mode=TwoWay}" Format="Custom" FormatString="yyyy.MM.dd HH:mm" />
+                                    <xctk1:DateTimePicker Text="{Binding FormattedDueDate, Mode=TwoWay}" Format="Custom" FormatString="yyyy-MM-dd HH:mm"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Complited?" Binding="{Binding IsTaskComplited, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="0.55*"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 

@@ -1,21 +1,19 @@
 ﻿using Projekt_WPF_TODO_app.Logic.Base;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Projekt_WPF_TODO_app
 {
-    public class WorkTask : BaseViewModel
+    public class WorkTask : BaseViewModel, INotifyPropertyChanged
     {
-        [JsonPropertyName("task_id")]
+        [JsonPropertyName("id")]
         public int? TaskId { get; set; }
 
-        [JsonPropertyName("user_id")]
+        [JsonPropertyName("user")]
         public int? UserId { get; set; }
-
-        [JsonPropertyName("category_id")]
-        public int? CategoryId { get; set; }
 
         [JsonPropertyName("category")]
         public string Category { get; set; }
@@ -28,20 +26,19 @@ namespace Projekt_WPF_TODO_app
 
         [JsonPropertyName("priority")]
         public string TaskPriority { get; set; }
-
-       
+      
         [JsonPropertyName("due_date")]
         public DateTime? TaskDueDate { get; set; }
 
         [JsonIgnore]
         public string FormattedDueDate
         {
-            get { return TaskDueDate?.ToString("yyyy.MM.dd HH:mm"); }
+            get { return TaskDueDate?.ToString("yyyy-MM-dd HH:mm"); }
             set
             {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    TaskDueDate = DateTime.ParseExact(value, "yyyy.MM.dd HH:mm", CultureInfo.InvariantCulture);
+                    TaskDueDate = DateTime.ParseExact(value, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -56,12 +53,12 @@ namespace Projekt_WPF_TODO_app
         [JsonIgnore]
         public string FormattedStartDate
         {
-            get { return TaskStartDate?.ToString("yyyy.MM.dd HH:mm"); }
+            get { return TaskStartDate?.ToString("yyyy-MM-dd HH:mm"); }
             set
             {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    TaskStartDate = DateTime.ParseExact(value, "yyyy.MM.dd HH:mm", CultureInfo.InvariantCulture);
+                    TaskStartDate = DateTime.ParseExact(value, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -76,12 +73,12 @@ namespace Projekt_WPF_TODO_app
         [JsonIgnore]
         public string FormattedCompletionDate
         {
-            get { return TaskCompletionDate?.ToString("yyyy.MM.dd HH:mm"); }
+            get { return TaskCompletionDate?.ToString("yyyy-MM-dd HH:mm"); }
             set
             {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    TaskCompletionDate = DateTime.ParseExact(value, "yyyy.MM.dd HH:mm", CultureInfo.InvariantCulture);
+                    TaskCompletionDate = DateTime.ParseExact(value, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -90,8 +87,7 @@ namespace Projekt_WPF_TODO_app
             }
         }
 
-        [JsonPropertyName("completed")]
-        public bool? IsTaskComplited { get; set; }
+    
         public bool IsSelected { get; set; }
 
 
@@ -105,10 +101,31 @@ namespace Projekt_WPF_TODO_app
         }
         public override string ToString()
         {
-            return $"Task Title: {TaskTitle}, Task Description: {TaskDescription}, TaskPriority: {TaskPriority}, TaskDueDate: {TaskDueDate} , TaskStartDate: {TaskStartDate}";
+            return $"Task Id: {TaskId}, User Id: {UserId}, Category: {Category}, Task Title: {TaskTitle}, Task Description: {TaskDescription}, Task Priority: {TaskPriority}, Task Due Date: {FormattedDueDate}, Task Start Date: {FormattedStartDate}, Task Completion Date: {FormattedCompletionDate}, Is Task Completed: {IsTaskComplited}, Is Selected: {IsSelected}";
         }
 
+        [JsonPropertyName("completed")]
+        private bool _isTaskComplited { get; set; }
 
+        public bool IsTaskComplited
+        {
+            get { return _isTaskComplited; }
+            set
+            {
+                if (_isTaskComplited != value)
+                {
+                    _isTaskComplited = value;
+                    OnPropertyChanged(nameof(IsTaskComplited));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
     }
 }

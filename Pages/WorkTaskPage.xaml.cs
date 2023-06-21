@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projekt_WPF_TODO_app.Logic.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -6,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,7 +33,17 @@ namespace Projekt_WPF_TODO_app.Pages
             InitializeComponent();
             DataContext = workTask;
             this.mainWindow = mainWindow;
-        
+
+            ApiHelper apiHelper = new ApiHelper("http://kubpi.pythonanywhere.com");
+            string response = apiHelper.SendGetRequest("/user-tasks/1");
+            /*Console.WriteLine(response);*/
+            List<WorkTask> tasks = JsonSerializer.Deserialize<List<WorkTask>>(response);
+            
+            foreach (WorkTask task in tasks)
+            {
+                Console.WriteLine(task);
+                workTask.WorkTaskList.Add(task);
+            }
             //workTask.Add();
 
         }
@@ -56,23 +68,12 @@ namespace Projekt_WPF_TODO_app.Pages
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             // CheckBox został zaznaczony, odblokuj kolumny
-            SetColumnReadOnly(false);
-            SetDatePickerEnable(true);
+            SetColumnReadOnly(false);      
             dataGrid.CanUserAddRows = true;
 
         }
 
-        private void SetDatePickerEnable(bool isEnable)
-        {
-            var datePickers = FindVisualChildren<DatePicker>(dataGrid);
-            foreach (var datePicker in datePickers)
-            {
-                if (datePicker.Tag is string tag && tag == "datePicker")
-                {
-                    datePicker.IsEnabled = isEnable;
-                }
-            }
-        }
+ 
         private IEnumerable<T> FindVisualChildren<T>(DependencyObject dependencyObject) where T : DependencyObject
         {
             if (dependencyObject != null)
@@ -95,32 +96,15 @@ namespace Projekt_WPF_TODO_app.Pages
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             // CheckBox został odznaczony, zablokuj kolumny
-            SetColumnReadOnly(true);
-            SetDatePickerEnable(false);
+            SetColumnReadOnly(true);      
             dataGrid.CanUserAddRows = false;
 
 
         }
 
-        private bool isDueDateSortedAscending = true;
+     
 
-        private void SortByDueDate_Click(object sender, RoutedEventArgs e)
-        {
-            if (isDueDateSortedAscending)
-            {
-                dataGrid.Items.SortDescriptions.Clear();
-                dataGrid.Items.SortDescriptions.Add(new SortDescription("TaskDueDate", ListSortDirection.Descending));
-                SetDatePickerEnable(false);
-            }
-            else
-            {
-                dataGrid.Items.SortDescriptions.Clear();
-                dataGrid.Items.SortDescriptions.Add(new SortDescription("TaskDueDate", ListSortDirection.Ascending));
-                SetDatePickerEnable(false);
-            }
-            isDueDateSortedAscending = !isDueDateSortedAscending;
-            ;
-        }
+       
 
 
         private void SetColumnReadOnly(bool isReadOnly)
@@ -128,7 +112,7 @@ namespace Projekt_WPF_TODO_app.Pages
             // Ustaw wartość IsReadOnly dla odpowiednich kolumn
             // Przyjmując, że pierwsza kolumna to DataGridTemplateColumn (CheckBox), indeksy są przesunięte o 1
             var columnCount = dataGrid.Columns.Count;
-            for (int i = 1; i < columnCount; i++)
+            for (int i = 1; i < columnCount-1; i++)
             {
                 var column = dataGrid.Columns[i];
                 column.IsReadOnly = isReadOnly;

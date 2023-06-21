@@ -1,4 +1,5 @@
-﻿using Projekt_WPF_TODO_app.Logic.Base;
+﻿using Projekt_WPF_TODO_app.Controls;
+using Projekt_WPF_TODO_app.Logic.Base;
 using Projekt_WPF_TODO_app.Logic.Helpers;
 using System;
 using System.Collections.Generic;
@@ -80,18 +81,20 @@ namespace Projekt_WPF_TODO_app
 
         private void AddSelectedTaskskToDoneList()
         {
-            foreach (var workTask in WorkTaskList)
+            /*foreach (var workTask in WorkTaskList)
             {
                 Console.WriteLine(workTask.ToString());
             }
-
+*/
             var selectedTasks = WorkTaskList.Where(x => x.IsSelected).ToList();
+
 
             foreach (var task in selectedTasks)
             {
-                task.IsSelected = true;
-                DoneTasks.Add(task);
-                WorkTaskList.Remove(task);
+                task.IsTaskComplited = true;
+                Console.WriteLine(task.ToString());
+                /*    DoneTasks.Add(task);
+                    WorkTaskList.Remove(task);*/
             }
         }
 

@@ -54,9 +54,11 @@ namespace Projekt_WPF_TODO_app.Logic
         {
             var session = new
             {
-                deserializedResponseData.Username,
-                deserializedResponseData.Token,
+                username = Username,
+                token = deserializedResponseData.Token,
+                userid = deserializedResponseData.UserId,
             };
+            Console.WriteLine(session);
             string sessionInJsonFormat = JsonSerializer.Serialize(session);
             File.WriteAllText("session.json", sessionInJsonFormat);
         }
