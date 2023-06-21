@@ -36,6 +36,23 @@ namespace Projekt_WPF_TODO_app
             {
                 ChangeIntoWorkTaskPage();
             }
+            ((LogIn)DataContext).LogInCompleted += ShowMassageBoxAfterLogIn;
+        }
+
+        private void ShowMassageBoxAfterLogIn(object? sender, bool success)
+        {
+
+            LogIn loginviewModel = (LogIn)DataContext;
+
+            if (loginviewModel.IsLogInSuccess)
+            {
+                MessageBox.Show("Pomyślnie zalogowano.", "Logowanie", MessageBoxButton.OK, MessageBoxImage.Information);
+                ChangeIntoWorkTaskPage();
+            }
+            else
+            {
+                MessageBox.Show(loginviewModel.ErrorResponse, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void SignIn_Button_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -44,11 +61,11 @@ namespace Projekt_WPF_TODO_app
             window.ShowDialog();
         }
 
-        private void LogIn_Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            LogInWindow window = new LogInWindow(login, mainwindow);
-            window.ShowDialog();
-        }
+        //private void LogIn_Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        //{
+        //    LogInWindow window = new LogInWindow(login, mainwindow);
+        //    window.ShowDialog();
+        //}
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
             ResetPasswordWindow window = new ResetPasswordWindow(login, mainwindow);
@@ -60,20 +77,20 @@ namespace Projekt_WPF_TODO_app
             this.Content = new WorkTaskPage(mainwindow);
         }
 
-        private void textEmail_MouseDown(object sender, MouseButtonEventArgs e)
+        private void textNick_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            inputEmail.Focus();
+            inputNick.Focus();
         }
 
-        private void inputEmail_TextChanged(object sender, TextChangedEventArgs e)
+        private void inputNick_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(!string.IsNullOrEmpty(inputEmail.Text) && inputEmail.Text.Length > 0)
+            if(!string.IsNullOrEmpty(inputNick.Text) && inputNick.Text.Length > 0)
             {
-                textEmail.Visibility = Visibility.Collapsed;
+                textNick.Visibility = Visibility.Collapsed;
             }
             else
             {
-                textEmail.Visibility = Visibility.Visible;
+                textNick.Visibility = Visibility.Visible;
             }
         }
 
@@ -104,7 +121,7 @@ namespace Projekt_WPF_TODO_app
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
-            if(!string.IsNullOrEmpty(inputEmail.Text) && !string.IsNullOrEmpty(inputPassword.Password))
+            if(!string.IsNullOrEmpty(inputNick.Text) && !string.IsNullOrEmpty(inputPassword.Password))
             {
                 MessageBox.Show("Pomyślnie zalogowano");
             }

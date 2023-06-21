@@ -38,7 +38,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock Text="Rejestracja konta" Style="{StaticResource titleText}"></TextBlock>
                     <TextBlock Text="Wpisz swoje dane i stwórz nowe konto by się połączyć" Style="{StaticResource normalText}" Opacity="0.8" Margin="20 30"></TextBlock>
-                    <Button Content="Zarejestruj się" Style="{StaticResource button}"/>
+                    <Button Content="Zarejestruj się" Style="{StaticResource button}" Click="SignIn_Button_Click"/>
                 </StackPanel>
                 
             </Grid>
@@ -65,8 +65,8 @@
                         </Grid.ColumnDefinitions>
 
                         <!--<Image Source="/Images/Email.png" Height="20"/> --><!-- dodać ikonki -->
-                        <TextBlock x:Name="textEmail" MouseDown="textEmail_MouseDown" Text="Email" Style="{StaticResource textHint}"/>
-                        <TextBox Text="{Binding Username}" x:Name="inputEmail" TextChanged="inputEmail_TextChanged" Style="{StaticResource textBox}"/>
+                        <TextBlock x:Name="textNick" MouseDown="textNick_MouseDown" Text="Nick" Style="{StaticResource textHint}"/>
+                        <TextBox Text="{Binding Username}" x:Name="inputNick" TextChanged="inputNick_TextChanged" Style="{StaticResource textBox}"/>
                     </Grid>
                 </Border>
 

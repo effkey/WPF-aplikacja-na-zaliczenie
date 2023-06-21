@@ -48,21 +48,74 @@ namespace Projekt_WPF_TODO_app.Windows
 
         private void ShowPassword_Checked(object sender, RoutedEventArgs e)
         {
-            TxtBox.Text = passwordTextBox.Password;
-            TxtBox1.Text = passwordTextBox1.Password;
-            passwordTextBox.Visibility = Visibility.Collapsed;
-            passwordTextBox1.Visibility = Visibility.Collapsed;
-            TxtBox.Visibility = Visibility.Visible;
-            TxtBox1.Visibility = Visibility.Visible;
+            textPassword.Text = inputPassword.Password;
+            textPasswordRepeat.Text = inputPasswordRepeat.Password;
+            inputPassword.Visibility = Visibility.Collapsed;
+            inputPasswordRepeat.Visibility = Visibility.Collapsed;
+            textPassword.Visibility = Visibility.Visible;
+            textPasswordRepeat.Visibility = Visibility.Visible;
         }
         private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
         {
-            passwordTextBox.Password = TxtBox.Text;
-            passwordTextBox1.Password = TxtBox1.Text;
-            passwordTextBox.Visibility = Visibility.Visible;
-            passwordTextBox1.Visibility = Visibility.Visible;
-            TxtBox.Visibility = Visibility.Collapsed;
-            TxtBox1.Visibility = Visibility.Collapsed;
+            inputPassword.Password = textPassword.Text;
+            inputPasswordRepeat.Password = textPasswordRepeat.Text;
+            inputPassword.Visibility = Visibility.Visible;
+            inputPasswordRepeat.Visibility = Visibility.Visible;
+            textPassword.Visibility = Visibility.Collapsed;
+            textPasswordRepeat.Visibility = Visibility.Collapsed;
+        }
+
+        private void textNick_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            inputNick.Focus();
+        }
+
+        private void inputNick_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(inputNick.Text) && inputNick.Text.Length > 0)
+            {
+                textNick.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                textNick.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void textEmail_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            inputEmail.Focus();
+        }
+
+        private void inputEmail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(inputEmail.Text) && inputEmail.Text.Length > 0)
+            {
+                textEmail.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                textEmail.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
+
+        private void textPassword_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            inputPassword.Focus();
+        }
+
+        private void Image_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Console.WriteLine("blabla");
+            this.Close();
         }
     }
 }

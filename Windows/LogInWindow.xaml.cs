@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+// To już raczej niepotrzebne, można potem wywalić!!
 namespace Projekt_WPF_TODO_app.Windows
 {
     /// <summary>
