@@ -32,6 +32,7 @@
             <MenuItem FontSize="15" Header="Ustawienia" HorizontalAlignment="Left" >
                 <MenuItem FontSize="12" Header="Wyloguj się" HorizontalAlignment="Right" Click="Logout_click"/>
             </MenuItem>
+           
         </Menu>
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -54,7 +55,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-
+                        <DataGridTextColumn Header="Category" Binding="{Binding Category}" IsReadOnly="True" Width="0.55*"/>
                         <DataGridTemplateColumn  Header="Priority" SortMemberPath="TaskPriority" IsReadOnly="True" Width="0.55*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -67,8 +68,6 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>
-
-
                         <DataGridTemplateColumn Header="Start date" SortMemberPath="FormattedStartDate" IsReadOnly="True" Width="0.55*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -77,7 +76,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                             <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
-                                    <xctk1:DateTimePicker Text="{Binding FormattedStartDate, Mode=TwoWay}" Format="Custom" FormatString="yyyy-MM-dd HH:mm" />
+                                    <xctk1:DateTimePicker Text="{Binding FormattedStartDate, Mode=TwoWay}" Minimum="{x:Static sys:DateTime.Now}" Format="Custom" FormatString="yyyy-MM-dd HH:mm" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn >
@@ -89,11 +88,13 @@
                             </DataGridTemplateColumn.CellTemplate>
                             <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
-                                    <xctk1:DateTimePicker Text="{Binding FormattedDueDate, Mode=TwoWay}" Format="Custom" FormatString="yyyy-MM-dd HH:mm"/>
+                                    <xctk1:DateTimePicker Text="{Binding FormattedDueDate, Mode=TwoWay}" Minimum="{x:Static sys:DateTime.Now}" Format="Custom" FormatString="yyyy-MM-dd HH:mm"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Header="Complited?" Binding="{Binding IsTaskComplited, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="0.55*"/>
+                        <DataGridTextColumn x:Name="completionDate" Header="Completion Date" Visibility="Hidden" Binding="{Binding FormattedCompletionDate, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="0.55*"/>
+
                     </DataGrid.Columns>
                 </DataGrid>
                 
@@ -101,11 +102,11 @@
 
            
             <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding AddNewTaskCommand}" Content="Dodaj" />
                 <Button Command="{Binding DeleteSelectedTasksCommend}" Content="Usun" />
                 <Button Command="{Binding AddSelectedTaskskToDoneListCommend}" Content="Przenieś do tasków ukończonych" />
-              
-                <CheckBox Content="Dodaj task / edytuj task" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
+
+                <CheckBox x:Name="addEndEnableEditTask_checkbox" Content="Dodaj task / edytuj task" Checked="AddEndEnableEditTask_Checked" Unchecked="AddEndEnableEditTask_UnChecked" />
+                <CheckBox x:Name="compitedTasks_checkbox" Content="Pokaż taski ukończone" Checked="ShowComplitedTasks_Checked" Unchecked="ShowComplitedTasks_UnChecked" />
             </StackPanel>
         </StackPanel>
        

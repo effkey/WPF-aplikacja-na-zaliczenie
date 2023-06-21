@@ -34,19 +34,10 @@ namespace Projekt_WPF_TODO_app.Pages
             DataContext = workTask;
             this.mainWindow = mainWindow;
             workTask.AddTasksFromDataBase();
+
             //workTask.Add();
 
         }
-
-        private void Logout_click(object sender, RoutedEventArgs e)
-        {
-            if(MessageBox.Show("Czy na pewno chcesz się wylogować?", "Log Out", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                File.Delete("session.json");
-                RestartApplication();
-            }
-        }
-
         private void RestartApplication()
         {
             string? appPath = Environment.ProcessPath;
@@ -54,16 +45,34 @@ namespace Projekt_WPF_TODO_app.Pages
             Console.WriteLine("Wykonalem sie");
             Application.Current.Shutdown();
         }
-
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        private void AddEndEnableEditTask_Checked(object sender, RoutedEventArgs e)
         {
             // CheckBox został zaznaczony, odblokuj kolumny
             SetColumnReadOnly(false);      
             dataGrid.CanUserAddRows = true;
-
+            dataGrid.ItemsSource = workTask.WorkTaskList;
+            compitedTasks_checkbox.IsChecked = false;
+            dataGrid.Columns[7].IsReadOnly = true;
         }
-
- 
+        private void AddEndEnableEditTask_UnChecked(object sender, RoutedEventArgs e)
+        {
+            // CheckBox został odznaczony, zablokuj kolumny
+            SetColumnReadOnly(true);
+            dataGrid.CanUserAddRows = false;
+            dataGrid.ItemsSource = workTask.WorkTaskList;
+            compitedTasks_checkbox.IsChecked = false;
+        }
+        private void ShowComplitedTasks_Checked(object sender, RoutedEventArgs e)
+        {
+            dataGrid.ItemsSource = workTask.DoneTasks;
+            completionDate.Visibility = Visibility.Visible;
+            SetColumnReadOnly(true);        
+        }
+        private void ShowComplitedTasks_UnChecked(object sender, RoutedEventArgs e)
+        {
+            dataGrid.ItemsSource = workTask.WorkTaskList;
+            completionDate.Visibility = Visibility.Hidden;
+        }
         private IEnumerable<T> FindVisualChildren<T>(DependencyObject dependencyObject) where T : DependencyObject
         {
             if (dependencyObject != null)
@@ -83,29 +92,29 @@ namespace Projekt_WPF_TODO_app.Pages
                 }
             }
         }
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            // CheckBox został odznaczony, zablokuj kolumny
-            SetColumnReadOnly(true);      
-            dataGrid.CanUserAddRows = false;
-
-
-        }
-
-     
         private void SetColumnReadOnly(bool isReadOnly)
         {
             // Ustaw wartość IsReadOnly dla odpowiednich kolumn
             // Przyjmując, że pierwsza kolumna to DataGridTemplateColumn (CheckBox), indeksy są przesunięte o 1
             var columnCount = dataGrid.Columns.Count;
-            for (int i = 1; i < columnCount-1; i++)
+            for (int i = 1; i < columnCount; i++)
             {
+                
                 var column = dataGrid.Columns[i];
                 column.IsReadOnly = isReadOnly;
             }
 
-        }
+           
 
+        }
+        private void Logout_click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Czy na pewno chcesz się wylogować?", "Log Out", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                File.Delete("session.json");
+                RestartApplication();
+            }
+        }
 
 
 
