@@ -30,6 +30,14 @@ namespace Projekt_WPF_TODO_app.Components
         public static readonly DependencyProperty PasswordProperty =
             DependencyProperty.Register("Password", typeof(string), typeof(BindAblePasswordBox), new PropertyMetadata(string.Empty));
 
+        public TextBlock TextPassword
+        {
+            get { return (TextBlock)GetValue(TextPasswordProperty); }
+            set { SetValue(TextPasswordProperty, value); }
+        }
+
+        public static readonly DependencyProperty TextPasswordProperty =
+            DependencyProperty.Register("TextPassword", typeof(TextBlock), typeof(BindAblePasswordBox), new PropertyMetadata(null));
 
         public BindAblePasswordBox()
         {
@@ -39,6 +47,14 @@ namespace Projekt_WPF_TODO_app.Components
         private void PasswordBox_PasswordChnged(object sender, RoutedEventArgs e)
         {
             Password = passwordBox.Password;
+            if (!string.IsNullOrEmpty(passwordBox.Password) && passwordBox.Password.Length > 0)
+            {
+                TextPassword.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                TextPassword.Visibility = Visibility.Visible;
+            }
         }
     }
 }
