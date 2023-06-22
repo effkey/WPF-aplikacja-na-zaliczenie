@@ -26,17 +26,20 @@ namespace Projekt_WPF_TODO_app
     {
         MainWindow mainwindow;
         User user = new User();
-        
+        LogIn login;
 
         public MainWindow()
         {
             InitializeComponent();
+            login = new LogIn(user, this);
             mainwindow = this;
-            //if (login.ReadLogInSession())
-            //{
-            //    ChangeIntoWorkTaskPage();
-            //}
-            //((LogIn)DataContext).LogInCompleted += ShowMassageBoxAfterLogIn;
+            DataContext = login;
+
+            if (login.ReadLogInSession())
+            {
+                ChangeIntoWorkTaskPage();
+            }
+            ((LogIn)DataContext).LogInCompleted += ShowMassageBoxAfterLogIn;
         }
 
         private void ShowMassageBoxAfterLogIn(object? sender, bool success)

@@ -3,14 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Projekt_WPF_TODO_app.Logic" 
+       xmlns:local="clr-namespace:Projekt_WPF_TODO_app.Windows"
         xmlns:Components="clr-namespace:Projekt_WPF_TODO_app.Components"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
         Background="Transparent"
         Title="TodoApp" Height="500" Width="800" MinWidth="1000">
-    <Window.DataContext>
-        <local:User/>
-    </Window.DataContext>
+ 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -66,7 +64,7 @@
 
                         <!--<Image Source="/Images/Email.png" Height="20"/> --><!-- dodać ikonki -->
                         <TextBlock x:Name="textNick" MouseDown="textNick_MouseDown" Text="Nick" Style="{StaticResource textHint}"/>
-                        <TextBox Text="{Binding Username}" x:Name="inputNick" TextChanged="inputNick_TextChanged" Style="{StaticResource textBox}"/>
+                        <TextBox Text="{Binding NewUserName}" x:Name="inputNick" TextChanged="inputNick_TextChanged" Style="{StaticResource textBox}"/>
                     </Grid>
                 </Border>
 
@@ -81,7 +79,7 @@
                         <!-- dodać ikonki -->
                         <TextBlock x:Name="textPassword" MouseDown="textPassword_MouseDown" Text="Hasło" Style="{StaticResource textHint}"/>
                         <!--<PasswordBox PasswordChanged="inputPassword_PasswordChanged" x:Name="inputPassword" Style="{StaticResource textBox}"/>-->
-                        <Components:BindAblePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" x:Name="inputPassword" TextPassword="{Binding ElementName=textPassword}"/>
+                        <Components:BindAblePasswordBox Password="{Binding NewUserPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" x:Name="inputPassword" TextPassword="{Binding ElementName=textPassword}"/>
                         <!--<TextBox Text="{Binding Password}" Name="TxtBox" Visibility="Collapsed"/>-->
                     </Grid>
                 </Border>
