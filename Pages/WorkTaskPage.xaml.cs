@@ -27,7 +27,7 @@ namespace Projekt_WPF_TODO_app.Pages
     /// <summary>
     /// Interaction logic for WorkTaskPage.xaml
     /// </summary>
-    public partial class WorkTaskPage : Page
+    public partial class WorkTaskPage : Window
     {
         MainWindow mainWindow;
        
@@ -126,14 +126,14 @@ namespace Projekt_WPF_TODO_app.Pages
            
 
         }
-        private void Logout_click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Czy na pewno chcesz się wylogować?", "Log Out", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                File.Delete("session.json");
-                RestartApplication();
-            }
-        }
+        //private void Logout_click(object sender, RoutedEventArgs e)
+        //{
+        //    if (MessageBox.Show("Czy na pewno chcesz się wylogować?", "Log Out", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+        //    {
+        //        File.Delete("session.json");
+        //        RestartApplication();
+        //    }
+        //}
 
         private void openSubtaskWindow(object sender, RoutedEventArgs e)
         {
@@ -171,13 +171,13 @@ namespace Projekt_WPF_TODO_app.Pages
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //if (e.ChangedButton == MouseButton.Left)
-            //{
-            //    this.DragMove();
-            //}
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
         }
 
-        private void Image_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Image_MouseUp_Close(object sender, MouseButtonEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Czy na pewno chcesz wyjść?", "Potwierdzenie", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
@@ -187,6 +187,15 @@ namespace Projekt_WPF_TODO_app.Pages
             else if (result == MessageBoxResult.No)
             {
 
+            }
+        }
+
+        private void Image_MouseUp_Logout(object sender, MouseButtonEventArgs e)
+        {
+            if (MessageBox.Show("Czy na pewno chcesz się wylogować?", "Log Out", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                File.Delete("session.json");
+                RestartApplication();
             }
         }
     }

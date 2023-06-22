@@ -77,18 +77,21 @@ namespace Projekt_WPF_TODO_app
         }
 
         public void ChangeIntoWorkTaskPage()
-        {           
-            this.Content = new WorkTaskPage(mainwindow, user.UserId);
+        {
+
+            WorkTaskPage worktaskpageWindow = new WorkTaskPage(mainwindow, user.UserId);
+            this.Close();
+            worktaskpageWindow.ShowDialog();
         }
 
-       /* public void UserLogged()
-        {
-            LogIn loginn = new LogIn(user);
-            if (loginn.ReadLogInSession())
-            {
-                ChangeIntoWorkTaskPage();
-            }
-        }*/
+        /* public void UserLogged()
+         {
+             LogIn loginn = new LogIn(user);
+             if (loginn.ReadLogInSession())
+             {
+                 ChangeIntoWorkTaskPage();
+             }
+         }*/
 
         private void textNick_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -151,6 +154,13 @@ namespace Projekt_WPF_TODO_app
             {
 
             }
+        }
+
+        private void textPassword_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Console.WriteLine("Sdadasda");
+            //e.Handled = true; // Zatrzymuje propagację zdarzenia do BindAblePasswordBox
+            inputPassword.Focus();
         }
     }
 }

@@ -112,6 +112,23 @@
             </Style.Triggers>
         </Style>
 
+        <Style x:Key="imgCloseLeft" TargetType="Image">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="0 13 13 0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="1.1" ScaleY="1.1"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <!--<Style x:Key="buttonCircle" TargetType="Button">    to narazie chyba niepotrzebne bo było do ikonek społecznościowych
             --><!-- styl dla circle buttona w logowaniu --><!--
             <Setter Property="Background" Value="Transparent"/>
