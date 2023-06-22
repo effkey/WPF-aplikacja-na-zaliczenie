@@ -84,10 +84,10 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.04*"/>
-                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="0.04*"/>
                 </Grid.ColumnDefinitions>
 
-                <CheckBox FontSize="14" Name="revealModeCheckBox" Grid.Column="0" HorizontalAlignment="Center" VerticalContentAlignment="Center" Unchecked="ShowPassword_Unchecked" Checked="ShowPassword_Checked" Foreground="#3AB19B" BorderBrush="#acb0af">Pokaż hasło</CheckBox>
+                <CheckBox FontSize="14" Name="revealModeCheckBox" Grid.Column="0" HorizontalAlignment="Center" Margin="0 0 150 0" VerticalContentAlignment="Center" Unchecked="ShowPassword_Unchecked" Checked="ShowPassword_Checked" Foreground="#3AB19B" BorderBrush="#acb0af">Pokaż hasło</CheckBox>
                 <Button Command="{Binding SignInCommend}" Name="signButton" Content="Zarejestruj się" Style="{StaticResource mainButton}" Grid.Column="1"/>
 
             </Grid>
