@@ -14,16 +14,6 @@
         <Border Background="#ffffff" CornerRadius="10 10 10 10" MouseDown="Border_MouseDown">
 
             <Grid>
-                <!--<Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>-->
-
                 <!-- ikonka zamykania -->
                 <Image Source="/Images/close.png" Panel.ZIndex="1" MouseUp="Image_MouseUp" Style="{StaticResource imgClose}"/>
 
