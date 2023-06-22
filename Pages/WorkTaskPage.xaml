@@ -6,126 +6,146 @@
       xmlns:local="clr-namespace:Projekt_WPF_TODO_app.Controls" xmlns:local1="clr-namespace:Projekt_WPF_TODO_app.Logic.Helpers"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:xctk1="http://schemas.xceed.com/wpf/xaml/toolkit"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      mc:Ignorable="d"
       Title="WorkTaskPage">
-
-    
-
-  
-
+    <!--d:DesignHeight="450" d:DesignWidth="800"-->
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Menu Grid.Row="0" Grid.Column="0" DockPanel.Dock="Top" Padding="5" Background="#FFA9D1F4">
-            <Menu.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <DockPanel HorizontalAlignment="Stretch"/>
-                </ItemsPanelTemplate>
-            </Menu.ItemsPanel>
-            <MenuItem FontSize="15" Header="Ustawienia" HorizontalAlignment="Left" >
-                <MenuItem FontSize="12" Header="Wyloguj się" HorizontalAlignment="Right" Click="Logout_click"/>
-            </MenuItem>
-           
-        </Menu>
 
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="dupa" />
-            <ScrollViewer Height="300">
+        <Border Background="#ffffff" CornerRadius="10 10 10 10" MouseDown="Border_MouseDown">
 
-                <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding WorkTaskList}" Margin="10" CanUserAddRows="False" MaxWidth="1100" SelectionUnit="FullRow" SelectedCellsChanged="dataGrid_SelectedCellsChanged">
-                    <DataGrid.Columns>
-                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" >
-                            <DataGridCheckBoxColumn.ElementStyle>
-                                <Style TargetType="CheckBox"/>
-                            </DataGridCheckBoxColumn.ElementStyle>
-                        </DataGridCheckBoxColumn>
-                        <DataGridTextColumn Header="Title" Binding="{Binding TaskTitle}" IsReadOnly="True" Width="0.55*"/>
-                        <DataGridTextColumn Header="Description" Binding="{Binding TaskDescription}" IsReadOnly="True" Width="*">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style>
-                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="Category" Binding="{Binding Category}" IsReadOnly="True" Width="0.55*"/>
-                        <DataGridTemplateColumn  Header="Priority" SortMemberPath="TaskPriority" IsReadOnly="True" Width="0.55*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding TaskPriority}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                            <DataGridTemplateColumn.CellEditingTemplate>
-                                <DataTemplate>
-                                    <ComboBox ItemsSource="{Binding PriorityOptions}" SelectedItem="{Binding TaskPriority}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellEditingTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Start date" SortMemberPath="FormattedStartDate" IsReadOnly="True" Width="0.55*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding FormattedStartDate}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                            <DataGridTemplateColumn.CellEditingTemplate>
-                                <DataTemplate>
-                                    <xctk1:DateTimePicker Text="{Binding FormattedStartDate, Mode=TwoWay}" Minimum="{x:Static sys:DateTime.Now}" Format="Custom" FormatString="yyyy-MM-dd HH:mm" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellEditingTemplate>
-                        </DataGridTemplateColumn >
-                        <DataGridTemplateColumn Header="Due date" SortMemberPath="FormattedDueDate" IsReadOnly="True" Width="0.55*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding FormattedDueDate}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                            <DataGridTemplateColumn.CellEditingTemplate>
-                                <DataTemplate>
-                                    <xctk1:DateTimePicker Text="{Binding FormattedDueDate, Mode=TwoWay}" Minimum="{x:Static sys:DateTime.Now}" Format="Custom" FormatString="yyyy-MM-dd HH:mm"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellEditingTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Complited?" Binding="{Binding IsTaskComplited, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="0.55*"/>
-                        <DataGridTextColumn x:Name="completionDate" Header="Completion Date" Visibility="Hidden" Binding="{Binding FormattedCompletionDate, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="0.55*"/>
-
-                        <DataGridTemplateColumn Visibility="Hidden" x:Name="SubtaskTemplate1"   Header="Subtasks" IsReadOnly="True" Width="0.55*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="buttonToShowSubtasks" Content="Check subtasks!" Click="openSubtaskWindow" IsEnabled="False"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-
-                        </DataGridTemplateColumn>
-
-                        <DataGridTemplateColumn Visibility="Visible" x:Name="SubtaskTemplate" Header="Subtasks" IsReadOnly="True" Width="0.55*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="buttonToShowSubtasks" Content="Check subtasks!" Click="openSubtaskWindow"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                     
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+            <Grid>
+                <!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 
-            </ScrollViewer>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>-->
 
-           
-            <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding DeleteSelectedTasksCommend}" Content="Usun" />
-                <Button Command="{Binding AddSelectedTaskskToDoneListCommend}" Content="Przenieś do tasków ukończonych" />
+                <!-- ikonka zamykania -->
+                <Image Source="/Images/close.png" Panel.ZIndex="1" MouseUp="Image_MouseUp" Style="{StaticResource imgClose}"/>
 
-                <CheckBox x:Name="addEndEnableEditTask_checkbox" Content="Dodaj task / edytuj task" Checked="AddEndEnableEditTask_Checked" Unchecked="AddEndEnableEditTask_UnChecked" />
-                <CheckBox x:Name="compitedTasks_checkbox" Content="Pokaż taski ukończone" Checked="ShowComplitedTasks_Checked" Unchecked="ShowComplitedTasks_UnChecked" />
-            </StackPanel>
-        </StackPanel>
-       
+                <StackPanel>
+                    <Menu DockPanel.Dock="Top" Padding="10" Margin="0 0 0 10" Background="#3AB19B">
+                        <Menu.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <DockPanel HorizontalAlignment="Stretch"/>
+                            </ItemsPanelTemplate>
+                        </Menu.ItemsPanel>
+                        <MenuItem FontSize="15" Foreground="#ffffff" Header="Ustawienia" HorizontalAlignment="Left" >
+                            <MenuItem FontSize="12" Header="Wyloguj się" HorizontalAlignment="Right" Click="Logout_click" Foreground="Black"/>
+                        </MenuItem>
+                    </Menu>
+
+                    <TextBlock Text="Lista zadań" Style="{StaticResource titleText}" Foreground="#3AB19B"/>
+
+                    <ScrollViewer Height="300" HorizontalAlignment="Center" Margin="0 0 20 0">
+
+                        <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" Background="#b5ded6" ItemsSource="{Binding WorkTaskList}" Margin="20 20 10 20" CanUserAddRows="False" MaxWidth="1100" SelectionUnit="FullRow" SelectedCellsChanged="dataGrid_SelectedCellsChanged">
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" >
+                                    <DataGridCheckBoxColumn.ElementStyle>
+                                        <Style TargetType="CheckBox"/>
+                                    </DataGridCheckBoxColumn.ElementStyle>
+                                </DataGridCheckBoxColumn>
+                                <DataGridTextColumn Header="Tytuł" Binding="{Binding TaskTitle}" IsReadOnly="True" Width="0.55*"/>
+                                <DataGridTextColumn Header="Opis" Binding="{Binding TaskDescription}" IsReadOnly="True" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                            <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Kategoria" Binding="{Binding Category}" IsReadOnly="True" Width="0.55*"/>
+                                <DataGridTemplateColumn  Header="Priorytet" SortMemberPath="TaskPriority" IsReadOnly="True" Width="0.55*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding TaskPriority}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding PriorityOptions}" SelectedItem="{Binding TaskPriority}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Data rozpoczęcia" SortMemberPath="FormattedStartDate" IsReadOnly="True" Width="0.55*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding FormattedStartDate}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <xctk1:DateTimePicker Text="{Binding FormattedStartDate, Mode=TwoWay}" Minimum="{x:Static sys:DateTime.Now}" Format="Custom" FormatString="yyyy-MM-dd HH:mm" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn >
+                                <DataGridTemplateColumn Header="Data zakończenia" SortMemberPath="FormattedDueDate" IsReadOnly="True" Width="0.55*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding FormattedDueDate}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <xctk1:DateTimePicker Text="{Binding FormattedDueDate, Mode=TwoWay}" Minimum="{x:Static sys:DateTime.Now}" Format="Custom" FormatString="yyyy-MM-dd HH:mm"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Status ukończenia" Binding="{Binding IsTaskComplited, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="0.55*"/>
+                                <DataGridTextColumn x:Name="completionDate" Header="Data ukończenia" Visibility="Hidden" Binding="{Binding FormattedCompletionDate, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="0.55*"/>
+
+                                <DataGridTemplateColumn Visibility="Hidden" x:Name="SubtaskTemplate1"   Header="Podzadania" IsReadOnly="True" Width="0.55*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="buttonToShowSubtasks" Content="Check subtasks!" Click="openSubtaskWindow" IsEnabled="False"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Visibility="Visible" x:Name="SubtaskTemplate" Header="Podzadania" IsReadOnly="True" Width="0.55*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="buttonToShowSubtasks" Content="Check subtasks!" Click="openSubtaskWindow"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+
+                    <Grid>
+                        <!-- grid dla opcji niżej -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Edytuj zaznaczone:" Style="{StaticResource normalText}" Foreground="#878787" Grid.Column="0" Grid.Row="0"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1">
+                            <Button Command="{Binding DeleteSelectedTasksCommend}" Content="Usuń taski" Style="{StaticResource mainButton}" Margin="0 0 0 10"/>
+                            <Button Command="{Binding AddSelectedTaskskToDoneListCommend}" Content="Ukończ taski" Style="{StaticResource mainButton}" Margin="10 0 0 10"/>
+                        </StackPanel>
+
+                        <TextBlock Text="Opcje:" Style="{StaticResource normalText}" Foreground="#878787" Grid.Column="1" Grid.Row="0"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
+                            <CheckBox x:Name="addEndEnableEditTask_checkbox" Content="Dodaj task / edytuj task" Checked="AddEndEnableEditTask_Checked" Unchecked="AddEndEnableEditTask_UnChecked" Margin="0 0 0 10" Foreground="#3AB19B" BorderBrush="#acb0af"/>
+                            <CheckBox x:Name="compitedTasks_checkbox" Content="Pokaż taski ukończone" Checked="ShowComplitedTasks_Checked" Unchecked="ShowComplitedTasks_UnChecked" Margin="10 0 0 0" Foreground="#3AB19B" BorderBrush="#acb0af"/>
+                        </StackPanel>
+
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Page>
