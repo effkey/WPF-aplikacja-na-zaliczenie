@@ -89,7 +89,7 @@
                 <Button Command="{Binding LogInCommand}" Name="loginButton" Content="Zaloguj się" Style="{StaticResource mainButton}"/>
 
                 <TextBlock Style="{StaticResource normalText}" Foreground="#878787" Margin="0 10 0 15"> <!-- złącze do odzyskiwania hasła -->
-                    <Hyperlink FontSize="16"  Click="ForgotPassword_Click">Zapomniałeś hasło?</Hyperlink>
+                    <Hyperlink FontSize="16"  Click="ForgotPassword_Click">Nie pamiętasz hasła?</Hyperlink>
                 </TextBlock>
 
             </StackPanel>

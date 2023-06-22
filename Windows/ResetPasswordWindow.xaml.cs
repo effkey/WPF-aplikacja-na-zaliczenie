@@ -58,7 +58,6 @@ namespace Projekt_WPF_TODO_app.Windows
 
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Console.WriteLine("blabla");
             this.Close();
         }
 

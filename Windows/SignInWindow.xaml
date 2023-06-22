@@ -10,15 +10,17 @@
     <Window.DataContext>
         <local:SignIn/>
     </Window.DataContext>
-    
-    <Border Background="#ffffff" CornerRadius="10 10 10 10" MouseDown="Border_MouseDown">
-        <StackPanel VerticalAlignment="Center">
-            <!-- ikonka zamykania -->
-                <Image Source="/Images/close.png" MouseUp="Image_MouseUp" Style="{StaticResource imgClose}"/>
 
+    <Grid>
+        <!-- musi być grid i zindex=1 bo inaczej mouseUp nie łapie na image!! -->
+        <!-- ikonka zamykania -->
+        <Image Source="/Images/close.png" Panel.ZIndex="1" MouseUp="Image_MouseUp" Style="{StaticResource imgClose}"/>   <!-- ikonka zamykania -->
+
+        <Border Background="#ffffff" CornerRadius="10 10 10 10" MouseDown="Border_MouseDown">
+            <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="Rejestracja" Style="{StaticResource titleText}" Foreground="#3AB19B"/>
 
-            <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5">
+                <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5">
                     <!-- nick -->
                     <Grid Margin="7 9">
                         <Grid.ColumnDefinitions>
@@ -46,7 +48,8 @@
                     </Grid>
                 </Border>
 
-                <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5"> <!-- hasło -->
+                <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5">
+                    <!-- hasło -->
                     <Grid Margin="7 9">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
@@ -74,23 +77,26 @@
                         <!--<TextBox Text="{Binding Password}" Name="TxtBox" Visibility="Collapsed"/>-->
                     </Grid>
                 </Border>
-                
+
                 <!--<TextBox FontSize="20" Grid.Row="3" Grid.Column="1"  Margin="5" Name="TxtBox" Visibility="Collapsed" VerticalContentAlignment="Center"/>
                 <TextBox FontSize="20" Grid.Row="4" Grid.Column="1"  Margin="5" Name="TxtBox1" Visibility="Collapsed" VerticalContentAlignment="Center"/>-->
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.04*"/>
-                    <ColumnDefinition Width="0.04*"/>
-                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.04*"/>
+                        <ColumnDefinition Width="0.04*"/>
+                    </Grid.ColumnDefinitions>
 
-                <CheckBox FontSize="14" Name="revealModeCheckBox" Grid.Column="0" HorizontalAlignment="Center" Margin="0 0 150 0" VerticalContentAlignment="Center" Unchecked="ShowPassword_Unchecked" Checked="ShowPassword_Checked" Foreground="#3AB19B" BorderBrush="#acb0af">Pokaż hasło</CheckBox>
-                <Button Command="{Binding SignInCommend}" Name="signButton" Content="Zarejestruj się" Style="{StaticResource mainButton}" Grid.Column="1"/>
+                    <CheckBox FontSize="14" Name="revealModeCheckBox" Grid.Column="0" HorizontalAlignment="Center" Margin="0 0 150 0" VerticalContentAlignment="Center" Unchecked="ShowPassword_Unchecked" Checked="ShowPassword_Checked" Foreground="#3AB19B" BorderBrush="#acb0af">Pokaż hasło</CheckBox>
+                    <Button Command="{Binding SignInCommend}" Name="signButton" Content="Zarejestruj się" Style="{StaticResource mainButton}" Grid.Column="1"/>
 
-            </Grid>
-        </StackPanel>
-    </Border>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+    
+    
 </Window>
