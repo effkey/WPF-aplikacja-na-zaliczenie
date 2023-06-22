@@ -1,9 +1,14 @@
-﻿using System.Text.Json.Serialization;
+﻿using Projekt_WPF_TODO_app.Logic.Base;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Text.Json.Serialization;
+using System.Windows.Input;
 
 namespace Projekt_WPF_TODO_app
 {
-    public class WorkSubtask
+    public class WorkSubtask : BaseViewModel, INotifyPropertyChanged
     {
+     
         [JsonPropertyName("subtask_id")]
         public int SubtaskId { get; set; }
 
@@ -11,9 +16,37 @@ namespace Projekt_WPF_TODO_app
         public int TaskId { get; set; }
 
         [JsonPropertyName("description")]
-        public string? Description { get; set; }
+        public string? SubtaskDescription { get; set; }
 
         [JsonPropertyName("completed")]
-        public bool IsSubtaskCompleted { get; set; }
+
+        public bool IsSubtaskSelected { get; set; }
+
+        public bool isSubtaskTaskComplited { get; set; }
+
+        public bool IsSubtaskCompleted
+        {
+            get { return isSubtaskTaskComplited; }
+            set
+            {
+                if (isSubtaskTaskComplited != value)
+                {
+                    isSubtaskTaskComplited = value;
+                    OnPropertyChanged(nameof(IsSubtaskCompleted));
+                }
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+        public override string ToString()
+        {
+            return $"Task SubtaskId: {SubtaskId}, Task Description: {SubtaskDescription}, Is Task Completed: {IsSubtaskCompleted}, Is Selected: {IsSubtaskSelected}";
+        }
     }
 }

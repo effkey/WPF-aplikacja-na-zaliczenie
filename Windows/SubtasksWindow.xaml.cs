@@ -1,15 +1,10 @@
-﻿using Projekt_WPF_TODO_app.Controls;
-using Projekt_WPF_TODO_app.Logic.Helpers;
-using Projekt_WPF_TODO_app.Windows;
+﻿using Projekt_WPF_TODO_app.Logic;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,28 +13,27 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Projekt_WPF_TODO_app.Pages
+namespace Projekt_WPF_TODO_app.Windows
 {
     /// <summary>
-    /// Interaction logic for WorkTaskPage.xaml
+    /// Interaction logic for SubtasksWindow.xaml
     /// </summary>
-    public partial class WorkTaskPage : Page
+    public partial class SubtasksWindow : Window
     {
-        MainWindow mainWindow;
-        WorkTasks workTask = new WorkTasks();
+      
+        WorkSubtasks workSubtasks = new WorkSubtasks();
 
         public int rowIndex { get; set; }
 
-        public WorkTaskPage(MainWindow mainWindow)
+        public SubtasksWindow(int rowIndex, string subtaskHeader)
         {
             InitializeComponent();
-            DataContext = workTask;
-            this.mainWindow = mainWindow;
-            workTask.AddTasksFromDataBase();
-
+            DataContext = workSubtasks;
+            this.rowIndex = rowIndex;
+            workSubtasks.AddDate(rowIndex);
+            workSubtasks.SubTasksHeader = subtaskHeader;
             //workTask.Add();
 
         }
@@ -53,40 +47,29 @@ namespace Projekt_WPF_TODO_app.Pages
         private void AddEndEnableEditTask_Checked(object sender, RoutedEventArgs e)
         {
             // CheckBox został zaznaczony, odblokuj kolumny
-            SetColumnReadOnly(false);      
+            SetColumnReadOnly(false);
             dataGrid.CanUserAddRows = true;
-            dataGrid.ItemsSource = workTask.WorkTaskList;
+            dataGrid.ItemsSource = workSubtasks.SubtasksList;
             compitedTasks_checkbox.IsChecked = false;
-            dataGrid.Columns[7].IsReadOnly = true;
-            // Odnajdź przycisk w strukturze kontrolki DataGrid
-            SubtaskTemplate.Visibility = Visibility.Hidden;
-            SubtaskTemplate1.Visibility = Visibility.Visible;
-
         }
         private void AddEndEnableEditTask_UnChecked(object sender, RoutedEventArgs e)
         {
             // CheckBox został odznaczony, zablokuj kolumny
             SetColumnReadOnly(true);
             dataGrid.CanUserAddRows = false;
-            dataGrid.ItemsSource = workTask.WorkTaskList;
+            dataGrid.ItemsSource = workSubtasks.SubtasksList;
             compitedTasks_checkbox.IsChecked = false;
-            // Odnajdź przycisk w strukturze kontrolki DataGrid
-            SubtaskTemplate1.Visibility = Visibility.Hidden;
-            SubtaskTemplate.Visibility = Visibility.Visible;
-       
-
-
         }
         private void ShowComplitedTasks_Checked(object sender, RoutedEventArgs e)
         {
-            dataGrid.ItemsSource = workTask.DoneTasks;
-            completionDate.Visibility = Visibility.Visible;
-            SetColumnReadOnly(true);        
+            dataGrid.ItemsSource = workSubtasks.SubtasksDoneList;
+           
+            SetColumnReadOnly(true);
         }
         private void ShowComplitedTasks_UnChecked(object sender, RoutedEventArgs e)
         {
-            dataGrid.ItemsSource = workTask.WorkTaskList;
-            completionDate.Visibility = Visibility.Hidden;
+            dataGrid.ItemsSource = workSubtasks.SubtasksList;
+          
         }
         private IEnumerable<T> FindVisualChildren<T>(DependencyObject dependencyObject) where T : DependencyObject
         {
@@ -114,12 +97,12 @@ namespace Projekt_WPF_TODO_app.Pages
             var columnCount = dataGrid.Columns.Count;
             for (int i = 1; i < columnCount; i++)
             {
-                
+
                 var column = dataGrid.Columns[i];
                 column.IsReadOnly = isReadOnly;
             }
 
-           
+
 
         }
         private void Logout_click(object sender, RoutedEventArgs e)
@@ -130,43 +113,5 @@ namespace Projekt_WPF_TODO_app.Pages
                 RestartApplication();
             }
         }
-
-        private void openSubtaskWindow(object sender, RoutedEventArgs e)
-        {
-            string titleHeader = "Subtaski zadania: " + workTask.ReturnTaskHeader(rowIndex);
-            SubtasksWindow subtasksWindow = new SubtasksWindow(rowIndex, titleHeader);
-            subtasksWindow.ShowDialog();
-        }
-
-        private void dataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
-            // Pobierz zaznaczony wiersz
-            var selectedRow = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromItem(dataGrid.SelectedItem);
-
-
-            if (selectedRow != null && workTask.WorkTaskList.Count > 0)
-            {
-                rowIndex = dataGrid.SelectedIndex;
-
-                if (rowIndex >= 0 && rowIndex < workTask.WorkTaskList.Count)
-                {
-                    Console.WriteLine("Index wybranego wiersza: " + rowIndex);
-                    Console.WriteLine("Wybrany element z WorkTaskList: " + workTask.WorkTaskList[rowIndex]);
-                }
-                else
-                {
-                    Console.WriteLine("Wybrany wiersz nie jest dostępny w WorkTaskList.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Wybrany wiersz lub WorkTaskList jest null.");
-            }
-
-        }
-
-
-
-
     }
 }

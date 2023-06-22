@@ -118,10 +118,27 @@ namespace Projekt_WPF_TODO_app
                     Console.WriteLine(task);
                     WorkTaskList.Add(task);
                 }
-                
+                if (task.isTaskComplited == true)
+                {
+                    Console.WriteLine(task);
+                    DoneTasks.Add(task);
+                }
+
             }
         }
 
-        
+       public string ReturnTaskHeader(int index)
+        {
+            if (WorkTaskList[index].TaskTitle != null)
+            {
+                return WorkTaskList[index].TaskTitle;
+            }
+            else
+            {
+                return "Brak tytulu";
+            }
+                 
+        }
+
     }
 }
