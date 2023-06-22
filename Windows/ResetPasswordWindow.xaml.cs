@@ -41,12 +41,42 @@ namespace Projekt_WPF_TODO_app.Windows
             {
                 this.Close();
                 MessageBox.Show(resetviewModel.Message,"Success", MessageBoxButton.OK);
-                LogInWindow window = new LogInWindow(mainWindow,user);
-                window.ShowDialog();
+                //LogInWindow window = new LogInWindow(login, mainWindow);
+                //window.ShowDialog();
             }
             else
             {
                 MessageBox.Show(resetviewModel.Message,"Error", MessageBoxButton.OK);
+            }
+        }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
+
+        private void Image_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void textEmail_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            inputEmail.Focus();
+        }
+
+        private void inputEmail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(inputEmail.Text) && inputEmail.Text.Length > 0)
+            {
+                textEmail.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                textEmail.Visibility = Visibility.Visible;
             }
         }
     }

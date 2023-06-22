@@ -32,7 +32,27 @@ namespace Projekt_WPF_TODO_app
         {
             InitializeComponent();
             mainwindow = this;
-          /*  UserLogged();*/
+            if (login.ReadLogInSession())
+            {
+                ChangeIntoWorkTaskPage();
+            }
+            ((LogIn)DataContext).LogInCompleted += ShowMassageBoxAfterLogIn;
+        }
+
+        private void ShowMassageBoxAfterLogIn(object? sender, bool success)
+        {
+
+            LogIn loginviewModel = (LogIn)DataContext;
+
+            if (loginviewModel.IsLogInSuccess)
+            {
+                MessageBox.Show("Pomyślnie zalogowano.", "Logowanie", MessageBoxButton.OK, MessageBoxImage.Information);
+                ChangeIntoWorkTaskPage();
+            }
+            else
+            {
+                MessageBox.Show(loginviewModel.ErrorResponse, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void SignIn_Button_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -41,11 +61,11 @@ namespace Projekt_WPF_TODO_app
             window.ShowDialog();
         }
 
-        private void LogIn_Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            LogInWindow window = new LogInWindow(mainwindow, user);
-            window.ShowDialog();
-        }
+        //private void LogIn_Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        //{
+        //    LogInWindow window = new LogInWindow(login, mainwindow);
+        //    window.ShowDialog();
+        //}
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
           
@@ -67,5 +87,59 @@ namespace Projekt_WPF_TODO_app
             }
         }*/
 
+        private void textNick_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            inputNick.Focus();
+        }
+
+        private void inputNick_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(!string.IsNullOrEmpty(inputNick.Text) && inputNick.Text.Length > 0)
+            {
+                textNick.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                textNick.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void textPassword_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            inputPassword.Focus();
+        }
+
+        private void inputPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(inputPassword.Password) && inputPassword.Password.Length > 0)
+            {
+                textPassword.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                textPassword.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
+
+        private void loginButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(!string.IsNullOrEmpty(inputNick.Text) && !string.IsNullOrEmpty(inputPassword.Password))
+            {
+                MessageBox.Show("Pomyślnie zalogowano");
+            }
+        }
+
+        private void Image_MouseUp(object sender, MouseButtonEventArgs e)   // do zamykania aplikacji
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
