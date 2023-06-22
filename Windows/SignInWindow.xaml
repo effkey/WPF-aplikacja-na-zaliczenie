@@ -8,7 +8,7 @@
         Background="Transparent"
         Title="SignInWindow" Height="450" Width="800" MinWidth="350">
     <Window.DataContext>
-        <local:SignIn/>
+        <local:User/>
     </Window.DataContext>
 
     <Grid>

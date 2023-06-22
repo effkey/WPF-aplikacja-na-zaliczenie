@@ -9,7 +9,7 @@
         Background="Transparent"
         Title="TodoApp" Height="500" Width="800" MinWidth="1000">
     <Window.DataContext>
-        <local:LogIn/>
+        <local:User/>
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
