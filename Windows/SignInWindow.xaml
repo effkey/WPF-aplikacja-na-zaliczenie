@@ -7,9 +7,7 @@
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
         Background="Transparent"
         Title="SignInWindow" Height="450" Width="800" MinWidth="350">
-    <Window.DataContext>
-        <local:User/>
-    </Window.DataContext>
+ 
 
     <Grid>
         <!-- musi być grid i zindex=1 bo inaczej mouseUp nie łapie na image!! -->
@@ -30,7 +28,7 @@
 
 
                         <TextBlock x:Name="textNick" MouseDown="textNick_MouseDown" Text="Nick" Style="{StaticResource textHint}"/>
-                        <TextBox Text="{Binding Username}" x:Name="inputNick" TextChanged="inputNick_TextChanged" Style="{StaticResource textBox}"/>
+                        <TextBox Text="{Binding NewUserName}" x:Name="inputNick" TextChanged="inputNick_TextChanged" Style="{StaticResource textBox}"/>
                     </Grid>
                 </Border>
 
@@ -44,7 +42,7 @@
 
 
                         <TextBlock x:Name="textEmail" MouseDown="textEmail_MouseDown" Text="Email" Style="{StaticResource textHint}"/>
-                        <TextBox Text="{Binding Email}" x:Name="inputEmail" TextChanged="inputEmail_TextChanged" Style="{StaticResource textBox}"/>
+                        <TextBox Text="{Binding NewUserEmail}" x:Name="inputEmail" TextChanged="inputEmail_TextChanged" Style="{StaticResource textBox}"/>
                     </Grid>
                 </Border>
 
@@ -58,7 +56,7 @@
 
                         <TextBlock x:Name="textPassword" MouseDown="textPassword_MouseDown" Text="Hasło" Style="{StaticResource textHint}"/>
                         <!--<PasswordBox PasswordChanged="inputPassword_PasswordChanged" x:Name="inputPassword" Style="{StaticResource textBox}"/>-->
-                        <Components:BindAblePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" x:Name="inputPassword" TextPassword="{Binding ElementName=textPassword}"/>
+                        <Components:BindAblePasswordBox Password="{Binding NewUserPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" x:Name="inputPassword" TextPassword="{Binding ElementName=textPassword}"/>
                         <!--<TextBox Text="{Binding Password}" Name="TxtBox" Visibility="Collapsed"/>-->
                     </Grid>
                 </Border>
@@ -73,7 +71,7 @@
 
                         <TextBlock x:Name="textPasswordRepeat" MouseDown="textPassword_MouseDown" Text="Powtórz hasło" Style="{StaticResource textHint}"/>
                         <!--<PasswordBox PasswordChanged="inputPassword_PasswordChanged" x:Name="inputPassword" Style="{StaticResource textBox}"/>-->
-                        <Components:BindAblePasswordBox Password="{Binding Password2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" x:Name="inputPasswordRepeat" TextPassword="{Binding ElementName=textPassword}"/>
+                        <Components:BindAblePasswordBox Password="{Binding NewUserPassword2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" x:Name="inputPasswordRepeat" TextPassword="{Binding ElementName=textPassword}"/>
                         <!--<TextBox Text="{Binding Password}" Name="TxtBox" Visibility="Collapsed"/>-->
                     </Grid>
                 </Border>

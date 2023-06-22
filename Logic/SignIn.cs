@@ -18,8 +18,6 @@ namespace Projekt_WPF_TODO_app.Logic
         public string NewUserEmail { get; set; }
         public string NewUserName { get; set; }
         public string NewUserToken { get; set; }
-
-
         public bool IsSignInSuccess { get; set; }
         public string? Response { get; set; }
 
@@ -37,6 +35,7 @@ namespace Projekt_WPF_TODO_app.Logic
             user.Password = NewUserPassword;
             user.Password2 = NewUserPassword2;
             user.Email = NewUserEmail;
+
             var signInUserData = new
             {
                 username = user.Username,
@@ -44,26 +43,59 @@ namespace Projekt_WPF_TODO_app.Logic
                 password = user.Password,
                 password2 = user.Password2,
             };
+
             var signInHandler = new ApiHelper("http://kubpi.pythonanywhere.com/");
             var signInDataInJson = JsonSerializer.Serialize(signInUserData);
             var signInResponse = signInHandler.SendPostRequest(signInDataInJson, "register");
             Response = signInResponse;
-            try
+
+            var responseJsonDocument = JsonDocument.Parse(signInResponse);
+
+            if (responseJsonDocument.RootElement.TryGetProperty("username", out var usernameProperty) && usernameProperty.ValueKind == JsonValueKind.String)
             {
-                var deserializedResponseData = JsonSerializer.Deserialize<User>(signInResponse) ?? throw new ArgumentException();
-                Console.WriteLine("Response: " + Response);
-                //SaveLogInSession(deserializedResponseData);
-                IsSignInSuccess = true;
-                SignInCompleted?.Invoke(this, true);
-                
+                string username = usernameProperty.GetString();
+                // Odpowiedni typ danych: string
+                Console.WriteLine("username: " + username);
+                user.Username = username;
             }
-            catch (Exception)
+
+
+            if (responseJsonDocument.RootElement.TryGetProperty("email", out var emailProperty) && emailProperty.ValueKind == JsonValueKind.Number)
             {
-                Console.WriteLine("Response: " + Response);
-                Console.WriteLine("Blad");
-                IsSignInSuccess = false;
-                SignInCompleted?.Invoke(this, false);
+                string email = emailProperty.GetString();
+                // Odpowiedni typ danych: int
+                user.Email = email;
+                Console.WriteLine("email: " + email);
+
             }
+
+            if (responseJsonDocument.RootElement.TryGetProperty("user_id", out var userIdProperty) && userIdProperty.ValueKind == JsonValueKind.Number)
+            {
+                int userId = userIdProperty.GetInt32();
+                // Odpowiedni typ danych: int
+                user.UserId = userIdProperty.GetInt32();
+                Console.WriteLine("UserID: " + userId);
+
+            }
+
+            if (responseJsonDocument.RootElement.TryGetProperty("token", out var tokenProperty) && tokenProperty.ValueKind == JsonValueKind.String)
+            {
+                string token = tokenProperty.GetString();
+                // Odpowiedni typ danych: string
+                Console.WriteLine("Token: " + token);
+                user.Token = token;
+            }
+
+            IsSignInSuccess = true;
+            SignInCompleted?.Invoke(this, true);
+
+            /* if (responseJsonDocument.RootElement.TryGetProperty("response", out var responseProperty) && tokenProperty.ValueKind == JsonValueKind.String)
+             {
+                 string response = responseProperty.GetString();
+                 // Odpowiedni typ danych: string
+                 Console.WriteLine("Token: " + response);
+
+             }*/
         }
 
     }

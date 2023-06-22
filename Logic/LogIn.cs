@@ -15,14 +15,9 @@ namespace Projekt_WPF_TODO_app.Logic
         public bool IsLogInSuccess { get; set; }
         public string? ErrorResponse { get; set; }
         public ICommand? LogInCommand { get; set; }
-
-
         public string NewUserPassword{ get; set; }
-
         public string NewUserName { get; set; }
-
         public string NewUserToken { get; set; }
-
 
         public event EventHandler<bool>? LogInCompleted;
 
@@ -45,8 +40,7 @@ namespace Projekt_WPF_TODO_app.Logic
                 username = user.Username,
                 password = user.Password,
             };
-            
-            //Console.WriteLine("TO JEST logInUserData" + logInUserData);
+           
             var logInHandler = new ApiHelper("http://kubpi.pythonanywhere.com/");
             var logInDataInJson = JsonSerializer.Serialize(logInUserData);
             var logInResponse = logInHandler.SendPostRequest(logInDataInJson, "login");
