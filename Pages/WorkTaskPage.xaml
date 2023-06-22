@@ -15,7 +15,7 @@
 
             <Grid>
                 <!-- ikonka zamykania -->
-                <Image Source="/Images/close_white.png" Panel.ZIndex="1" MouseUp="Image_MouseUp" Style="{StaticResource imgClose}"/>
+                <Image Source="/Images/close_white.png" Panel.ZIndex="1" MouseUp="Image_MouseUp" Style="{StaticResource imgClose}" Margin="8"/>
 
                 <StackPanel>
                     <Menu DockPanel.Dock="Top" Padding="10" Margin="0 0 0 10" Background="#3AB19B">
@@ -92,7 +92,7 @@
                                 <DataGridTemplateColumn Visibility="Hidden" x:Name="SubtaskTemplate1"   Header="Podzadania" IsReadOnly="True" Width="0.55*">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button x:Name="buttonToShowSubtasks" Content="Check subtasks!" Click="openSubtaskWindow" IsEnabled="False"/>
+                                            <Button x:Name="buttonToShowSubtasks" Content="Sprawdź subtaski" Click="openSubtaskWindow" IsEnabled="False"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
 
