@@ -10,7 +10,7 @@ namespace Projekt_WPF_TODO_app
     public class WorkTask : BaseViewModel, INotifyPropertyChanged
     {
         [JsonPropertyName("id")]
-        public int? TaskId { get; set; }
+        public int TaskId { get; set; }
 
         [JsonPropertyName("user")]
         public int? UserId { get; set; }

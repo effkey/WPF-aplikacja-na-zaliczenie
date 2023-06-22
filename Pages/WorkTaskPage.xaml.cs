@@ -33,7 +33,7 @@ namespace Projekt_WPF_TODO_app.Pages
         MainWindow mainWindow;
        
         WorkTasks workTask;
-
+        Random random = new Random();
         public int rowIndex { get; set; }
 
         public User user { get; set; }
@@ -67,7 +67,8 @@ namespace Projekt_WPF_TODO_app.Pages
             dataGrid.CanUserAddRows = true;
             dataGrid.ItemsSource = workTask.WorkTaskList;
             compitedTasks_checkbox.IsChecked = false;
-            dataGrid.Columns[7].IsReadOnly = true;
+            dataGrid.Columns[8].IsReadOnly = true;
+            dataGrid.Columns[1].IsReadOnly = true;
             SubtaskTemplate.Visibility = Visibility.Hidden;
             SubtaskTemplate1.Visibility = Visibility.Visible;
 
@@ -174,7 +175,14 @@ namespace Projekt_WPF_TODO_app.Pages
 
         }
 
-
+        private void dataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            var newSubtask = new WorkTask();
+            
+            int randomNumber = random.Next(200, 10000);
+            newSubtask.TaskId = randomNumber;
+            e.NewItem = newSubtask;
+        }
 
 
     }

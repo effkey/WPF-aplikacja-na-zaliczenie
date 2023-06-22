@@ -13,6 +13,7 @@ namespace Projekt_WPF_TODO_app.Logic
 {
     public class WorkSubtasks : BaseViewModel
     {
+        
         public ObservableCollection<WorkSubtask> SubtasksList { get; set; } = new ObservableCollection<WorkSubtask>();
 
         public ObservableCollection<WorkSubtask> SubtasksDoneList { get; set; } = new ObservableCollection<WorkSubtask>();
@@ -34,6 +35,8 @@ namespace Projekt_WPF_TODO_app.Logic
 
         private void DeleteSelectedTasks()
         {
+            
+
             foreach (var workTask in SubtasksList)
             {
                 Console.WriteLine(workTask.ToString());
@@ -65,10 +68,17 @@ namespace Projekt_WPF_TODO_app.Logic
                 SubtasksList.Remove(task);
             }
 
+            foreach (WorkSubtask task in SubtasksList)
+            {
+                Console.WriteLine(task);
+               
+
+            }
+
 
         }
 
-        public void AddDate(WorkTask taskidobj)
+        public void AddSubTasks(WorkTask taskidobj)
         {
             ApiHelper apiHelper = new ApiHelper("http://kubpi.pythonanywhere.com");
             Console.WriteLine("userid to jest to " + user.UserId);

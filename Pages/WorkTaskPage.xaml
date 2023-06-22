@@ -39,13 +39,14 @@
             <TextBlock Text="dupa" />
             <ScrollViewer Height="300">
 
-                <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding WorkTaskList}" Margin="10" CanUserAddRows="False" MaxWidth="1100" SelectionUnit="FullRow" SelectedCellsChanged="dataGrid_SelectedCellsChanged">
+                <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding WorkTaskList}" Margin="10" CanUserAddRows="False" MaxWidth="1100" SelectionUnit="FullRow" SelectedCellsChanged="dataGrid_SelectedCellsChanged" AddingNewItem="dataGrid_AddingNewItem">
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" >
                             <DataGridCheckBoxColumn.ElementStyle>
                                 <Style TargetType="CheckBox"/>
                             </DataGridCheckBoxColumn.ElementStyle>
                         </DataGridCheckBoxColumn>
+                        <DataGridTextColumn Visibility="Hidden" Header="Task id" Binding="{Binding TaskId}" IsReadOnly="True" />
                         <DataGridTextColumn Header="Title" Binding="{Binding TaskTitle}" IsReadOnly="True" Width="0.55*"/>
                         <DataGridTextColumn Header="Description" Binding="{Binding TaskDescription}" IsReadOnly="True" Width="*">
                             <DataGridTextColumn.ElementStyle>

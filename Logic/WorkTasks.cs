@@ -27,6 +27,8 @@ namespace Projekt_WPF_TODO_app
 
         public string NewWorkTaskPiority { get; set; }
 
+        public string NewWorkTaskCategory { get; set; }
+
         public DateTime NewWorkTaskDueDate { get; set; }
 
         public DateTime NewWorkTaskStartDate { get; set; }
@@ -114,7 +116,60 @@ namespace Projekt_WPF_TODO_app
             }
         }
 
-       public string ReturnTaskHeader(int index)
+        public void AddTasksToDataBase()
+        {
+
+
+           /* ApiHelper apiHelper = new ApiHelper("http://kubpi.pythonanywhere.com");
+             var json =  new 
+            {
+                user = 1,
+                category = WorkTaskCategory
+                 title = "amobus",
+                 description = "Opis zadania 1",
+                priority = "High",
+                dueDate = DateTime.Parse("2023-06-30T12:00:00"),
+                startDate = DateTime.Parse("2023-06-15T08:00:00"),
+                completionDate = DateTime.Parse("2023-06-15T08:00:00"),
+                completed = false,
+                subtasks = new List<SubTask>
+                {
+                    new SubTask { Description = "pb", Completed = false },
+                    new SubTask { Description = "pb", Completed = true }
+                }
+            };
+
+            TaskData taskData = new TaskData
+            {
+                Tasks = new List<WorkTask> { task }
+            };
+
+            string jsonData = JsonSerializer.Serialize(taskData, new JsonSerializerOptions { WriteIndented = true });
+            Console.WriteLine(jsonData);
+
+
+
+            string response = apiHelper.SendPostRequestWithHeaders(json,"/user-tasks/" + user.UserId,user.Token);
+            *//*Console.WriteLine(response);*//*
+            List<WorkTask> tasks = JsonSerializer.Deserialize<List<WorkTask>>(response);
+
+            foreach (WorkTask task in tasks)
+            {
+                if (task.isTaskComplited == false)
+                {
+                    Console.WriteLine(task);
+                    WorkTaskList.Add(task);
+                }
+                if (task.isTaskComplited == true)
+                {
+                    Console.WriteLine(task);
+                    DoneTasks.Add(task);
+                }
+
+            }*/
+        }
+
+        public string ReturnTaskHeader(int index)
         {
             if (WorkTaskList[index].TaskTitle != null)
             {

@@ -34,13 +34,14 @@
             <TextBlock Text="{Binding SubTasksHeader}" />
             <ScrollViewer Height="300">
 
-                <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding SubtasksList}" Margin="10" CanUserAddRows="False" MaxWidth="1100" >
+                <DataGrid x:Name="dataGrid"  AutoGenerateColumns="False" ItemsSource="{Binding SubtasksList}" Margin="10" CanUserAddRows="True" MaxWidth="1100" AddingNewItem="dataGrid_AddingNewItem" >
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Binding="{Binding IsSubtaskSelected, UpdateSourceTrigger=PropertyChanged}" >
                             <DataGridCheckBoxColumn.ElementStyle>
                                 <Style TargetType="CheckBox"/>
                             </DataGridCheckBoxColumn.ElementStyle>
                         </DataGridCheckBoxColumn>
+                        <DataGridTextColumn Visibility="Hidden" Header="Task id" Binding="{Binding TaskId}" IsReadOnly="True" Width="*"/>
                         <DataGridTextColumn Header="Description" Binding="{Binding SubtaskDescription}" IsReadOnly="True" Width="*">
                             <DataGridTextColumn.ElementStyle>
                                 <Style>
