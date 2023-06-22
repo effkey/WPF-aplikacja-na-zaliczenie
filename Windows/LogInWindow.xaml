@@ -20,9 +20,9 @@
         <Label FontSize="30" Margin="5" Grid.ColumnSpan="2" HorizontalAlignment="Center">Log in</Label>
         <Label FontSize="20" Margin="5" Grid.Row="1" VerticalContentAlignment="Center" >Nick:</Label>
         <Label FontSize="20"  Margin="5" Grid.Row="2" VerticalContentAlignment="Center" >Password:</Label>
-        <TextBox Text="{Binding Username}" FontSize="20" x:Name="nickTextBlock" Margin="5" Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center"/>
-        <Components:BindAblePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="20" x:Name="passwordTextBox" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center"/>
-        <TextBox Text="{Binding Password}" FontSize="20" Grid.Row="2" Grid.Column="1"  Margin="5" Name="TxtBox" Visibility="Collapsed" VerticalContentAlignment="Center"/>
+        <TextBox Text="{Binding NewUserName}" FontSize="20" x:Name="nickTextBlock" Margin="5" Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center"/>
+        <Components:BindAblePasswordBox Password="{Binding NewUserPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="20" x:Name="passwordTextBox" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center"/>
+        <TextBox Text="{Binding NewUserPassword}" FontSize="20" Grid.Row="2" Grid.Column="1"  Margin="5" Name="TxtBox" Visibility="Collapsed" VerticalContentAlignment="Center"/>
         <Grid Grid.Row="5" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>

@@ -21,14 +21,17 @@ namespace Projekt_WPF_TODO_app.Windows
     public partial class LogInWindow : Window
     {
         MainWindow mainWindow;
-        public LogInWindow(LogIn login, MainWindow mainWindow)
+        LogIn login; 
+        public LogInWindow(MainWindow mainWindow, User user)
         {
             InitializeComponent();
+            login = new LogIn(user,mainWindow);
             DataContext = login;
+           
             this.mainWindow = mainWindow;
             ((LogIn)DataContext).LogInCompleted += ShowMassageBoxAfterLogIn;
-        }
 
+        }
         private void ShowMassageBoxAfterLogIn(object? sender, bool success)
         {
 
@@ -46,6 +49,7 @@ namespace Projekt_WPF_TODO_app.Windows
             }
         }
 
+
         private void ShowPassword_Checked(object sender, RoutedEventArgs e)
         {
             TxtBox.Text = passwordTextBox.Password;
@@ -58,5 +62,13 @@ namespace Projekt_WPF_TODO_app.Windows
             passwordTextBox.Visibility = Visibility.Visible;
             TxtBox.Visibility = Visibility.Collapsed;
         }
+
+       /* public void UserLogged()
+        {
+            if (login.ReadLogInSession())
+            {
+                mainWindow.ChangeIntoWorkTaskPage();
+            }
+        }*/
     }
 }

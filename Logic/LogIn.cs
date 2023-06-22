@@ -2,59 +2,83 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows.Input;
+using Projekt_WPF_TODO_app.Logic;
 
 namespace Projekt_WPF_TODO_app.Logic
 {
-    public class LogIn : User
+    public class LogIn 
     {
+
+        public User User { get; set; }
         public bool IsLogInSuccess { get; set; }
         public string? ErrorResponse { get; set; }
         public ICommand? LogInCommand { get; set; }
 
+
+        public string NewUserPassword{ get; set; }
+
+        public string NewUserName { get; set; }
+
+        public string NewUserToken { get; set; }
+
+
         public event EventHandler<bool>? LogInCompleted;
 
-        public LogIn()
+        public User user { get; set; }
+
+        MainWindow mainWindow;
+        public LogIn(User user, MainWindow mainWindow)
         {
+            this.user = user;
             LogInCommand = new RelayCommand(LogInIntoApp);
         }
         private void LogInIntoApp()
         {
-            Console.WriteLine("Odpalasie ");
+            user.Username = NewUserName;
+            user.Password = NewUserPassword;
+
+           // Console.WriteLine("Odpalasie ");
             var logInUserData = new
             {
-                username = Username,
-                password = Password,
+                username = user.Username,
+                password = user.Password,
             };
-            Console.WriteLine(logInUserData);
+            
+            //Console.WriteLine("TO JEST logInUserData" + logInUserData);
             var logInHandler = new ApiHelper("http://kubpi.pythonanywhere.com/");
             var logInDataInJson = JsonSerializer.Serialize(logInUserData);
             var logInResponse = logInHandler.SendPostRequest(logInDataInJson, "login");
-            try
+           // Console.WriteLine(logInResponse);
+            var responseJsonDocument = JsonDocument.Parse(logInResponse);
+
+            if (responseJsonDocument.RootElement.TryGetProperty("token", out var tokenProperty) && tokenProperty.ValueKind == JsonValueKind.String)
             {
-                var deserializedResponseData = JsonSerializer.Deserialize<LogIn>(logInResponse) ?? throw new ArgumentException();
-                Console.WriteLine("Token logged user: " + deserializedResponseData.Token);
-                Console.WriteLine("UserID logged user: " + deserializedResponseData.UserId);
-                Console.WriteLine("Response: " + logInResponse);
-                SaveLogInSession(deserializedResponseData);
-                IsLogInSuccess = true;
-                LogInCompleted?.Invoke(this, true);
+                string token = tokenProperty.GetString();
+                // Odpowiedni typ danych: string
+                Console.WriteLine("Token: " + token);
+                user.Token = token;
             }
-            catch (Exception)
+
+            if (responseJsonDocument.RootElement.TryGetProperty("user_id", out var userIdProperty) && userIdProperty.ValueKind == JsonValueKind.Number)
             {
-                Console.WriteLine("Response: " + logInResponse);
-                Console.WriteLine("Blad");
-                IsLogInSuccess = false;
-                ErrorResponse = logInResponse;
-                LogInCompleted?.Invoke(this, false);
+                int userId = userIdProperty.GetInt32();
+                // Odpowiedni typ danych: int
+                user.UserId = userIdProperty.GetInt32();
+                Console.WriteLine("UserID: " + userId);
+
             }
+            IsLogInSuccess = true;
+            LogInCompleted?.Invoke(this, true);
+      
         }
 
         public void SaveLogInSession(User deserializedResponseData)
         {
             var session = new
             {
-                username = Username,
+                username = user.Username,
                 token = deserializedResponseData.Token,
                 userid = deserializedResponseData.UserId,
             };
@@ -70,9 +94,8 @@ namespace Projekt_WPF_TODO_app.Logic
 
                 string sessionJson = File.ReadAllText("session.json");
                 Console.WriteLine("session " + sessionJson);
-                var session = JsonSerializer.Deserialize<LogIn>(sessionJson);
-                Console.WriteLine("session " + session?.Username);
-                Console.WriteLine("session " + session?.Token);
+                var session = JsonSerializer.Deserialize<User>(sessionJson);
+     
                 return true;
             }
             else { return false; }

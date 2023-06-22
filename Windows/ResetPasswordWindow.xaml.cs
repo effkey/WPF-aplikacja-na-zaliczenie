@@ -22,11 +22,13 @@ namespace Projekt_WPF_TODO_app.Windows
     {
         LogIn login;
         MainWindow mainWindow;
-        public ResetPasswordWindow(LogIn login, MainWindow mainWindow)
+        User user;
+        public ResetPasswordWindow( MainWindow mainWindow, User user)
         {
             InitializeComponent();
             DataContext = new ResetPassword();
-            this.login = login;
+            this.user = user;
+         
             this.mainWindow = mainWindow;
             ((ResetPassword)DataContext).ResetInCompleted += ShowMassageBoxAfterReset;
         }
@@ -39,7 +41,7 @@ namespace Projekt_WPF_TODO_app.Windows
             {
                 this.Close();
                 MessageBox.Show(resetviewModel.Message,"Success", MessageBoxButton.OK);
-                LogInWindow window = new LogInWindow(login, mainWindow);
+                LogInWindow window = new LogInWindow(mainWindow,user);
                 window.ShowDialog();
             }
             else

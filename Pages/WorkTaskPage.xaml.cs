@@ -1,4 +1,5 @@
 ﻿using Projekt_WPF_TODO_app.Controls;
+using Projekt_WPF_TODO_app.Logic;
 using Projekt_WPF_TODO_app.Logic.Helpers;
 using Projekt_WPF_TODO_app.Windows;
 using System;
@@ -29,16 +30,21 @@ namespace Projekt_WPF_TODO_app.Pages
     public partial class WorkTaskPage : Page
     {
         MainWindow mainWindow;
-        WorkTasks workTask = new WorkTasks();
+       
+        WorkTasks workTask;
 
         public int rowIndex { get; set; }
 
-        public WorkTaskPage(MainWindow mainWindow)
+        public WorkTaskPage(MainWindow mainWindow, int userid)
         {
             InitializeComponent();
-            DataContext = workTask;
+            workTask = new WorkTasks(userid);
+            DataContext = workTask;    
+        
             this.mainWindow = mainWindow;
             workTask.AddTasksFromDataBase();
+       
+           
 
             //workTask.Add();
 
@@ -58,7 +64,6 @@ namespace Projekt_WPF_TODO_app.Pages
             dataGrid.ItemsSource = workTask.WorkTaskList;
             compitedTasks_checkbox.IsChecked = false;
             dataGrid.Columns[7].IsReadOnly = true;
-            // Odnajdź przycisk w strukturze kontrolki DataGrid
             SubtaskTemplate.Visibility = Visibility.Hidden;
             SubtaskTemplate1.Visibility = Visibility.Visible;
 
@@ -70,7 +75,6 @@ namespace Projekt_WPF_TODO_app.Pages
             dataGrid.CanUserAddRows = false;
             dataGrid.ItemsSource = workTask.WorkTaskList;
             compitedTasks_checkbox.IsChecked = false;
-            // Odnajdź przycisk w strukturze kontrolki DataGrid
             SubtaskTemplate1.Visibility = Visibility.Hidden;
             SubtaskTemplate.Visibility = Visibility.Visible;
        

@@ -58,10 +58,10 @@
 
             <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding DeleteSelectedSubtaskCommend}" Content="Usun" />
-                <Button Command="{Binding AddSelectedSubtaskToDoneListCommend}" Content="Przenieś do tasków ukończonych" />
+                <Button Command="{Binding AddSelectedSubtaskToDoneListCommend}" Content="Przenieś do subtasków ukończonych" />
 
-                <CheckBox x:Name="addEndEnableEditTask_checkbox" Content="Dodaj task / edytuj task" Checked="AddEndEnableEditTask_Checked" Unchecked="AddEndEnableEditTask_UnChecked" />
-                <CheckBox x:Name="compitedTasks_checkbox" Content="Pokaż taski ukończone" Checked="ShowComplitedTasks_Checked" Unchecked="ShowComplitedTasks_UnChecked" />
+                <CheckBox x:Name="addEndEnableEditTask_checkbox" Content="Dodaj subtask / edytuj subtask" Checked="AddEndEnableEditTask_Checked" Unchecked="AddEndEnableEditTask_UnChecked" />
+                <CheckBox x:Name="compitedTasks_checkbox" Content="Pokaż subtaski ukończone" Checked="ShowComplitedTasks_Checked" Unchecked="ShowComplitedTasks_UnChecked" />
             </StackPanel>
         </StackPanel>
 

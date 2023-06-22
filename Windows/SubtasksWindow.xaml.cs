@@ -51,6 +51,7 @@ namespace Projekt_WPF_TODO_app.Windows
             dataGrid.CanUserAddRows = true;
             dataGrid.ItemsSource = workSubtasks.SubtasksList;
             compitedTasks_checkbox.IsChecked = false;
+            dataGrid.Columns[2].IsReadOnly = true;
         }
         private void AddEndEnableEditTask_UnChecked(object sender, RoutedEventArgs e)
         {

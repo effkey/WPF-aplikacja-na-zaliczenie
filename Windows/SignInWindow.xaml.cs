@@ -21,11 +21,15 @@ namespace Projekt_WPF_TODO_app.Windows
     public partial class SignInWindow : Window
     {
         MainWindow mainWindow;
-        public SignInWindow(SignIn signIn, MainWindow mainWindow)
+
+        SignIn signIn; 
+        public SignInWindow(MainWindow mainWindow, User user)
         {
             InitializeComponent();
+            signIn = new SignIn(user);
             DataContext = signIn;
             this.mainWindow = mainWindow;
+            
             ((SignIn)DataContext).SignInCompleted += ShowMassageBoxAfterSignIn;
         }
 

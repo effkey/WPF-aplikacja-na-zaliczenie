@@ -11,7 +11,7 @@ namespace Projekt_WPF_TODO_app.Logic.Base
     {
         public event PropertyChangedEventHandler? PropertyChanged = (s, e) => { };
 
-        protected void OnPropertyChanged(string name)
+        public void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }

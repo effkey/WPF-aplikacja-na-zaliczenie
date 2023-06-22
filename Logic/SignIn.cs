@@ -9,27 +9,40 @@ using System.Windows.Input;
 
 namespace Projekt_WPF_TODO_app.Logic
 {
-    public class SignIn : LogIn
+    public class SignIn
     {
+        public User user { get; set; }
+
+        public string NewUserPassword { get; set; }
+        public string NewUserPassword2 { get; set; }
+        public string NewUserEmail { get; set; }
+        public string NewUserName { get; set; }
+        public string NewUserToken { get; set; }
+
+
         public bool IsSignInSuccess { get; set; }
         public string? Response { get; set; }
 
         public event EventHandler<bool>? SignInCompleted;
         public ICommand? SignInCommend { get; set; }
 
-        public SignIn()
+        public SignIn(User user)
         {
+            this.user = user;
             SignInCommend = new RelayCommand(SignInIntoApp);
         }
         public void SignInIntoApp()
         {
-            Console.WriteLine("dada");
+            user.Username = NewUserName;
+            user.Password = NewUserPassword;
+            user.Password2 = NewUserPassword2;
+            user.Email = NewUserEmail;
             var signInUserData = new
             {
-                username = Username,
-                email = Email,
-                password = Password,
-                password2 = Password2,
+                username = user.Username,
+                email = user.Email,
+                password = user.Password,
+                password2 = user.Password2,
             };
             var signInHandler = new ApiHelper("http://kubpi.pythonanywhere.com/");
             var signInDataInJson = JsonSerializer.Serialize(signInUserData);
@@ -37,8 +50,7 @@ namespace Projekt_WPF_TODO_app.Logic
             Response = signInResponse;
             try
             {
-                var deserializedResponseData = JsonSerializer.Deserialize<SignIn>(signInResponse) ?? throw new ArgumentException();
-                SaveLogInSession(deserializedResponseData);
+                var deserializedResponseData = JsonSerializer.Deserialize<User>(signInResponse) ?? throw new ArgumentException();
                 Console.WriteLine("Response: " + Response);
                 //SaveLogInSession(deserializedResponseData);
                 IsSignInSuccess = true;

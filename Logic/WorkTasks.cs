@@ -11,11 +11,12 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+using Projekt_WPF_TODO_app.Logic;
 namespace Projekt_WPF_TODO_app
 {
     public class WorkTasks : BaseViewModel
     {
+        public int userId { get; set; }
         public ObservableCollection<WorkTask> WorkTaskList { get; set; } = new ObservableCollection<WorkTask>();
 
         public ObservableCollection<WorkTask> DoneTasks { get; set; } = new ObservableCollection<WorkTask>();
@@ -37,8 +38,9 @@ namespace Projekt_WPF_TODO_app
         public ICommand DeleteSelectedTasksCommend { get; set; }
         public ICommand AddSelectedTaskskToDoneListCommend { get; set; }
 
-        public WorkTasks()
+        public WorkTasks(int userid)
         {
+            userId = userid;
             AddNewTaskCommand = new RelayCommand(AddNewTask);
             DeleteSelectedTasksCommend = new RelayCommand(DeleteSelectedTasks);
             AddSelectedTaskskToDoneListCommend = new RelayCommand(AddSelectedTaskskToDoneList);
@@ -106,8 +108,9 @@ namespace Projekt_WPF_TODO_app
         public void AddTasksFromDataBase()
         {
          
+            
             ApiHelper apiHelper = new ApiHelper("http://kubpi.pythonanywhere.com");
-            string response = apiHelper.SendGetRequest("/user-tasks/1");
+            string response = apiHelper.SendGetRequest("/user-tasks/" + userId);
             /*Console.WriteLine(response);*/
             List<WorkTask> tasks = JsonSerializer.Deserialize<List<WorkTask>>(response);
 

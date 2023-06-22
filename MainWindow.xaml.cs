@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Projekt_WPF_TODO_app.Pages;
 using Projekt_WPF_TODO_app.Windows;
+using System.Runtime.Intrinsics.X86;
 
 namespace Projekt_WPF_TODO_app
 {
@@ -24,41 +25,47 @@ namespace Projekt_WPF_TODO_app
     public partial class MainWindow : Window
     {
         MainWindow mainwindow;
+        User user = new User();
+        
 
-        SignIn signIn = new SignIn();
-        LogIn login = new LogIn();
-      
         public MainWindow()
         {
             InitializeComponent();
             mainwindow = this;
-            if (login.ReadLogInSession())
-            {
-                ChangeIntoWorkTaskPage();
-            }
+          /*  UserLogged();*/
         }
 
         private void SignIn_Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            SignInWindow window = new SignInWindow(signIn, mainwindow);
+            SignInWindow window = new SignInWindow(mainwindow, user);
             window.ShowDialog();
         }
 
         private void LogIn_Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            LogInWindow window = new LogInWindow(login, mainwindow);
+            LogInWindow window = new LogInWindow(mainwindow, user);
             window.ShowDialog();
         }
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
-            ResetPasswordWindow window = new ResetPasswordWindow(login, mainwindow);
+          
+            ResetPasswordWindow window = new ResetPasswordWindow(mainwindow,user);
             window.ShowDialog();
         }
 
         public void ChangeIntoWorkTaskPage()
-        {
-            this.Content = new WorkTaskPage(mainwindow);
+        {           
+            this.Content = new WorkTaskPage(mainwindow, user.UserId);
         }
+
+       /* public void UserLogged()
+        {
+            LogIn loginn = new LogIn(user);
+            if (loginn.ReadLogInSession())
+            {
+                ChangeIntoWorkTaskPage();
+            }
+        }*/
 
     }
 }
