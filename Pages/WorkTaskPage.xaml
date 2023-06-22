@@ -130,7 +130,7 @@
                         <TextBlock Text="Opcje:" Style="{StaticResource normalText}" Foreground="#878787" Grid.Column="1" Grid.Row="0"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
                             <CheckBox x:Name="addEndEnableEditTask_checkbox" Content="Dodaj task / edytuj task" Checked="AddEndEnableEditTask_Checked" Unchecked="AddEndEnableEditTask_UnChecked" Margin="0 0 0 10" Foreground="#3AB19B" BorderBrush="#acb0af"/>
-                            <CheckBox x:Name="compitedTasks_checkbox" Content="Pokaż taski ukończone" Checked="ShowComplitedTasks_Checked" Unchecked="ShowComplitedTasks_UnChecked" Margin="10 0 0 0" Foreground="#3AB19B" BorderBrush="#acb0af"/>
+                            <CheckBox x:Name="compitedTasks_checkbox" Content="Pokaż ukończone taski" Checked="ShowComplitedTasks_Checked" Unchecked="ShowComplitedTasks_UnChecked" Margin="10 0 0 0" Foreground="#3AB19B" BorderBrush="#acb0af"/>
                         </StackPanel>
 
                     </Grid>

@@ -114,5 +114,18 @@ namespace Projekt_WPF_TODO_app.Windows
                 RestartApplication();
             }
         }
+
+        private void Image_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
     }
 }

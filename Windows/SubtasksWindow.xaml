@@ -6,10 +6,89 @@
       xmlns:local="clr-namespace:Projekt_WPF_TODO_app.Controls" xmlns:local1="clr-namespace:Projekt_WPF_TODO_app.Logic.Helpers"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:xctk1="http://schemas.xceed.com/wpf/xaml/toolkit"
-        mc:Ignorable="d"
-        Title="SubtasksWindow" Height="450" Width="800">
-    
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent"
+        Title="SubtasksWindow" Height="550" Width="1100">
+
     <Grid>
+        <Image Source="/Images/close.png" Panel.ZIndex="1" MouseUp="Image_MouseUp" Style="{StaticResource imgClose}"/>
+
+        <Border Background="#ffffff" CornerRadius="10 10 10 10" MouseDown="Border_MouseDown">
+            <StackPanel VerticalAlignment="Center">
+
+                <TextBlock Text="Subtaski" Style="{StaticResource titleText}" Foreground="#3AB19B"/>
+
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!-- zbindowany header subtasku -->
+                    <TextBlock Text="{Binding SubTasksHeader}" Style="{StaticResource normalText}" Foreground="#878787" Margin="0 10 0 0"/>
+
+                    <ScrollViewer Height="300" Margin="0 0 20 0">
+
+                        <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" Background="#b5ded6" ItemsSource="{Binding SubtasksList}" Margin="20 20 10 20" CanUserAddRows="False" MaxWidth="1100" >
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Binding="{Binding IsSubtaskSelected, UpdateSourceTrigger=PropertyChanged}" >
+                                    <DataGridCheckBoxColumn.ElementStyle>
+                                        <Style TargetType="CheckBox"/>
+                                    </DataGridCheckBoxColumn.ElementStyle>
+                                </DataGridCheckBoxColumn>
+                                <DataGridTextColumn Header="Opis" Binding="{Binding SubtaskDescription}" IsReadOnly="True" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                            <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Status ukończenia" Binding="{Binding IsSubtaskCompleted, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="0.55*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </ScrollViewer>
+
+                    <Grid>
+                        <!-- grid dla opcji niżej -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Edytuj zaznaczone:" Style="{StaticResource normalText}" Foreground="#878787" Grid.Column="0" Grid.Row="0"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1">
+                            <Button Command="{Binding DeleteSelectedSubtaskCommend}" Content="Usuń podtaski" Style="{StaticResource mainButton}" Margin="0 0 0 10"/>
+                            <Button Command="{Binding AddSelectedSubtaskToDoneListCommend}" Content="Ukończ podtaski" Style="{StaticResource mainButton}" Margin="10 0 0 10"/>
+                        </StackPanel>
+
+                        <TextBlock Text="Opcje:" Style="{StaticResource normalText}" Foreground="#878787" Grid.Column="1" Grid.Row="0"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
+                            <CheckBox x:Name="addEndEnableEditTask_checkbox" Content="Dodaj / edytuj podtask" Checked="AddEndEnableEditTask_Checked" Unchecked="AddEndEnableEditTask_UnChecked" Margin="0 0 0 10" Foreground="#3AB19B" BorderBrush="#acb0af"/>
+                            <CheckBox x:Name="compitedTasks_checkbox" Content="Pokaż ukończone podtaski" Checked="ShowComplitedTasks_Checked" Unchecked="ShowComplitedTasks_UnChecked" Margin="10 0 0 0" Foreground="#3AB19B" BorderBrush="#acb0af"/>
+                        </StackPanel>
+
+                    </Grid>
+                    
+                    <!--<StackPanel Orientation="Horizontal">
+                        <Button Command="{Binding DeleteSelectedSubtaskCommend}" Content="Usun" />
+                        <Button Command="{Binding AddSelectedSubtaskToDoneListCommend}" Content="Przenieś do subtasków ukończonych" />
+
+                        <CheckBox x:Name="addEndEnableEditTask_checkbox" Content="Dodaj subtask / edytuj subtask" Checked="AddEndEnableEditTask_Checked" Unchecked="AddEndEnableEditTask_UnChecked" />
+                        <CheckBox x:Name="compitedTasks_checkbox" Content="Pokaż subtaski ukończone" Checked="ShowComplitedTasks_Checked" Unchecked="ShowComplitedTasks_UnChecked" />
+                    </StackPanel>-->
+                </StackPanel>
+
+            </StackPanel>
+
+        </Border>
+
+        
+        
+    </Grid>
+    
+    <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -17,53 +96,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Menu Grid.Row="0" Grid.Column="0" DockPanel.Dock="Top" Padding="5" Background="#FFA9D1F4">
-            <Menu.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <DockPanel HorizontalAlignment="Stretch"/>
-                </ItemsPanelTemplate>
-            </Menu.ItemsPanel>
-            <MenuItem FontSize="15" Header="Ustawienia" HorizontalAlignment="Left" >
-                <MenuItem FontSize="12" Header="Wyloguj się" HorizontalAlignment="Right" Click="Logout_click"/>
-            </MenuItem>
-
-        </Menu>
-
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="{Binding SubTasksHeader}" />
-            <ScrollViewer Height="300">
-
-                <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding SubtasksList}" Margin="10" CanUserAddRows="False" MaxWidth="1100" >
-                    <DataGrid.Columns>
-                        <DataGridCheckBoxColumn Binding="{Binding IsSubtaskSelected, UpdateSourceTrigger=PropertyChanged}" >
-                            <DataGridCheckBoxColumn.ElementStyle>
-                                <Style TargetType="CheckBox"/>
-                            </DataGridCheckBoxColumn.ElementStyle>
-                        </DataGridCheckBoxColumn>
-                        <DataGridTextColumn Header="Description" Binding="{Binding SubtaskDescription}" IsReadOnly="True" Width="*">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style>
-                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="Complited?" Binding="{Binding IsSubtaskCompleted, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="0.55*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-
-            </ScrollViewer>
+        </Grid.RowDefinitions>-->
 
 
-            <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding DeleteSelectedSubtaskCommend}" Content="Usun" />
-                <Button Command="{Binding AddSelectedSubtaskToDoneListCommend}" Content="Przenieś do subtasków ukończonych" />
 
-                <CheckBox x:Name="addEndEnableEditTask_checkbox" Content="Dodaj subtask / edytuj subtask" Checked="AddEndEnableEditTask_Checked" Unchecked="AddEndEnableEditTask_UnChecked" />
-                <CheckBox x:Name="compitedTasks_checkbox" Content="Pokaż subtaski ukończone" Checked="ShowComplitedTasks_Checked" Unchecked="ShowComplitedTasks_UnChecked" />
-            </StackPanel>
-        </StackPanel>
-
-    </Grid>
 </Window>
