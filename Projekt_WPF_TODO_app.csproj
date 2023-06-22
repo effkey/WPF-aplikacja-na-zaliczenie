@@ -13,6 +13,11 @@
 
   <ItemGroup>
     <None Remove="Images\close.png" />
+    <None Remove="Images\close_white.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\close_white.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,7 +15,7 @@
 
             <Grid>
                 <!-- ikonka zamykania -->
-                <Image Source="/Images/close.png" Panel.ZIndex="1" MouseUp="Image_MouseUp" Style="{StaticResource imgClose}"/>
+                <Image Source="/Images/close_white.png" Panel.ZIndex="1" MouseUp="Image_MouseUp" Style="{StaticResource imgClose}"/>
 
                 <StackPanel>
                     <Menu DockPanel.Dock="Top" Padding="10" Margin="0 0 0 10" Background="#3AB19B">
