@@ -179,7 +179,15 @@ namespace Projekt_WPF_TODO_app.Pages
 
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Application.Current.Shutdown();
+            MessageBoxResult result = MessageBox.Show("Czy na pewno chcesz wyjść?", "Potwierdzenie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+            else if (result == MessageBoxResult.No)
+            {
+
+            }
         }
     }
 }
