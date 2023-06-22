@@ -22,17 +22,16 @@ namespace Projekt_WPF_TODO_app.Windows
     /// </summary>
     public partial class SubtasksWindow : Window
     {
-      
-        WorkSubtasks workSubtasks = new WorkSubtasks();
 
-        public int rowIndex { get; set; }
 
-        public SubtasksWindow(int rowIndex, string subtaskHeader)
+        WorkSubtasks workSubtasks;
+
+        public SubtasksWindow(WorkTask taskidobj, string subtaskHeader, User user)
         {
             InitializeComponent();
+            workSubtasks = new WorkSubtasks(user);
             DataContext = workSubtasks;
-            this.rowIndex = rowIndex;
-            workSubtasks.AddDate(rowIndex);
+            workSubtasks.AddDate(taskidobj);
             workSubtasks.SubTasksHeader = subtaskHeader;
             //workTask.Add();
 

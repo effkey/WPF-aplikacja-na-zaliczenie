@@ -16,7 +16,7 @@ namespace Projekt_WPF_TODO_app
 {
     public class WorkTasks : BaseViewModel
     {
-        public int userId { get; set; }
+        public User user { get; set; }
         public ObservableCollection<WorkTask> WorkTaskList { get; set; } = new ObservableCollection<WorkTask>();
 
         public ObservableCollection<WorkTask> DoneTasks { get; set; } = new ObservableCollection<WorkTask>();
@@ -38,9 +38,9 @@ namespace Projekt_WPF_TODO_app
         public ICommand DeleteSelectedTasksCommend { get; set; }
         public ICommand AddSelectedTaskskToDoneListCommend { get; set; }
 
-        public WorkTasks(int userid)
+        public WorkTasks(User user)
         {
-            userId = userid;
+            this.user = user;
             AddNewTaskCommand = new RelayCommand(AddNewTask);
             DeleteSelectedTasksCommend = new RelayCommand(DeleteSelectedTasks);
             AddSelectedTaskskToDoneListCommend = new RelayCommand(AddSelectedTaskskToDoneList);
@@ -50,22 +50,6 @@ namespace Projekt_WPF_TODO_app
         public void AddNewTask()
         {
 
-            var newTask = new WorkTask
-            {
-                TaskTitle = NewWorkTaskTitle,
-                TaskDescription = NewWorkTaskDescription,
-                TaskPriority = null,
-                TaskDueDate = NewWorkTaskDueDate,
-                TaskStartDate = NewWorkTaskStartDate,
-                //TaskCompletionDate = NewWorkTaskStartDate,
-            };
-
-            WorkTaskList.Add(newTask);
-            NewWorkTaskTitle = string.Empty;
-            NewWorkTaskDescription = string.Empty;
-
-            OnPropertyChanged(nameof(NewWorkTaskTitle));
-            OnPropertyChanged(nameof(NewWorkTaskDescription));
         }
 
         private void DeleteSelectedTasks()
@@ -110,7 +94,7 @@ namespace Projekt_WPF_TODO_app
          
             
             ApiHelper apiHelper = new ApiHelper("http://kubpi.pythonanywhere.com");
-            string response = apiHelper.SendGetRequest("/user-tasks/" + userId);
+            string response = apiHelper.SendGetRequest("/user-tasks/" + user.UserId);
             /*Console.WriteLine(response);*/
             List<WorkTask> tasks = JsonSerializer.Deserialize<List<WorkTask>>(response);
 
@@ -141,6 +125,12 @@ namespace Projekt_WPF_TODO_app
                 return "Brak tytulu";
             }
                  
+        }
+
+        public WorkTask ReturnTaskId(int index)
+        {
+            return WorkTaskList[index];
+          
         }
 
     }

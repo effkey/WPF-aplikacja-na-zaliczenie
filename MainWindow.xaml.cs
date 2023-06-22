@@ -78,7 +78,7 @@ namespace Projekt_WPF_TODO_app
 
         public void ChangeIntoWorkTaskPage()
         {           
-            this.Content = new WorkTaskPage(mainwindow, user.UserId);
+            this.Content = new WorkTaskPage(mainwindow, user);
         }
 
        /* public void UserLogged()

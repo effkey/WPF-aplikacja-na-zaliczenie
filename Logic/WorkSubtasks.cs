@@ -22,8 +22,10 @@ namespace Projekt_WPF_TODO_app.Logic
 
         public string SubTasksHeader { get; set; }
 
-        public WorkSubtasks()
+        public User user { get; set; }
+        public WorkSubtasks(User user)
         {
+            this.user = user;
             DeleteSelectedSubtaskCommend = new RelayCommand(DeleteSelectedTasks);
             AddSelectedSubtaskToDoneListCommend = new RelayCommand(AddSelectedTaskskToDoneList);
         }
@@ -66,20 +68,27 @@ namespace Projekt_WPF_TODO_app.Logic
 
         }
 
-        public void AddDate(int rowIndex)
+        public void AddDate(WorkTask taskidobj)
         {
             ApiHelper apiHelper = new ApiHelper("http://kubpi.pythonanywhere.com");
-            string response = apiHelper.SendGetRequest("/user-subtasks/1/");
+            Console.WriteLine("userid to jest to " + user.UserId);
+            string response = apiHelper.SendGetRequest("/user-subtasks/" + user.UserId + "/");
             /*Console.WriteLine(response);*/
             List<WorkSubtask> tasks = JsonSerializer.Deserialize<List<WorkSubtask>>(response);
             foreach (WorkSubtask task in tasks)
             {
-               if(task.TaskId == rowIndex)
+                Console.WriteLine(task);
+               if(task.TaskId == taskidobj.TaskId)
                 {
                     SubtasksList.Add(task);
                 }
 
             }
+
+        }
+
+        public void findSubtasks()
+        {
 
         }
 

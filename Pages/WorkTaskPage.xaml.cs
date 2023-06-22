@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -35,10 +36,13 @@ namespace Projekt_WPF_TODO_app.Pages
 
         public int rowIndex { get; set; }
 
-        public WorkTaskPage(MainWindow mainWindow, int userid)
+        public User user { get; set; }
+
+        public WorkTaskPage(MainWindow mainWindow, User user)
         {
             InitializeComponent();
-            workTask = new WorkTasks(userid);
+            this.user = user;
+            workTask = new WorkTasks(user);
             DataContext = workTask;    
         
             this.mainWindow = mainWindow;
@@ -138,7 +142,8 @@ namespace Projekt_WPF_TODO_app.Pages
         private void openSubtaskWindow(object sender, RoutedEventArgs e)
         {
             string titleHeader = "Subtaski zadania: " + workTask.ReturnTaskHeader(rowIndex);
-            SubtasksWindow subtasksWindow = new SubtasksWindow(rowIndex, titleHeader);
+         
+            SubtasksWindow subtasksWindow = new SubtasksWindow(workTask.WorkTaskList[rowIndex], titleHeader, user);
             subtasksWindow.ShowDialog();
         }
 
