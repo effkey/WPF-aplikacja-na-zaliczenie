@@ -27,7 +27,7 @@
                         </Grid.ColumnDefinitions>
 
 
-                        <TextBlock x:Name="textNick" MouseDown="textNick_MouseDown" Text="Nick" Style="{StaticResource textHint}"/>
+                        <TextBlock x:Name="textNick" MouseDown="textNick_MouseDown" Text="Nick" Style="{StaticResource textHint}" Margin="26 0 0 0"/>
                         <TextBox Text="{Binding NewUserName}" x:Name="inputNick" TextChanged="inputNick_TextChanged" Style="{StaticResource textBox}"/>
                     </Grid>
                 </Border>
@@ -41,7 +41,7 @@
                         </Grid.ColumnDefinitions>
 
 
-                        <TextBlock x:Name="textEmail" MouseDown="textEmail_MouseDown" Text="Email" Style="{StaticResource textHint}"/>
+                        <TextBlock x:Name="textEmail" MouseDown="textEmail_MouseDown" Text="Email" Style="{StaticResource textHint}" Margin="26 0 0 0"/>
                         <TextBox Text="{Binding NewUserEmail}" x:Name="inputEmail" TextChanged="inputEmail_TextChanged" Style="{StaticResource textBox}"/>
                     </Grid>
                 </Border>

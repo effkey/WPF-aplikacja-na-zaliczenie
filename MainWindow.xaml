@@ -63,7 +63,7 @@
                         </Grid.ColumnDefinitions>
 
                         <!--<Image Source="/Images/Email.png" Height="20"/> --><!-- dodać ikonki -->
-                        <TextBlock x:Name="textNick" MouseDown="textNick_MouseDown" Text="Nick" Style="{StaticResource textHint}"/>
+                        <TextBlock x:Name="textNick" MouseDown="textNick_MouseDown" Text="Nick" Style="{StaticResource textHint}" Margin="26 0 0 0"/>
                         <TextBox Text="{Binding NewUserName}" x:Name="inputNick" TextChanged="inputNick_TextChanged" Style="{StaticResource textBox}"/>
                     </Grid>
                 </Border>
