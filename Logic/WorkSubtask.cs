@@ -9,19 +9,20 @@ namespace Projekt_WPF_TODO_app
     public class WorkSubtask : BaseViewModel, INotifyPropertyChanged
     {
      
-        [JsonPropertyName("subtask_id")]
+        [JsonPropertyName("id")]
         public int SubtaskId { get; set; }
 
-        [JsonPropertyName("task_id")]
+        [JsonPropertyName("task")]
         public int TaskId { get; set; }
 
         [JsonPropertyName("description")]
         public string? SubtaskDescription { get; set; }
 
-        [JsonPropertyName("completed")]
+       
 
         public bool IsSubtaskSelected { get; set; }
 
+        [JsonPropertyName("completed")]
         public bool isSubtaskTaskComplited { get; set; }
 
         public bool IsSubtaskCompleted
@@ -46,7 +47,7 @@ namespace Projekt_WPF_TODO_app
 
         public override string ToString()
         {
-            return $"Task SubtaskId: {SubtaskId}, Task Description: {SubtaskDescription}, Is Task Completed: {IsSubtaskCompleted}, Is Selected: {IsSubtaskSelected}";
+            return $"Task SubtaskId: {SubtaskId}, Task ID: {TaskId}, Task Description: {SubtaskDescription}, Is Task Completed: {IsSubtaskCompleted}, Is Selected: {IsSubtaskSelected}";
         }
     }
 }

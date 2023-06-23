@@ -79,7 +79,7 @@ namespace Projekt_WPF_TODO_app
         public void ChangeIntoWorkTaskPage()
         {
 
-            WorkTaskPage worktaskpageWindow = new WorkTaskPage(mainwindow, user.UserId);
+            WorkTaskPage worktaskpageWindow = new WorkTaskPage(mainwindow, user);
             this.Close();
             worktaskpageWindow.ShowDialog();
         }

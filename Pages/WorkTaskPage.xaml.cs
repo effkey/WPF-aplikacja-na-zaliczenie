@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -32,22 +33,18 @@ namespace Projekt_WPF_TODO_app.Pages
         MainWindow mainWindow;
        
         WorkTasks workTask;
-
+        Random random = new Random();
         public int rowIndex { get; set; }
-
-        public WorkTaskPage(MainWindow mainWindow, int userid)
+        public User user { get; set; }
+     
+        public WorkTaskPage(MainWindow mainWindow, User user)
         {
             InitializeComponent();
-            workTask = new WorkTasks(userid);
-            DataContext = workTask;    
-        
+            this.user = user;
+            workTask = new WorkTasks(user);
+            DataContext = workTask;
             this.mainWindow = mainWindow;
-            workTask.AddTasksFromDataBase();
-       
-           
-
-            //workTask.Add();
-
+            workTask.AddTasksFromDataBase();         
         }
         private void RestartApplication()
         {
@@ -56,6 +53,7 @@ namespace Projekt_WPF_TODO_app.Pages
             Console.WriteLine("Wykonalem sie");
             Application.Current.Shutdown();
         }
+
         private void AddEndEnableEditTask_Checked(object sender, RoutedEventArgs e)
         {
             // CheckBox został zaznaczony, odblokuj kolumny
@@ -63,11 +61,12 @@ namespace Projekt_WPF_TODO_app.Pages
             dataGrid.CanUserAddRows = true;
             dataGrid.ItemsSource = workTask.WorkTaskList;
             compitedTasks_checkbox.IsChecked = false;
-            dataGrid.Columns[7].IsReadOnly = true;
+            dataGrid.Columns[8].IsReadOnly = true;
+            dataGrid.Columns[1].IsReadOnly = true;
             SubtaskTemplate.Visibility = Visibility.Hidden;
             SubtaskTemplate1.Visibility = Visibility.Visible;
-
         }
+
         private void AddEndEnableEditTask_UnChecked(object sender, RoutedEventArgs e)
         {
             // CheckBox został odznaczony, zablokuj kolumny
@@ -77,9 +76,6 @@ namespace Projekt_WPF_TODO_app.Pages
             compitedTasks_checkbox.IsChecked = false;
             SubtaskTemplate1.Visibility = Visibility.Hidden;
             SubtaskTemplate.Visibility = Visibility.Visible;
-       
-
-
         }
         private void ShowComplitedTasks_Checked(object sender, RoutedEventArgs e)
         {
@@ -138,7 +134,8 @@ namespace Projekt_WPF_TODO_app.Pages
         private void openSubtaskWindow(object sender, RoutedEventArgs e)
         {
             string titleHeader = "Subtaski zadania: " + workTask.ReturnTaskHeader(rowIndex);
-            SubtasksWindow subtasksWindow = new SubtasksWindow(rowIndex, titleHeader);
+          
+            SubtasksWindow subtasksWindow = new SubtasksWindow(workTask.WorkTaskList[rowIndex], titleHeader, user);
             subtasksWindow.ShowDialog();
         }
 
@@ -176,6 +173,10 @@ namespace Projekt_WPF_TODO_app.Pages
                 this.DragMove();
             }
         }
+        //private int nextTaskId = 1;
+        private void dataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            var newTask = new WorkTask();
 
         private void Image_MouseUp_Close(object sender, MouseButtonEventArgs e)
         {
@@ -186,8 +187,17 @@ namespace Projekt_WPF_TODO_app.Pages
             }
             else if (result == MessageBoxResult.No)
             {
+            //Ikrementacja
+          /*  newTask.TaskId = nextTaskId; // Set the TaskId for the new item
+            nextTaskId++; // Increment the task ID for the next item
+            e.NewItem = newTask;*/
 
             }
+        }
+            //Losowanie
+            int randomNumber = random.Next(200, 10000);
+            newTask.TaskId = randomNumber;
+            e.NewItem = newTask;
         }
 
         private void Image_MouseUp_Logout(object sender, MouseButtonEventArgs e)
@@ -197,6 +207,11 @@ namespace Projekt_WPF_TODO_app.Pages
                 File.Delete("session.json");
                 RestartApplication();
             }
+        }
+        //Tutaj trzeba zbindowac jakos przycisk zapisz.
+        private void SaveTasks()
+        {
+            workTask.AddTasksToDataBase();
         }
     }
 }

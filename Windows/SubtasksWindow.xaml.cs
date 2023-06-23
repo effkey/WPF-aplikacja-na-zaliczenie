@@ -22,17 +22,18 @@ namespace Projekt_WPF_TODO_app.Windows
     /// </summary>
     public partial class SubtasksWindow : Window
     {
-      
-        WorkSubtasks workSubtasks = new WorkSubtasks();
 
-        public int rowIndex { get; set; }
 
-        public SubtasksWindow(int rowIndex, string subtaskHeader)
+        WorkSubtasks workSubtasks;
+        WorkTask taskObject;
+        Random random = new Random();
+        public SubtasksWindow(WorkTask taskObject, string subtaskHeader, User user)
         {
             InitializeComponent();
+            this.taskObject = taskObject;
+            workSubtasks = new WorkSubtasks(user);
             DataContext = workSubtasks;
-            this.rowIndex = rowIndex;
-            workSubtasks.AddDate(rowIndex);
+            workSubtasks.AddSubTasks(taskObject);
             workSubtasks.SubTasksHeader = subtaskHeader;
             //workTask.Add();
 
@@ -51,7 +52,8 @@ namespace Projekt_WPF_TODO_app.Windows
             dataGrid.CanUserAddRows = true;
             dataGrid.ItemsSource = workSubtasks.SubtasksList;
             compitedTasks_checkbox.IsChecked = false;
-            dataGrid.Columns[2].IsReadOnly = true;
+            dataGrid.Columns[0].IsReadOnly = true;
+            dataGrid.Columns[4].IsReadOnly = true;
         }
         private void AddEndEnableEditTask_UnChecked(object sender, RoutedEventArgs e)
         {
@@ -113,6 +115,16 @@ namespace Projekt_WPF_TODO_app.Windows
                 File.Delete("session.json");
                 RestartApplication();
             }
+        }
+
+
+        private void dataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            var newSubtask = new WorkSubtask();
+            newSubtask.TaskId = taskObject.TaskId; // Set the TaskId for the new item
+            int randomNumber = random.Next(200, 10000);
+            newSubtask.SubtaskId = randomNumber;
+            e.NewItem = newSubtask;
         }
 
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
