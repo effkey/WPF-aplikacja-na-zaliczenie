@@ -139,5 +139,11 @@ namespace Projekt_WPF_TODO_app.Windows
                 this.DragMove();
             }
         }
+
+        private void ButtonSaveSubtask_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            MessageBox.Show("Zapisano zmiany.", "Zapisywanie", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }

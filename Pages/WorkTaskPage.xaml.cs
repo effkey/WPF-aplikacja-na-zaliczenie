@@ -210,10 +210,10 @@ namespace Projekt_WPF_TODO_app.Pages
                 RestartApplication();
             }
         }
-        //Tutaj trzeba zbindowac jakos przycisk zapisz.
-        private void SaveTasks()
+
+        private void ButtonTaskSave_Click(object sender, RoutedEventArgs e)
         {
-            workTask.AddTasksToDataBase();
+            MessageBox.Show("Zapisano zmiany.", "Zapisywanie", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
