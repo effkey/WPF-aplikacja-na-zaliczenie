@@ -42,6 +42,7 @@
                             </DataGridCheckBoxColumn.ElementStyle>
                         </DataGridCheckBoxColumn>
                         <DataGridTextColumn Visibility="Hidden" Header="Task id" Binding="{Binding TaskId}" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn Visibility="Hidden" Header="Task id" Binding="{Binding SubTaskId}" IsReadOnly="True" Width="*"/>
                         <DataGridTextColumn Header="Description" Binding="{Binding SubtaskDescription}" IsReadOnly="True" Width="*">
                             <DataGridTextColumn.ElementStyle>
                                 <Style>

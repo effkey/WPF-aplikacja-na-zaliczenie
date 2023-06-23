@@ -27,13 +27,12 @@ namespace Projekt_WPF_TODO_app.Logic
         public WorkSubtasks(User user)
         {
             this.user = user;
-            DeleteSelectedSubtaskCommend = new RelayCommand(DeleteSelectedTasks);
+            DeleteSelectedSubtaskCommend = new RelayCommand(AddSubTasksToDataBase);
             AddSelectedSubtaskToDoneListCommend = new RelayCommand(AddSelectedTaskskToDoneList);
 
         }
 
-       
-
+ 
         private void DeleteSelectedTasks()
         {
             
@@ -100,12 +99,67 @@ namespace Projekt_WPF_TODO_app.Logic
 
         }
 
-        public void findSubtasks()
+        public void AddTasksFromDataBase()
         {
 
+
+            ApiHelper apiHelper = new ApiHelper("http://kubpi.pythonanywhere.com");
+            string response = apiHelper.SendGetRequest("/user-tasks/" + user.UserId);
+            /*Console.WriteLine(response);*/
+            List<WorkSubtask> tasks = JsonSerializer.Deserialize<List<WorkSubtask>>(response);
+
+            foreach (WorkSubtask task in tasks)
+            {
+                if (task.isSubtaskTaskComplited == false)
+                {
+                    //Console.WriteLine(task);
+                    SubtasksList.Add(task);
+                }
+                if (task.isSubtaskTaskComplited == true)
+                {
+                    //Console.WriteLine(task);
+                    SubtasksDoneList.Add(task);
+                }
+
+            }
         }
 
-        
+        public List<WorkTask> Tasks { get; set; }
+        public ObservableCollection<WorkSubtask> CombinedSubTasks { get; set; } = new ObservableCollection<WorkSubtask>();
+        public void AddSubTasksToDataBase()
+        {
+            ApiHelper apiHelper = new ApiHelper("http://kubpi.pythonanywhere.com");
+            string response = apiHelper.SendDeleteRequest("/delete-all-subtasks/" + user.UserId, user.Token);
+            // Połączenie dwóch list i przypisanie wyniku do CombinedTasks
+            foreach (var task in SubtasksList)
+            {
+                CombinedSubTasks.Add(task);
+            }
 
+            foreach (var task in SubtasksDoneList)
+            {
+                CombinedSubTasks.Add(task);
+            }
+
+            var taskData = new
+            {
+                subtasks = CombinedSubTasks.Select(task => new
+                {
+                    id = task.SubtaskId,
+                    task_id = task.TaskId,
+                    description = task.SubtaskDescription,
+                    completed = task.isSubtaskTaskComplited
+                }).ToList()
+            };
+
+
+            ApiHelper apiHelper1 = new ApiHelper("http://kubpi.pythonanywhere.com");
+            string jsonData = JsonSerializer.Serialize(taskData, new JsonSerializerOptions { WriteIndented = true });
+            Console.WriteLine(jsonData);
+            string response = apiHelper1.SendPostRequestWithHeaders(jsonData, "/add-subtasks/" + user.UserId + "/", user.Token);
+            Console.WriteLine(response);
+            CombinedSubTasks.Clear();
+
+        }
     }
 }

@@ -26,12 +26,12 @@ namespace Projekt_WPF_TODO_app.Windows
 
         WorkSubtasks workSubtasks;
         WorkTask taskObject;
-
-        public SubtasksWindow(WorkTask taskObject, string subtaskHeader, WorkSubtasks workSubtasks )
+        Random random = new Random();
+        public SubtasksWindow(WorkTask taskObject, string subtaskHeader, User user)
         {
             InitializeComponent();
             this.taskObject = taskObject;
-           
+            workSubtasks = new WorkSubtasks(user);
             DataContext = workSubtasks;
             workSubtasks.AddSubTasks(taskObject);
             workSubtasks.SubTasksHeader = subtaskHeader;
@@ -52,8 +52,8 @@ namespace Projekt_WPF_TODO_app.Windows
             dataGrid.CanUserAddRows = true;
             dataGrid.ItemsSource = workSubtasks.SubtasksList;
             compitedTasks_checkbox.IsChecked = false;
-            dataGrid.Columns[1].IsReadOnly = true;
-            dataGrid.Columns[3].IsReadOnly = true;
+            dataGrid.Columns[0].IsReadOnly = true;
+            dataGrid.Columns[4].IsReadOnly = true;
         }
         private void AddEndEnableEditTask_UnChecked(object sender, RoutedEventArgs e)
         {
@@ -122,9 +122,10 @@ namespace Projekt_WPF_TODO_app.Windows
         {
             var newSubtask = new WorkSubtask();
             newSubtask.TaskId = taskObject.TaskId; // Set the TaskId for the new item
- 
+            int randomNumber = random.Next(200, 10000);
+            newSubtask.SubtaskId = randomNumber;
             e.NewItem = newSubtask;
         }
-
+        
     }
 }

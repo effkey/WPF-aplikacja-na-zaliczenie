@@ -48,7 +48,7 @@ namespace Projekt_WPF_TODO_app
         {
             this.user = user;
         
-            DeleteSelectedTasksCommend = new RelayCommand(DeleteSelectedTasks);
+            DeleteSelectedTasksCommend = new RelayCommand(AddTasksToDataBase);
             AddSelectedTaskskToDoneListCommend = new RelayCommand(AddSelectedTaskskToDoneList);     
         }
     
@@ -120,6 +120,7 @@ namespace Projekt_WPF_TODO_app
         {
             ApiHelper apiHelper = new ApiHelper("http://kubpi.pythonanywhere.com");
             apiHelper.SendDeleteRequest("/delete-all-tasks/" + user.UserId, user.Token);
+            apiHelper.SendDeleteRequest("/delete-all-subtasks/" + user.UserId, user.Token);
 
 
             // Połączenie dwóch list i przypisanie wyniku do CombinedTasks

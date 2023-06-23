@@ -35,14 +35,13 @@ namespace Projekt_WPF_TODO_app.Pages
         Random random = new Random();
         public int rowIndex { get; set; }
         public User user { get; set; }
-        WorkSubtasks workSubtasks;
+     
         public WorkTaskPage(MainWindow mainWindow, User user)
         {
             InitializeComponent();
             this.user = user;
             workTask = new WorkTasks(user);
             DataContext = workTask;
-            workSubtasks = new WorkSubtasks(user);
             this.mainWindow = mainWindow;
             workTask.AddTasksFromDataBase();         
         }
@@ -135,7 +134,7 @@ namespace Projekt_WPF_TODO_app.Pages
         {
             string titleHeader = "Subtaski zadania: " + workTask.ReturnTaskHeader(rowIndex);
           
-            SubtasksWindow subtasksWindow = new SubtasksWindow(workTask.WorkTaskList[rowIndex], titleHeader, workSubtasks);
+            SubtasksWindow subtasksWindow = new SubtasksWindow(workTask.WorkTaskList[rowIndex], titleHeader, user);
             subtasksWindow.ShowDialog();
         }
 
