@@ -13,7 +13,7 @@ namespace Projekt_WPF_TODO_app.Logic
 
         public User User { get; set; }
         public bool IsLogInSuccess { get; set; }
-        public string? ErrorResponse { get; set; }
+        public string ErrorResponse { get; set; }
         public ICommand? LogInCommand { get; set; }
         public string NewUserPassword{ get; set; }
         public string NewUserName { get; set; }
@@ -44,27 +44,35 @@ namespace Projekt_WPF_TODO_app.Logic
             var logInHandler = new ApiHelper("http://kubpi.pythonanywhere.com/");
             var logInDataInJson = JsonSerializer.Serialize(logInUserData);
             var logInResponse = logInHandler.SendPostRequest(logInDataInJson, "login");
-           // Console.WriteLine(logInResponse);
-            var responseJsonDocument = JsonDocument.Parse(logInResponse);
-
-            if (responseJsonDocument.RootElement.TryGetProperty("token", out var tokenProperty) && tokenProperty.ValueKind == JsonValueKind.String)
+            // Console.WriteLine(logInResponse);
+            try
             {
-                string token = tokenProperty.GetString();
-                // Odpowiedni typ danych: string
-                Console.WriteLine("Token: " + token);
-                user.Token = token;
-            }
+                var responseJsonDocument = JsonDocument.Parse(logInResponse);
+               
+                if (responseJsonDocument.RootElement.TryGetProperty("token", out var tokenProperty) && tokenProperty.ValueKind == JsonValueKind.String)
+                {
+                    string token = tokenProperty.GetString();
+                    // Odpowiedni typ danych: string
+                    Console.WriteLine("Token: " + token);
+                    user.Token = token;
+                }
 
-            if (responseJsonDocument.RootElement.TryGetProperty("user_id", out var userIdProperty) && userIdProperty.ValueKind == JsonValueKind.Number)
+                if (responseJsonDocument.RootElement.TryGetProperty("user_id", out var userIdProperty) && userIdProperty.ValueKind == JsonValueKind.Number)
+                {
+                    int userId = userIdProperty.GetInt32();
+                    // Odpowiedni typ danych: int
+                    user.UserId = userIdProperty.GetInt32();
+                    Console.WriteLine("UserID: " + userId);
+
+                }
+                IsLogInSuccess = true;
+                LogInCompleted?.Invoke(this, true);
+            }catch(Exception ex)
             {
-                int userId = userIdProperty.GetInt32();
-                // Odpowiedni typ danych: int
-                user.UserId = userIdProperty.GetInt32();
-                Console.WriteLine("UserID: " + userId);
-
+                ErrorResponse = logInResponse;
+                IsLogInSuccess = false;
+                LogInCompleted?.Invoke(this, false);
             }
-            IsLogInSuccess = true;
-            LogInCompleted?.Invoke(this, true);
       
         }
 

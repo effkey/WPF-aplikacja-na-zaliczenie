@@ -1,4 +1,5 @@
-﻿using Projekt_WPF_TODO_app.Logic.Helpers;
+﻿using Microsoft.VisualBasic;
+using Projekt_WPF_TODO_app.Logic.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace Projekt_WPF_TODO_app.Logic
         public string NewUserToken { get; set; }
         public bool IsSignInSuccess { get; set; }
         public string? Response { get; set; }
+        public string ErrorResponse { get; set; }
+
 
         public event EventHandler<bool>? SignInCompleted;
         public ICommand? SignInCommend { get; set; }
@@ -49,45 +52,56 @@ namespace Projekt_WPF_TODO_app.Logic
             var signInResponse = signInHandler.SendPostRequest(signInDataInJson, "register");
             Response = signInResponse;
 
-            var responseJsonDocument = JsonDocument.Parse(signInResponse);
-
-            if (responseJsonDocument.RootElement.TryGetProperty("username", out var usernameProperty) && usernameProperty.ValueKind == JsonValueKind.String)
+            try
             {
-                string username = usernameProperty.GetString();
-                // Odpowiedni typ danych: string
-                Console.WriteLine("username: " + username);
-                user.Username = username;
+                var responseJsonDocument = JsonDocument.Parse(signInResponse);
+
+                if (responseJsonDocument.RootElement.TryGetProperty("username", out var usernameProperty) && usernameProperty.ValueKind == JsonValueKind.String)
+                {
+                    string username = usernameProperty.GetString();
+                    // Odpowiedni typ danych: string
+                    Console.WriteLine("username: " + username);
+                    user.Username = username;
+                }
+
+
+                if (responseJsonDocument.RootElement.TryGetProperty("email", out var emailProperty) && emailProperty.ValueKind == JsonValueKind.Number)
+                {
+                    string email = emailProperty.GetString();
+                    // Odpowiedni typ danych: int
+                    user.Email = email;
+                    Console.WriteLine("email: " + email);
+
+                }
+
+                if (responseJsonDocument.RootElement.TryGetProperty("user_id", out var userIdProperty) && userIdProperty.ValueKind == JsonValueKind.Number)
+                {
+                    int userId = userIdProperty.GetInt32();
+                    // Odpowiedni typ danych: int
+                    user.UserId = userIdProperty.GetInt32();
+                    Console.WriteLine("UserID: " + userId);
+
+                }
+
+                if (responseJsonDocument.RootElement.TryGetProperty("token", out var tokenProperty) && tokenProperty.ValueKind == JsonValueKind.String)
+                {
+                    string token = tokenProperty.GetString();
+                    // Odpowiedni typ danych: string
+                    Console.WriteLine("Token: " + token);
+                    user.Token = token;
+                }
+
+                IsSignInSuccess = true;
+                SignInCompleted?.Invoke(this, true);
+            }
+            catch(Exception ex)
+            {
+                ErrorResponse = signInResponse;
+                IsSignInSuccess = false;
+                SignInCompleted?.Invoke(this, false);
             }
 
-
-            if (responseJsonDocument.RootElement.TryGetProperty("email", out var emailProperty) && emailProperty.ValueKind == JsonValueKind.Number)
-            {
-                string email = emailProperty.GetString();
-                // Odpowiedni typ danych: int
-                user.Email = email;
-                Console.WriteLine("email: " + email);
-
-            }
-
-            if (responseJsonDocument.RootElement.TryGetProperty("user_id", out var userIdProperty) && userIdProperty.ValueKind == JsonValueKind.Number)
-            {
-                int userId = userIdProperty.GetInt32();
-                // Odpowiedni typ danych: int
-                user.UserId = userIdProperty.GetInt32();
-                Console.WriteLine("UserID: " + userId);
-
-            }
-
-            if (responseJsonDocument.RootElement.TryGetProperty("token", out var tokenProperty) && tokenProperty.ValueKind == JsonValueKind.String)
-            {
-                string token = tokenProperty.GetString();
-                // Odpowiedni typ danych: string
-                Console.WriteLine("Token: " + token);
-                user.Token = token;
-            }
-
-            IsSignInSuccess = true;
-            SignInCompleted?.Invoke(this, true);
+     
 
             /* if (responseJsonDocument.RootElement.TryGetProperty("response", out var responseProperty) && tokenProperty.ValueKind == JsonValueKind.String)
              {
