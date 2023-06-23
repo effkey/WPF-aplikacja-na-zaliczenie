@@ -27,11 +27,11 @@ namespace Projekt_WPF_TODO_app.Windows
         WorkSubtasks workSubtasks;
         WorkTask taskObject;
 
-        public SubtasksWindow(WorkTask taskObject, string subtaskHeader, User user)
+        public SubtasksWindow(WorkTask taskObject, string subtaskHeader, WorkSubtasks workSubtasks )
         {
             InitializeComponent();
             this.taskObject = taskObject;
-            workSubtasks = new WorkSubtasks(user);
+           
             DataContext = workSubtasks;
             workSubtasks.AddSubTasks(taskObject);
             workSubtasks.SubTasksHeader = subtaskHeader;

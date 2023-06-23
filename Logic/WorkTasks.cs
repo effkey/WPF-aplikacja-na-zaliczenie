@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Projekt_WPF_TODO_app.Logic;
+using System.Windows.Documents;
+using System.Text.Json.Serialization;
+
 namespace Projekt_WPF_TODO_app
 {
     public class WorkTasks : BaseViewModel
@@ -20,6 +23,7 @@ namespace Projekt_WPF_TODO_app
         public ObservableCollection<WorkTask> WorkTaskList { get; set; } = new ObservableCollection<WorkTask>();
 
         public ObservableCollection<WorkTask> DoneTasks { get; set; } = new ObservableCollection<WorkTask>();
+
 
         public string NewWorkTaskTitle { get; set; }
 
@@ -43,23 +47,17 @@ namespace Projekt_WPF_TODO_app
         public WorkTasks(User user)
         {
             this.user = user;
-            AddNewTaskCommand = new RelayCommand(AddNewTask);
+        
             DeleteSelectedTasksCommend = new RelayCommand(DeleteSelectedTasks);
-            AddSelectedTaskskToDoneListCommend = new RelayCommand(AddSelectedTaskskToDoneList);
-       
+            AddSelectedTaskskToDoneListCommend = new RelayCommand(AddSelectedTaskskToDoneList);     
         }
-
-        public void AddNewTask()
-        {
-
-        }
-
+    
         private void DeleteSelectedTasks()
         {
-            foreach (var workTask in WorkTaskList)
+           /* foreach (var workTask in WorkTaskList)
             {
                 Console.WriteLine(workTask.ToString());
-            }
+            }*/
 
             var selectedTasks = WorkTaskList.Where(x => x.IsSelected).ToList();
 
@@ -82,7 +80,7 @@ namespace Projekt_WPF_TODO_app
             foreach (var task in selectedTasks)
             {
                 task.IsTaskComplited = true;
-                Console.WriteLine(task.ToString());
+               // Console.WriteLine(task.ToString());
                 task.TaskCompletionDate = DateTime.Now;
                 DoneTasks.Add(task);
                 WorkTaskList.Remove(task);
@@ -104,70 +102,64 @@ namespace Projekt_WPF_TODO_app
             {
                 if (task.isTaskComplited == false)
                 {
-                    Console.WriteLine(task);
+                    //Console.WriteLine(task);
                     WorkTaskList.Add(task);
                 }
                 if (task.isTaskComplited == true)
                 {
-                    Console.WriteLine(task);
+                    //Console.WriteLine(task);
                     DoneTasks.Add(task);
                 }
 
             }
         }
 
+        public List<WorkTask> Tasks { get; set; }
+        public ObservableCollection<WorkTask> CombinedTasks { get; set; } = new ObservableCollection<WorkTask>();
         public void AddTasksToDataBase()
         {
+            ApiHelper apiHelper = new ApiHelper("http://kubpi.pythonanywhere.com");
+            apiHelper.SendDeleteRequest("/delete-all-tasks/" + user.UserId, user.Token);
 
 
-           /* ApiHelper apiHelper = new ApiHelper("http://kubpi.pythonanywhere.com");
-             var json =  new 
-            {
-                user = 1,
-                category = WorkTaskCategory
-                 title = "amobus",
-                 description = "Opis zadania 1",
-                priority = "High",
-                dueDate = DateTime.Parse("2023-06-30T12:00:00"),
-                startDate = DateTime.Parse("2023-06-15T08:00:00"),
-                completionDate = DateTime.Parse("2023-06-15T08:00:00"),
-                completed = false,
-                subtasks = new List<SubTask>
+            // Połączenie dwóch list i przypisanie wyniku do CombinedTasks
+            foreach (var task in WorkTaskList)
                 {
-                    new SubTask { Description = "pb", Completed = false },
-                    new SubTask { Description = "pb", Completed = true }
+                    CombinedTasks.Add(task);
                 }
-            };
 
-            TaskData taskData = new TaskData
-            {
-                Tasks = new List<WorkTask> { task }
-            };
+                foreach (var task in DoneTasks)
+                {
+                    CombinedTasks.Add(task);
+                }
+
+                var taskData = new
+                {
+                    tasks = CombinedTasks.Select(task => new
+                    {
+                        id = task.TaskId,
+                        user = user.UserId,
+                        category = task.Category,
+                        title = task.TaskTitle,
+                        description = task.TaskDescription,
+                        priority = task.TaskPriority,
+                        due_date = task.TaskDueDate?.ToString("yyyy-MM-dd"),
+                        start_date = task.TaskStartDate?.ToString("yyyy-MM-dd"),
+                        completion_date = task.TaskCompletionDate?.ToString("yyyy-MM-dd"),
+                        completed = task.IsTaskComplited
+                    }).ToList()
+                };
+     
+           
 
             string jsonData = JsonSerializer.Serialize(taskData, new JsonSerializerOptions { WriteIndented = true });
             Console.WriteLine(jsonData);
-
-
-
-            string response = apiHelper.SendPostRequestWithHeaders(json,"/user-tasks/" + user.UserId,user.Token);
-            *//*Console.WriteLine(response);*//*
-            List<WorkTask> tasks = JsonSerializer.Deserialize<List<WorkTask>>(response);
-
-            foreach (WorkTask task in tasks)
-            {
-                if (task.isTaskComplited == false)
-                {
-                    Console.WriteLine(task);
-                    WorkTaskList.Add(task);
-                }
-                if (task.isTaskComplited == true)
-                {
-                    Console.WriteLine(task);
-                    DoneTasks.Add(task);
-                }
-
-            }*/
+            string response = apiHelper.SendPostRequestWithHeaders(jsonData, "/add-tasks/", user.Token);
+            Console.WriteLine(response);
+            CombinedTasks.Clear(); 
+            
         }
+
 
         public string ReturnTaskHeader(int index)
         {

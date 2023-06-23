@@ -30,28 +30,21 @@ namespace Projekt_WPF_TODO_app.Pages
     /// </summary>
     public partial class WorkTaskPage : Page
     {
-        MainWindow mainWindow;
-       
+        MainWindow mainWindow;    
         WorkTasks workTask;
         Random random = new Random();
         public int rowIndex { get; set; }
-
         public User user { get; set; }
-
+        WorkSubtasks workSubtasks;
         public WorkTaskPage(MainWindow mainWindow, User user)
         {
             InitializeComponent();
             this.user = user;
             workTask = new WorkTasks(user);
-            DataContext = workTask;    
-        
+            DataContext = workTask;
+            workSubtasks = new WorkSubtasks(user);
             this.mainWindow = mainWindow;
-            workTask.AddTasksFromDataBase();
-       
-           
-
-            //workTask.Add();
-
+            workTask.AddTasksFromDataBase();         
         }
         private void RestartApplication()
         {
@@ -60,6 +53,7 @@ namespace Projekt_WPF_TODO_app.Pages
             Console.WriteLine("Wykonalem sie");
             Application.Current.Shutdown();
         }
+
         private void AddEndEnableEditTask_Checked(object sender, RoutedEventArgs e)
         {
             // CheckBox został zaznaczony, odblokuj kolumny
@@ -71,8 +65,8 @@ namespace Projekt_WPF_TODO_app.Pages
             dataGrid.Columns[1].IsReadOnly = true;
             SubtaskTemplate.Visibility = Visibility.Hidden;
             SubtaskTemplate1.Visibility = Visibility.Visible;
-
         }
+
         private void AddEndEnableEditTask_UnChecked(object sender, RoutedEventArgs e)
         {
             // CheckBox został odznaczony, zablokuj kolumny
@@ -82,9 +76,6 @@ namespace Projekt_WPF_TODO_app.Pages
             compitedTasks_checkbox.IsChecked = false;
             SubtaskTemplate1.Visibility = Visibility.Hidden;
             SubtaskTemplate.Visibility = Visibility.Visible;
-       
-
-
         }
         private void ShowComplitedTasks_Checked(object sender, RoutedEventArgs e)
         {
@@ -143,8 +134,8 @@ namespace Projekt_WPF_TODO_app.Pages
         private void openSubtaskWindow(object sender, RoutedEventArgs e)
         {
             string titleHeader = "Subtaski zadania: " + workTask.ReturnTaskHeader(rowIndex);
-         
-            SubtasksWindow subtasksWindow = new SubtasksWindow(workTask.WorkTaskList[rowIndex], titleHeader, user);
+          
+            SubtasksWindow subtasksWindow = new SubtasksWindow(workTask.WorkTaskList[rowIndex], titleHeader, workSubtasks);
             subtasksWindow.ShowDialog();
         }
 
@@ -175,15 +166,26 @@ namespace Projekt_WPF_TODO_app.Pages
 
         }
 
+        //private int nextTaskId = 1;
         private void dataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
         {
-            var newSubtask = new WorkTask();
-            
+            var newTask = new WorkTask();
+
+            //Ikrementacja
+          /*  newTask.TaskId = nextTaskId; // Set the TaskId for the new item
+            nextTaskId++; // Increment the task ID for the next item
+            e.NewItem = newTask;*/
+
+            //Losowanie
             int randomNumber = random.Next(200, 10000);
-            newSubtask.TaskId = randomNumber;
-            e.NewItem = newSubtask;
+            newTask.TaskId = randomNumber;
+            e.NewItem = newTask;
         }
 
-
+        //Tutaj trzeba zbindowac jakos przycisk zapisz.
+        private void SaveTasks()
+        {
+            workTask.AddTasksToDataBase();
+        }
     }
 }

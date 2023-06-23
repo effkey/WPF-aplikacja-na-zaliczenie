@@ -29,6 +29,7 @@ namespace Projekt_WPF_TODO_app.Logic
             this.user = user;
             DeleteSelectedSubtaskCommend = new RelayCommand(DeleteSelectedTasks);
             AddSelectedSubtaskToDoneListCommend = new RelayCommand(AddSelectedTaskskToDoneList);
+
         }
 
        
@@ -36,12 +37,12 @@ namespace Projekt_WPF_TODO_app.Logic
         private void DeleteSelectedTasks()
         {
             
-
+/*
             foreach (var workTask in SubtasksList)
             {
                 Console.WriteLine(workTask.ToString());
             }
-
+*/
             var selectedTasks = SubtasksList.Where(x => x.IsSubtaskSelected).ToList();
 
             foreach (var task in selectedTasks)
@@ -52,10 +53,10 @@ namespace Projekt_WPF_TODO_app.Logic
 
         private void AddSelectedTaskskToDoneList()
         {
-            foreach (var workTask in SubtasksList)
+           /* foreach (var workTask in SubtasksList)
             {
                 Console.WriteLine(workTask.ToString());
-            }
+            }*/
 
             var selectedTasks = SubtasksList.Where(x => x.IsSubtaskSelected).ToList();
 
@@ -68,12 +69,6 @@ namespace Projekt_WPF_TODO_app.Logic
                 SubtasksList.Remove(task);
             }
 
-            foreach (WorkSubtask task in SubtasksList)
-            {
-                Console.WriteLine(task);
-               
-
-            }
 
 
         }
@@ -89,9 +84,17 @@ namespace Projekt_WPF_TODO_app.Logic
             {
                 Console.WriteLine(task);
                if(task.TaskId == taskidobj.TaskId)
-                {
-                    SubtasksList.Add(task);
+                {         
+                    if (task.IsSubtaskCompleted == true)
+                    {
+                        SubtasksDoneList.Add(task);
+                    }
+                    else
+                    {
+                        SubtasksList.Add(task);
+                    }
                 }
+               
 
             }
 

@@ -119,9 +119,14 @@ namespace Projekt_WPF_TODO_app
             return $"Task Id: {TaskId}, User Id: {UserId}, Category: {Category}, Task Title: {TaskTitle}, Task Description: {TaskDescription}, Task Priority: {TaskPriority}, Task Due Date: {FormattedDueDate}, Task Start Date: {FormattedStartDate}, Task Completion Date: {FormattedCompletionDate}, Is Task Completed: {IsTaskComplited}, Is Selected: {IsSelected}";
         }*/
 
-        public override string ToString()
+/*        public override string ToString()
         {
             return $"Task id: {TaskId}, Task Title: {TaskTitle}, Task Description: {TaskDescription}, Task Due Date: {FormattedDueDate}, Task Start Date: {FormattedStartDate}, Task Completion Date: {FormattedCompletionDate}, Is Task Completed: {IsTaskComplited}, Is Selected: {IsSelected}";
+        }*/
+
+        public override string ToString()
+        {
+            return $"Task id: {TaskId}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
