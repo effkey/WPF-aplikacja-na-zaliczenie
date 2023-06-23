@@ -64,11 +64,6 @@ namespace Projekt_WPF_TODO_app
             window.ShowDialog();
         }
 
-        //private void LogIn_Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        //{
-        //    LogInWindow window = new LogInWindow(login, mainwindow);
-        //    window.ShowDialog();
-        //}
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
           

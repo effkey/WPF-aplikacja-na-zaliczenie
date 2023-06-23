@@ -26,7 +26,6 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-
                         <TextBlock x:Name="textNick" MouseDown="textNick_MouseDown" Text="Nick" Style="{StaticResource textHint}" Margin="26 0 0 0"/>
                         <TextBox Text="{Binding NewUserName}" x:Name="inputNick" TextChanged="inputNick_TextChanged" Style="{StaticResource textBox}"/>
                     </Grid>
@@ -39,7 +38,6 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-
 
                         <TextBlock x:Name="textEmail" MouseDown="textEmail_MouseDown" Text="Email" Style="{StaticResource textHint}" Margin="26 0 0 0"/>
                         <TextBox Text="{Binding NewUserEmail}" x:Name="inputEmail" TextChanged="inputEmail_TextChanged" Style="{StaticResource textBox}"/>
@@ -55,9 +53,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock x:Name="textPassword" MouseDown="textPassword_MouseDown" Text="Hasło" Style="{StaticResource textHint}"/>
-                        <!--<PasswordBox PasswordChanged="inputPassword_PasswordChanged" x:Name="inputPassword" Style="{StaticResource textBox}"/>-->
                         <Components:BindAblePasswordBox Password="{Binding NewUserPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" x:Name="inputPassword" TextPassword="{Binding ElementName=textPassword}"/>
-                        <!--<TextBox Text="{Binding Password}" Name="TxtBox" Visibility="Collapsed"/>-->
                     </Grid>
                 </Border>
 
@@ -70,14 +66,9 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock x:Name="textPasswordRepeat" MouseDown="textPassword_MouseDown" Text="Powtórz hasło" Style="{StaticResource textHint}"/>
-                        <!--<PasswordBox PasswordChanged="inputPassword_PasswordChanged" x:Name="inputPassword" Style="{StaticResource textBox}"/>-->
                         <Components:BindAblePasswordBox Password="{Binding NewUserPassword2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" x:Name="inputPasswordRepeat" TextPassword="{Binding ElementName=textPassword}"/>
-                        <!--<TextBox Text="{Binding Password}" Name="TxtBox" Visibility="Collapsed"/>-->
                     </Grid>
                 </Border>
-
-                <!--<TextBox FontSize="20" Grid.Row="3" Grid.Column="1"  Margin="5" Name="TxtBox" Visibility="Collapsed" VerticalContentAlignment="Center"/>
-                <TextBox FontSize="20" Grid.Row="4" Grid.Column="1"  Margin="5" Name="TxtBox1" Visibility="Collapsed" VerticalContentAlignment="Center"/>-->
 
                 <Grid>
                     <Grid.RowDefinitions>

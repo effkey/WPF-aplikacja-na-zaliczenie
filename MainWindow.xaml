@@ -40,18 +40,12 @@
                 </StackPanel>
                 
             </Grid>
-            
+      
         </Border>
 
         <Border Background="#ffffff" Grid.Column="1" CornerRadius="0 10 10 0" MouseDown="Border_MouseDown">  <!-- logowanie -->
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="Zaloguj się do aplikacji" Style="{StaticResource titleText}" Foreground="#3AB19B"/>
-                <!-- tutaj niżej dla ikonek kont społecznościowych ale raczej niepotrzebne -->
-                <!--<StackPanel Orientation="Horizontal" Margin="0 20" HorizontalAlignment="Center">
-                    <Button>
-                        <Image></Image>
-                    </Button>
-                </StackPanel>-->
 
                 <TextBlock Text="Wpisz dane logowania:" Style="{StaticResource normalText}" Foreground="#878787" Margin="0 10 0 15"/>
 
@@ -62,7 +56,6 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!--<Image Source="/Images/Email.png" Height="20"/> --><!-- dodać ikonki -->
                         <TextBlock x:Name="textNick" MouseDown="textNick_MouseDown" Text="Nick" Style="{StaticResource textHint}" Margin="26 0 0 0"/>
                         <TextBox Text="{Binding NewUserName}" x:Name="inputNick" TextChanged="inputNick_TextChanged" Style="{StaticResource textBox}"/>
                     </Grid>
@@ -75,12 +68,8 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!--<Image Source="/Images/Lock.png" Height="20"/>-->
-                        <!-- dodać ikonki -->
                         <TextBlock x:Name="textPassword" MouseDown="textPassword_MouseDown" Text="Hasło" Style="{StaticResource textHint}"/>
-                        <!--<PasswordBox PasswordChanged="inputPassword_PasswordChanged" x:Name="inputPassword" Style="{StaticResource textBox}"/>-->
                         <Components:BindAblePasswordBox Password="{Binding NewUserPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" x:Name="inputPassword" TextPassword="{Binding ElementName=textPassword}"/>
-                        <!--<TextBox Text="{Binding Password}" Name="TxtBox" Visibility="Collapsed"/>-->
                     </Grid>
                 </Border>
 
@@ -92,21 +81,7 @@
 
             </StackPanel>
         </Border>
-        
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <Label FontSize="30" Margin="20" Grid.ColumnSpan="2" HorizontalAlignment="Center"  >Welcome to TodoApp!</Label>
-        <Button FontSize="18" Margin="10" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Height="60" Width="210" HorizontalAlignment="Center" Click="SignIn_Button_Click">Sign In</Button>
-        <Button FontSize="18" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="5" Height="60" Width="210" HorizontalAlignment="Center" Click="LogIn_Button_Click">Log in</Button>
-        <TextBlock Grid.Row="3" Margin="10" HorizontalAlignment="Center">           
-        <Hyperlink FontSize="16"  Click="ForgotPassword_Click">
-            Forgot password?
-        </Hyperlink>
-        </TextBlock>-->
+
         <ContentControl x:Name="navigationControl" />
     </Grid>
 </Window>

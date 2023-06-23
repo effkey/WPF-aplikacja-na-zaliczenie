@@ -129,30 +129,5 @@
             </Style.Triggers>
         </Style>
 
-        <!--<Style x:Key="buttonCircle" TargetType="Button">    to narazie chyba niepotrzebne bo było do ikonek społecznościowych
-            --><!-- styl dla circle buttona w logowaniu --><!--
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="Margin" Value="8 0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="30" BorderThickness="1" BorderBrush="#878787" Padding="15">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                --><!-- triggery dla buttona --><!--
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#d9d9d9"/>
-                </Trigger>
-                <Trigger Property="IsMouseCaptured" Value="True">
-                    <Setter Property="Background" Value="#c4c4c4"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>-->
-
     </Application.Resources>
 </Application>
