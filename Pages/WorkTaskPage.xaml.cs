@@ -173,10 +173,6 @@ namespace Projekt_WPF_TODO_app.Pages
                 this.DragMove();
             }
         }
-        //private int nextTaskId = 1;
-        private void dataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
-        {
-            var newTask = new WorkTask();
 
         private void Image_MouseUp_Close(object sender, MouseButtonEventArgs e)
         {
@@ -187,17 +183,23 @@ namespace Projekt_WPF_TODO_app.Pages
             }
             else if (result == MessageBoxResult.No)
             {
-            //Ikrementacja
-          /*  newTask.TaskId = nextTaskId; // Set the TaskId for the new item
-            nextTaskId++; // Increment the task ID for the next item
-            e.NewItem = newTask;*/
-
             }
         }
+
+                //private int nextTaskId = 1;
+        private void dataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            var newTask = new WorkTask();
             //Losowanie
             int randomNumber = random.Next(200, 10000);
             newTask.TaskId = randomNumber;
             e.NewItem = newTask;
+
+            //Ikrementacja
+            /*  newTask.TaskId = nextTaskId; // Set the TaskId for the new item
+              nextTaskId++; // Increment the task ID for the next item
+              e.NewItem = newTask;*/
+
         }
 
         private void Image_MouseUp_Logout(object sender, MouseButtonEventArgs e)

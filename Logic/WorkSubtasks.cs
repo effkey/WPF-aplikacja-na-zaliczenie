@@ -156,7 +156,7 @@ namespace Projekt_WPF_TODO_app.Logic
             ApiHelper apiHelper1 = new ApiHelper("http://kubpi.pythonanywhere.com");
             string jsonData = JsonSerializer.Serialize(taskData, new JsonSerializerOptions { WriteIndented = true });
             Console.WriteLine(jsonData);
-            string response = apiHelper1.SendPostRequestWithHeaders(jsonData, "/add-subtasks/" + user.UserId + "/", user.Token);
+            string response1 = apiHelper1.SendPostRequestWithHeaders(jsonData, "/add-subtasks/" + user.UserId + "/", user.Token);
             Console.WriteLine(response);
             CombinedSubTasks.Clear();
 
