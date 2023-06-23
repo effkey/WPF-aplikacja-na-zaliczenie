@@ -117,19 +117,9 @@ namespace Projekt_WPF_TODO_app.Pages
                 
                 var column = dataGrid.Columns[i];
                 column.IsReadOnly = isReadOnly;
-            }
-
-           
+            }           
 
         }
-        //private void Logout_click(object sender, RoutedEventArgs e)
-        //{
-        //    if (MessageBox.Show("Czy na pewno chcesz się wylogować?", "Log Out", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-        //    {
-        //        File.Delete("session.json");
-        //        RestartApplication();
-        //    }
-        //}
 
         private void openSubtaskWindow(object sender, RoutedEventArgs e)
         {
@@ -186,7 +176,6 @@ namespace Projekt_WPF_TODO_app.Pages
             }
         }
 
-                //private int nextTaskId = 1;
         private void dataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
         {
             var newTask = new WorkTask();
@@ -194,11 +183,6 @@ namespace Projekt_WPF_TODO_app.Pages
             int randomNumber = random.Next(200, 10000);
             newTask.TaskId = randomNumber;
             e.NewItem = newTask;
-
-            //Ikrementacja
-            /*  newTask.TaskId = nextTaskId; // Set the TaskId for the new item
-              nextTaskId++; // Increment the task ID for the next item
-              e.NewItem = newTask;*/
 
         }
 
