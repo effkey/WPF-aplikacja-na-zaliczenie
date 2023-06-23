@@ -20,6 +20,7 @@ namespace Projekt_WPF_TODO_app.Logic
 
         public ICommand DeleteSelectedSubtaskCommend { get; set; }
         public ICommand AddSelectedSubtaskToDoneListCommend { get; set; }
+        public ICommand AddSubTasksToDataBaseCommend { get; set; }
 
         public string SubTasksHeader { get; set; }
 
@@ -27,8 +28,9 @@ namespace Projekt_WPF_TODO_app.Logic
         public WorkSubtasks(User user)
         {
             this.user = user;
-            DeleteSelectedSubtaskCommend = new RelayCommand(AddSubTasksToDataBase);
+            DeleteSelectedSubtaskCommend = new RelayCommand(DeleteSelectedTasks);
             AddSelectedSubtaskToDoneListCommend = new RelayCommand(AddSelectedTaskskToDoneList);
+            AddSubTasksToDataBaseCommend = new RelayCommand(AddSubTasksToDataBase);
 
         }
 

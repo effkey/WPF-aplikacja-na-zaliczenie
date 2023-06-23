@@ -133,7 +133,7 @@
                             </StackPanel>
                         </Grid>
 
-                        <Button Content="Zapisz zmiany" Style="{StaticResource mainButton}"/> <!-- dać odpowiedni binding!! -->
+                        <Button Content="Zapisz zmiany" Command="{Binding AddTasksToDataBaseCommend}" Style="{StaticResource mainButton}"/> <!-- dać odpowiedni binding!! -->
 
                     </StackPanel>
                 </StackPanel>

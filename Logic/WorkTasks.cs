@@ -43,13 +43,15 @@ namespace Projekt_WPF_TODO_app
 
         public ICommand DeleteSelectedTasksCommend { get; set; }
         public ICommand AddSelectedTaskskToDoneListCommend { get; set; }
+        public ICommand AddTasksToDataBaseCommend { get; set; }
 
         public WorkTasks(User user)
         {
             this.user = user;
         
-            DeleteSelectedTasksCommend = new RelayCommand(AddTasksToDataBase);
-            AddSelectedTaskskToDoneListCommend = new RelayCommand(AddSelectedTaskskToDoneList);     
+            DeleteSelectedTasksCommend = new RelayCommand(DeleteSelectedTasks);
+            AddSelectedTaskskToDoneListCommend = new RelayCommand(AddSelectedTaskskToDoneList);
+            AddTasksToDataBaseCommend = new RelayCommand(AddTasksToDataBase);
         }
     
         private void DeleteSelectedTasks()
