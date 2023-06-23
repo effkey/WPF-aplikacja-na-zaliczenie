@@ -62,7 +62,6 @@ namespace Projekt_WPF_TODO_app.Pages
             dataGrid.ItemsSource = workTask.WorkTaskList;
             compitedTasks_checkbox.IsChecked = false;
             dataGrid.Columns[8].IsReadOnly = true;
-            dataGrid.Columns[1].IsReadOnly = true;
             SubtaskTemplate.Visibility = Visibility.Hidden;
             SubtaskTemplate1.Visibility = Visibility.Visible;
         }
